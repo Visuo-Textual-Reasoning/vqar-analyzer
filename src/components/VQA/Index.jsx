@@ -5,10 +5,11 @@ import Question from '../Question/Index';
 import { getMaxNoOfImages } from '../../utils/api_calls';
 import ModelPanel from '../ModelPanel/Index';
 import { MCAN_HOME_URL, SAAA_HOME_URL } from '../../utils/apis';
+import SampleQuestions from '../SampleQuestions/Index';
 
-export default function CustomQuestionForm() {
+export default function VQA() {
 	const [ maxImages, setMaxImages ] = useState(10);
-	const [ imageIndex, setImageIndex ] = useState(2);
+	const [ imageIndex, setImageIndex ] = useState(5163);
 	const [ question, setQuestion ] = useState('');
 	const [ split ] = useState('val');
 
@@ -28,6 +29,7 @@ export default function CustomQuestionForm() {
 	return (
 		<Box>
 			<ImagePanel maxImages={maxImages} imageIndex={imageIndex} setImageIndex={setImageIndex} />
+			<SampleQuestions task="vqa"/>
 			<Question question={question} questionChangeHandler={questionChangeHandler} />
 			<Box sx={{ display: 'flex' }}>
 				<ModelPanel

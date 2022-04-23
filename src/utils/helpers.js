@@ -1,3 +1,5 @@
+import { VQA } from './apis';
+
 export function getRandomInt(min, max) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
@@ -14,5 +16,17 @@ export async function fetchPrediction(apiUrl, predictionData) {
 		body: JSON.stringify(predictionData)
 	});
 	let data = await response.json();
-  return data.answer
+	return data.answer;
+}
+
+export async function fetchRandomQuestions(task = 'vqa') {
+	let apiUrl;
+	if (task === 'vqa') {
+		apiUrl = VQA;
+	} else {
+		apiUrl = 'vcr';
+	}
+	let response = await fetch(`${apiUrl}/sample_questions`);
+	let data = await response.json();
+	return data.random_questions;
 }

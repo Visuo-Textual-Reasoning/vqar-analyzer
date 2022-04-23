@@ -20,12 +20,13 @@ export default function ModelPanel({ modelName, apiUrl, question, imageIndex }) 
 	const [ answer, setAnswer ] = useState('');
 	const [ evaluate, setEvaluate ] = useEvaluate();
 	const [ loading, setLoading ] = useState(false);
+	const [ timeTaken, setTimeTaken ] = useState(null);
 
 	useEffect(
 		() => {
 			// console.log("Model Panel: ", evaluate, evaluateRef.current);
 			if (evaluate) {
-				console.log('getting asnwer');
+				// console.log('getting asnwer');
 				getAnswer();
 				setEvaluate(false);
 			}
@@ -38,7 +39,10 @@ export default function ModelPanel({ modelName, apiUrl, question, imageIndex }) 
 
 		try {
 			setLoading(true);
+			let startTime = performance.now();
 			let ans = await fetchPrediction(apiUrl, predictionData);
+			let endTime = performance.now();
+			setTimeTaken(endTime - startTime);
 			setLoading(false);
 			setAnswer(ans);
 		} catch (err) {
@@ -50,6 +54,9 @@ export default function ModelPanel({ modelName, apiUrl, question, imageIndex }) 
 		<Paper className={classes.panel} elevation={10}>
 			<Typography sx={{ fontFamily: 'Cascadia Code' }}>{modelName}</Typography>
 			{loading ? <CircularProgress color="secondary" /> : <Answer answer={answer} />}
+			<Typography sx={{ fontFamily: 'Cascadia Code', fontSize: '12px' }}>
+				{!loading && timeTaken && `Took ${(timeTaken / 1000).toFixed(2)}s`}
+			</Typography>
 		</Paper>
 	);
 }
