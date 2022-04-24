@@ -1,25 +1,37 @@
-import { Box, Paper } from '@mui/material';
+import { Box, Card, CardContent, Paper, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { fetchRandomQuestions } from '../../utils/helpers';
 
 const styles = {
-    marign: "0 auto",
-    textAlign: "center",
-}
+	marign: '5px auto',
+	textAlign: 'center',
+	padding: '15px',
+	fontFamily: 'Cascadia Code',
+	fontSize: '7px 14px',
+    boxShadow: "inset 1px 1px 6px gray",
+    maxWidth: 600,
+    width: 600,
+};
 
-export default function SampleQuestions({ task }) {
-    const [sampleQuestions, setSampleQuestions] = useState([])
+export default function SampleQuestions({ task, imageIndex }) {
+	const [ sampleQuestions, setSampleQuestions ] = useState([]);
 
 	useEffect(() => {
-        fetchRandomQuestions(task)
-            .then(setSampleQuestions)
-    }, []);
+		fetchRandomQuestions(imageIndex, task).then(setSampleQuestions);
+	}, [imageIndex]);
 
 	return (
-        <Paper sx={styles} elevation={10}>
-            {sampleQuestions.map(q => {
-                return <div key={q}>{q}</div>
-            })}
-        </Paper>
-    )
+		<Card sx={styles}>
+			<CardContent sx={{ color: '#2345b0', fontWeight: 'bold', textAlign: 'left' }}>
+				<Typography gutterBotton variant="h6" component="div">
+					Sample Questions
+				</Typography>
+			</CardContent>
+			<Box sx={{ color: '#118834' }}>
+				{sampleQuestions.map((q) => {
+					return <div key={q}>{q}</div>;
+				})}
+			</Box>
+		</Card>
+	);
 }

@@ -27,9 +27,9 @@ export default function VQA() {
 	}
 
 	return (
-		<Box>
+		<Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
 			<ImagePanel maxImages={maxImages} imageIndex={imageIndex} setImageIndex={setImageIndex} />
-			<SampleQuestions task="vqa"/>
+			<SampleQuestions task="vqa" imageIndex={imageIndex}/>
 			<Question question={question} questionChangeHandler={questionChangeHandler} />
 			<Box sx={{ display: 'flex' }}>
 				<ModelPanel
