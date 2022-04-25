@@ -37,7 +37,7 @@ export default function SampleQuestions({ task, imageIndex }) {
 			<Typography variant="h6" sx={{fontFamily: "Cascadia Code"}}>Sample Questions</Typography>
 			{sampleQuestions.map((q) => {
 				return (
-					<Accordion>
+					<Accordion key={q}>
 						<AccordionSummary sx={{ color: '#118834' }}>{q}</AccordionSummary>
 						<AccordionDetails sx={{ color: '#2345b0', fontWeight: 'bold', textAlign: 'left' }}>
 							Answer
