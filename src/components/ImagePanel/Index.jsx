@@ -68,6 +68,7 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex }) {
 					maxWidth: 650
 				}}
 				src={`${VQA}/image?imageIndex=${imageIndex}`}
+				alt={`Image-${imageIndex}`}
 			/>
 		</Box>
 	);
