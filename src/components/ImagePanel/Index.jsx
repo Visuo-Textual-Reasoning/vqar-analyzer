@@ -23,6 +23,7 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex }) {
 	const classes = useStyles();
 	const split = 'val';
 
+	// This should handle Issue #2. May be the issue is browser specific.
 	function handleImageIndexChange(e) {
 		let value = parseInt(e.target.value, 10);
 		if (!value) value = 1;
