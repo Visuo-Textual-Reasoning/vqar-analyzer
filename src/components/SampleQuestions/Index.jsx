@@ -6,23 +6,35 @@ import {
 	Card,
 	CardContent,
 	Paper,
-	Typography
+	Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { fetchRandomQuestions } from '../../utils/helpers';
+import {makeStyles} from "@mui/styles"
 
-const styles = {
-	marign: '5px auto',
-	textAlign: 'center',
-	padding: '15px',
-	fontFamily: 'Cascadia Code',
-	fontSize: '7px 14px',
-	boxShadow: 'inset 1px 1px 6px gray',
-	maxWidth: 600,
-	width: 600
-};
+const useStyles = makeStyles((theme) => {
+	return {
+		wrapper: {
+			marign: '5px auto',
+			textAlign: 'center',
+			padding: '15px',
+			fontFamily: 'Cascadia Code',
+			fontSize: '13px',
+			boxShadow: 'inset 1px 1px 6px gray',
+			maxWidth: 600,
+			width: 600,
 
+			[theme.breakpoints.down('md')]: {
+				width: 480,
+			},
+			[theme.breakpoints.down('sm')]: {
+				width: 380,
+			}
+		}
+	};
+});
 export default function SampleQuestions({ task, imageIndex }) {
+	const classes = useStyles()
 	const [ sampleQuestions, setSampleQuestions ] = useState([]);
 
 	useEffect(
@@ -33,8 +45,10 @@ export default function SampleQuestions({ task, imageIndex }) {
 	);
 
 	return (
-		<Box sx={styles}>
-			<Typography variant="h6" sx={{fontFamily: "Cascadia Code"}}>Sample Questions</Typography>
+		<Box className={classes.wrapper}>
+			<Typography variant="h6" sx={{ fontFamily: 'Cascadia Code' }}>
+				Sample Questions
+			</Typography>
 			{sampleQuestions.map((q) => {
 				return (
 					<Accordion key={q}>

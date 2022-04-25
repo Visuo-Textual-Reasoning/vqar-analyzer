@@ -5,18 +5,39 @@ import React from 'react';
 import { getRandomDataPoint } from '../../utils/api_calls';
 import { VQA } from '../../utils/apis';
 
-const useStyles = makeStyles({
-	imagePanel: {
-		display: 'flex',
-		flexDirection: 'column',
-		margin: '5px auto',
-		width: 'fit-content',
+const useStyles = makeStyles((theme) => {
+	return {
+		imagePanel: {
+			display: 'flex',
+			flexDirection: 'column',
+			margin: '5px auto',
+			width: 'fit-content',
 
-		'& button': {
-			margin: '12px 3px',
-			fontFamily: 'Cascadia Code'
+			'& button': {
+				margin: '12px 3px',
+				fontFamily: 'Cascadia Code'
+			}
+		},
+
+		img: {
+			minHeight: 400,
+			maxHeight: 650,
+			maxWidth: 650,
+
+			[theme.breakpoints.down('md')]: {
+				maxHeight: 500,
+				maxWidth: 500
+			},
+			[theme.breakpoints.down('sm')]: {
+				maxHeight: 400,
+				maxWidth: 400
+			}
+		},
+		textField: {
+			display: 'flex',
+			flexDirection: 'column',
 		}
-	}
+	};
 });
 
 export default function ImagePanel({ maxImages, imageIndex, setImageIndex }) {
@@ -53,6 +74,7 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex }) {
 					onChange={handleImageIndexChange}
 					value={imageIndex}
 					sx={{ mb: 1, mt: 1 }}
+					className={classes.textField}
 				/>
 				<Button color="secondary" variant="contained" size="small">
 					Fetch Image
@@ -63,11 +85,7 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex }) {
 			</Box>
 			<Paper
 				component="img"
-				sx={{
-					minHeight: 400,
-					maxHeight: 650,
-					maxWidth: 650
-				}}
+				className={classes.img}
 				src={`${VQA}/image?imageIndex=${imageIndex}`}
 				alt={`Image-${imageIndex}`}
 			/>

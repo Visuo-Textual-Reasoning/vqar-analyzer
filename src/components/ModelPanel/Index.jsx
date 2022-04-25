@@ -7,11 +7,20 @@ import { useState } from 'react';
 import { fetchPrediction } from '../../utils/helpers';
 import { useEvaluate } from '../../contexts/EvaluateProvider';
 
-const useStyles = makeStyles({
-	panel: {
-		width: '40%',
-		padding: 10,
-		margin: '20px auto'
+const useStyles = makeStyles( (theme) => {
+	console.log(theme)
+	return {
+		panel: {
+			[theme.breakpoints.down("md")] :{
+				width: "55%"
+			},
+			[theme.breakpoints.down("sm")] :{
+				width: "100%"
+			},
+			width: "35%",
+			margin: '20px auto',
+			padding: 10,
+		}
 	}
 });
 
