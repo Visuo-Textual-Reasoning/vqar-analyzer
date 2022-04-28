@@ -1,7 +1,7 @@
-import { Box, Paper, Button, TextField } from '@mui/material';
+import { Box, Paper, Button, TextField, Snackbar, Alert } from '@mui/material';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@mui/styles';
-import React from 'react';
+import React, { useState } from 'react';
 import { getRandomDataPoint } from '../../utils/api_calls';
 import { VQA } from '../../utils/apis';
 
@@ -35,22 +35,32 @@ const useStyles = makeStyles((theme) => {
 		},
 		textField: {
 			display: 'flex',
-			flexDirection: 'column',
+			flexDirection: 'column'
 		}
 	};
 });
 
 export default function ImagePanel({ maxImages, imageIndex, setImageIndex }) {
+	const [ snackbarOpen, setSnackBarOpen ] = useState(false);
 	const classes = useStyles();
 	const split = 'val';
 
 	// This should handle Issue #2. May be the issue is browser specific.
 	function handleImageIndexChange(e) {
 		let value = parseInt(e.target.value, 10);
-		if (!value) value = 1;
+		if (!value) {
+			setSnackBarOpen(true);
+			value = 1;
+		}
 
-		if (value > maxImages) value = maxImages;
-		if (value < 1) value = 1;
+		if (value > maxImages) {
+			setSnackBarOpen(true);
+			value = maxImages;
+		}
+		if (value < 1) {
+			setSnackBarOpen(true);
+			value = 1;
+		}
 
 		setImageIndex(value);
 	}
@@ -60,8 +70,22 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex }) {
 		setImageIndex(randomImageIndex);
 	}
 
+	function handleSnackbarClose(e) {
+		setSnackBarOpen(false);
+	}
+
 	return (
 		<Box className={classes.imagePanel}>
+			<Snackbar
+				open={snackbarOpen}
+				autoHideDuration={2000}
+				onClose={handleSnackbarClose}
+				//   action={action}
+			>
+				<Alert onClose={handleSnackbarClose} severity="warning" sx={{ width: '100%' }}>
+					{`Image index must lie between ${1} and ${maxImages}`}
+				</Alert>
+			</Snackbar>
 			<Box>
 				<TextField
 					id="outlined-number"
