@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => {
 
 export default function VQA() {
 	const classes = useStyles()
-	const [ maxImages, setMaxImages ] = useState(10);
-	const [ imageIndex, setImageIndex ] = useState(5163);
+	const [ maxImages, setMaxImages ] = useState(0);
+	const [ imageIndex, setImageIndex ] = useState(1);
 	const [ question, setQuestion ] = useState('');
 	const [ split ] = useState('val');
 	const saaaHomeUrl = (process.env.REACT_APP_DEMO) ? MOCK_API :SAAA_HOME_URL
