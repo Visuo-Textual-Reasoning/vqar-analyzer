@@ -4,7 +4,7 @@ import ImagePanel from '../ImagePanel/Index';
 import Question from '../Question/Index';
 import { getMaxNoOfImages } from '../../utils/api_calls';
 import ModelPanel from '../ModelPanel/Index';
-import { MCAN_HOME_URL, SAAA_HOME_URL } from '../../utils/apis';
+import { MCAN_HOME_URL, SAAA_HOME_URL, MOCK_API} from '../../utils/apis';
 import SampleQuestions from '../SampleQuestions/Index';
 import { makeStyles } from '@mui/styles';
 
@@ -33,6 +33,8 @@ export default function VQA() {
 	const [ imageIndex, setImageIndex ] = useState(5163);
 	const [ question, setQuestion ] = useState('');
 	const [ split ] = useState('val');
+	const saaaHomeUrl = (process.env.REACT_APP_DEMO) ? MOCK_API :SAAA_HOME_URL
+	const mcanHomeUrl = (process.env.REACT_APP_DEMO) ? MOCK_API :MCAN_HOME_URL
 
 	useEffect(
 		() => {
@@ -55,13 +57,13 @@ export default function VQA() {
 			<Box className={classes.modelPanels}>
 				<ModelPanel
 					modelName="Show Ask Attend and Answer"
-					apiUrl={SAAA_HOME_URL}
+					apiUrl={saaaHomeUrl}
 					question={question}
 					imageIndex={imageIndex}
 				/>
 				<ModelPanel
 					modelName="Deep Modular Co-attention"
-					apiUrl={MCAN_HOME_URL}
+					apiUrl={mcanHomeUrl}
 					question={question}
 					imageIndex={imageIndex}
 				/>
