@@ -16,7 +16,7 @@ export async function fetchPrediction(apiUrl, predictionData) {
 		body: JSON.stringify(predictionData)
 	});
 	let data = await response.json();
-	return data.answer;
+	return data;
 }
 
 export async function fetchRandomQuestions(imageIndex, task = 'vqa') {

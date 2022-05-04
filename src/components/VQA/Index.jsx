@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import ImagePanel from '../ImagePanel/Index';
 import Question from '../Question/Index';
 import { getMaxNoOfImages } from '../../utils/api_calls';
-import ModelPanel from '../ModelPanel/Index';
+import VQAModelPanel from '../ModelPanel/VQAPanel';
 import { MCAN_HOME_URL, SAAA_HOME_URL, MOCK_API} from '../../utils/apis';
 import SampleQuestions from '../SampleQuestions/Index';
 import { makeStyles } from '@mui/styles';
@@ -55,13 +55,13 @@ export default function VQA() {
 			<SampleQuestions task="vqa" imageIndex={imageIndex} />
 			<Question question={question} questionChangeHandler={questionChangeHandler} />
 			<Box className={classes.modelPanels}>
-				<ModelPanel
+				<VQAModelPanel
 					modelName="Show Ask Attend and Answer"
 					apiUrl={saaaHomeUrl}
 					question={question}
 					imageIndex={imageIndex}
 				/>
-				<ModelPanel
+				<VQAModelPanel
 					modelName="Deep Modular Co-attention"
 					apiUrl={mcanHomeUrl}
 					question={question}
