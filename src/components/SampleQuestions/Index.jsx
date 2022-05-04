@@ -1,16 +1,7 @@
-import {
-	Accordion,
-	AccordionDetails,
-	AccordionSummary,
-	Box,
-	Card,
-	CardContent,
-	Paper,
-	Typography,
-} from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { fetchRandomQuestions } from '../../utils/helpers';
-import {makeStyles} from "@mui/styles"
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => {
 	return {
@@ -25,16 +16,16 @@ const useStyles = makeStyles((theme) => {
 			width: 600,
 
 			[theme.breakpoints.down('md')]: {
-				width: 480,
+				width: 480
 			},
 			[theme.breakpoints.down('sm')]: {
-				width: 380,
+				width: 380
 			}
 		}
 	};
 });
 export default function SampleQuestions({ task, imageIndex }) {
-	const classes = useStyles()
+	const classes = useStyles();
 	const [ sampleQuestions, setSampleQuestions ] = useState([]);
 
 	useEffect(

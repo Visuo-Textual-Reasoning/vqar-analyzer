@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
 import { getRandomDataPoint } from '../../utils/api_calls';
-import { VQA } from '../../utils/apis';
 
 const useStyles = makeStyles((theme) => {
 	return {

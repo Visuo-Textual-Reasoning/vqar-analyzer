@@ -6,21 +6,21 @@ import { useState } from 'react';
 import { fetchPrediction } from '../../utils/helpers';
 import { useEvaluate } from '../../contexts/EvaluateProvider';
 
-const useStyles = makeStyles( (theme) => {
-	console.log(theme)
+const useStyles = makeStyles((theme) => {
+	console.log(theme);
 	return {
 		panel: {
-			[theme.breakpoints.down("md")] :{
-				width: "55%"
+			[theme.breakpoints.down('md')]: {
+				width: '55%'
 			},
-			[theme.breakpoints.down("sm")] :{
-				width: "100%"
+			[theme.breakpoints.down('sm')]: {
+				width: '100%'
 			},
-			width: "35%",
+			width: '35%',
 			margin: '20px auto',
-			padding: 10,
+			padding: 10
 		}
-	}
+	};
 });
 
 export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcrMode }) {
@@ -47,7 +47,7 @@ export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcr
 			questionData: data,
 			imageIdx: imageIndex,
 			task_type: vcrMode
-		}
+		};
 
 		try {
 			setLoading(true);
@@ -82,9 +82,5 @@ VCRModelPanel.propTypes = {
 		question: PropTypes.string.isRequired,
 		answers: PropTypes.arrayOf(PropTypes.string).isRequired,
 		rationales: PropTypes.arrayOf(PropTypes.string).isRequired
-	}).isRequired,
+	}).isRequired
 };
-
-function VCRAnswer({prediction}) {
-
-}

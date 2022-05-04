@@ -1,8 +1,7 @@
-import { Box, Button, TextField } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
-import { useEvaluate } from '../../contexts/EvaluateProvider';
 
 const useStyles = makeStyles((theme) => {
 	return {
@@ -60,5 +59,5 @@ export default function Choice({ value, valueChangeHandler, label }) {
 Choice.propTypes = {
 	value: PropTypes.string.isRequired,
 	valueChangeHandler: PropTypes.func.isRequired,
-    label: PropTypes.string.isRequired,
+	label: PropTypes.string.isRequired
 };
