@@ -66,7 +66,7 @@ function VCRCard() {
 			<CardMedia component="img" alt="VCR Example" image={VCRImage} />
 			<CardContent>
 				<Typography gutterBottom variant="h5" component="div">
-					Visual Question Answering
+					Visual Commonsense Reasoning
 				</Typography>
 				<Typography variant="body2" color="text.secondary">
 					In VQA, we present the model with an image and a question in the form of natural language and the
