@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => {
 	};
 });
 
-export default function ImagePanel({ maxImages, imageIndex, setImageIndex }) {
+export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUrl }) {
 	const [ snackbarOpen, setSnackBarOpen ] = useState(false);
 	const classes = useStyles();
 	const split = 'val';
@@ -110,7 +110,7 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex }) {
 			<Paper
 				component="img"
 				className={classes.img}
-				src={`${VQA}/image?imageIndex=${imageIndex}`}
+				src={`${apiUrl}/image?imageIndex=${imageIndex}`}
 				alt={`Image-${imageIndex}`}
 			/>
 		</Box>
@@ -120,5 +120,6 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex }) {
 ImagePanel.propTypes = {
 	maxImages: PropTypes.number.isRequired,
 	imageIndex: PropTypes.number.isRequired,
-	setImageIndex: PropTypes.func.isRequired
+	setImageIndex: PropTypes.func.isRequired,
+	apiUrl: PropTypes.string.isRequired
 };

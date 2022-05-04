@@ -1,6 +1,6 @@
 import './App.css';
-import Sidebar from './components/Sidebar/Index';
 import VQA from './components/VQA/Index';
+import VCR from "./components/VCR/Index"
 import EvaluateProvider from './contexts/EvaluateProvider';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom"
 import { ThemeProvider, useTheme } from '@mui/material';
@@ -18,7 +18,7 @@ function App() {
 				<Routes>
 					<Route exact path="/" element={<Home/>} />
           			<Route exact path="/vqa" element={<VQA />} />
-          			{/* <Route exact path="/vcr" element={<VCR />} /> */}
+          			<Route exact path="/vcr" element={<VCR />} />
 				</Routes>
 			</Router>
 		</EvaluateProvider>

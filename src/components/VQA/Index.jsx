@@ -51,7 +51,7 @@ export default function VQA() {
 
 	return (
 		<Box className={classes.wrapper}>
-			<ImagePanel maxImages={maxImages} imageIndex={imageIndex} setImageIndex={setImageIndex} />
+			<ImagePanel maxImages={maxImages} imageIndex={imageIndex} setImageIndex={setImageIndex} apiUrl={saaaHomeUrl}/>
 			<SampleQuestions task="vqa" imageIndex={imageIndex} />
 			<Question question={question} questionChangeHandler={questionChangeHandler} />
 			<Box className={classes.modelPanels}>

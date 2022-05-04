@@ -7,7 +7,7 @@ import { useEvaluate } from '../../contexts/EvaluateProvider';
 const useStyles = makeStyles((theme) => {
 	return {
 		box: {
-			width: "fit-content",
+			width: 'fit-content',
 			margin: '0 auto',
 			display: 'flex',
 			justifyContent: 'center',
@@ -31,15 +31,15 @@ const useStyles = makeStyles((theme) => {
 			'& button': {
 				height: 40,
 				fontFamily: 'Cascadia Code',
-        [theme.breakpoints.down('sm')]: {
-          height: 30
-        },
+				[theme.breakpoints.down('sm')]: {
+					height: 30
+				}
 			}
 		}
 	};
 });
 
-export default function Question({ question, questionChangeHandler }) {
+export default function Question({ question, questionChangeHandler, hideEvaluateButton }) {
 	const classes = useStyles();
 	const [ , setEvalute ] = useEvaluate();
 
@@ -58,14 +58,17 @@ export default function Question({ question, questionChangeHandler }) {
 				onChange={questionChangeHandler}
 				focused
 			/>
-			<Button variant="contained" color="secondary" size="small" onClick={startEvaluation}>
-				Evaluate
-			</Button>
+			{!hideEvaluateButton && (
+				<Button variant="contained" color="secondary" size="small" onClick={startEvaluation}>
+					Evaluate
+				</Button>
+			)}
 		</Box>
 	);
 }
 
 Question.propTypes = {
 	question: PropTypes.string.isRequired,
-	questionChangeHandler: PropTypes.func.isRequired
+	questionChangeHandler: PropTypes.func.isRequired,
+	hideEvaluateButton: PropTypes.bool
 };
