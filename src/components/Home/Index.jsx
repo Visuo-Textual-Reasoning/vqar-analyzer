@@ -23,6 +23,31 @@ const useStyles = makeStyles((theme) => {
 			// border: "1px solid red",
 			width: 450,
 			height: 420,
+		},
+		myCard: {
+			maxWidth: 350,
+			height: 450,
+			padding: 10,
+			display: "flex",
+			flexDirection: 'column',
+			margin: "0 5px",
+			boxShadow: "1px 1px 3px grey",
+			
+			"& .image": {
+				width: "100%",
+				height: "200px",
+			},
+
+			"& img": {
+				width: "100%",
+				maxHeight: "100%",
+				height: "auto"
+			},
+
+
+			"& h4": {
+				fontSize: 21
+			}
 		}
 	};
 });
@@ -40,43 +65,41 @@ export default function Home() {
 function VQACard() {
 	const classes = useStyles()
 	return (
-		<Card sx={{ maxWidth: 345, height: 'fit-content', margin: '0 10px' }} elevation={7} className={classes.card}>
-			<CardMedia component="img" alt="VQA Example" image={VQAImage}/>
-			<CardContent>
-				<Typography gutterBottom variant="h5" component="div">
-					Visual Question Answering
-				</Typography>
-				<Typography variant="body2" color="text.secondary">
+		<div className={classes.myCard}>
+			<div className="image">
+				<img src={VQAImage} alt="VQA" />
+			</div>
+			<div className="contents">
+				<h4>Visual Question Answering</h4>
+				<p>
 					In VQA, we present the model with an image and a question in the form of natural language and the
-					model generates an answer again in the form of natural language
-				</Typography>
-			</CardContent>
-			<CardActions>
-				{/* <Button size="small">Share</Button> */}
-				<Button size="small" sx={{marginBottom: "-110px"}}>Learn More</Button>
-			</CardActions>
-		</Card>
+					 model generates an answer again in the form of natural language
+				</p>
+			</div>
+			<div className="actions">
+				<Button size="small">Learn More</Button>
+			</div>
+		</div>
 	);
 }
 
 function VCRCard() {
 	const classes = useStyles()
 	return (
-		<Card sx={{ maxWidth: 345, height: 'fit-content', margin: '0 10px' }} elevation={7} className={classes.card}>
-			<CardMedia component="img" alt="VCR Example" image={VCRImage} />
-			<CardContent>
-				<Typography gutterBottom variant="h5" component="div">
-					Visual Commonsense Reasoning
-				</Typography>
-				<Typography variant="body2" color="text.secondary">
+		<div className={classes.myCard}>
+			<div className="image">
+				<img src={VCRImage} alt="VCR" />
+			</div>
+			<div className="contents">
+				<h4>Visual Commonsense Reasoning</h4>
+				<p>
 					In VQA, we present the model with an image and a question in the form of natural language and the
 					model generates an answer again in the form of natural language
-				</Typography>
-			</CardContent>
-			<CardActions>
-				{/* <Button size="small">Share</Button> */}
+				</p>
+			</div>
+			<div className="actions">
 				<Button size="small">Learn More</Button>
-			</CardActions>
-		</Card>
+			</div>
+		</div>
 	);
 }
