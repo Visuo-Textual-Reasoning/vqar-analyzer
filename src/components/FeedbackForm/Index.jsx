@@ -18,7 +18,8 @@ const useStyles = makeStyles({
     "& > div": {
         // border: "1px solid red",
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: "space-between",
     },
 
     "& button": {
