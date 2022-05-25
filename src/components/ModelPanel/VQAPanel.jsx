@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Paper, Typography, CircularProgress } from '@mui/material';
+import { Paper, Typography, CircularProgress, Switch } from '@mui/material';
 import React, { useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import Answer from '../Answer/Index';
@@ -7,21 +7,24 @@ import { useState } from 'react';
 import { fetchPrediction } from '../../utils/helpers';
 import { useEvaluate } from '../../contexts/EvaluateProvider';
 
-const useStyles = makeStyles( (theme) => {
-	console.log(theme)
+const useStyles = makeStyles((theme) => {
+	console.log(theme);
 	return {
 		panel: {
-			[theme.breakpoints.down("md")] :{
-				width: "55%"
+			[theme.breakpoints.down('md')]: {
+				width: '55%'
 			},
-			[theme.breakpoints.down("sm")] :{
-				width: "100%"
+			[theme.breakpoints.down('sm')]: {
+				width: '100%'
 			},
-			width: "35%",
+			width: '35%',
 			margin: '20px auto',
-			padding: 10,
+			padding: 10
+		},
+		switch: {
+			float: 'right'
 		}
-	}
+	};
 });
 
 export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex }) {
@@ -30,6 +33,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 	const [ evaluate, setEvaluate ] = useEvaluate();
 	const [ loading, setLoading ] = useState(false);
 	const [ timeTaken, setTimeTaken ] = useState(null);
+	const [ modelActive, setModelActive ] = useState(true);
 
 	useEffect(
 		() => {
@@ -44,6 +48,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 	);
 
 	async function getAnswer() {
+		if(!modelActive) {return}
 		let predictionData = { imageIndex, question };
 
 		try {
@@ -60,7 +65,16 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 	}
 
 	return (
-		<Paper className={classes.panel} elevation={10}>
+		<Paper className={classes.panel} elevation={modelActive ? 10: 3} sx={{ backgroundColor: modelActive ? "white" : "#eeeeee" }}>
+			<Switch
+				className={classes.switch}
+				checked={modelActive}
+				onChange={(e) => {
+					setModelActive(!modelActive);
+				}}
+				inputProps={{ 'aria-label': 'controlled' }}
+				color="primary"
+			/>
 			<Typography sx={{ fontFamily: 'Cascadia Code' }}>{modelName}</Typography>
 			{loading ? <CircularProgress color="secondary" /> : <Answer answer={answer} />}
 			<Typography sx={{ fontFamily: 'Cascadia Code', fontSize: '12px' }}>
