@@ -30,3 +30,15 @@ export async function fetchRandomQuestions(imageIndex, task = 'vqa') {
 	let data = await response.json();
 	return data.random_questions;
 }
+
+export async function sendUserFeedback(apiUrl, data){
+	let response = await fetch(`${apiUrl}/feedback`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)
+	})
+	return
+}

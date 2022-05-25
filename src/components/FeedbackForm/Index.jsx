@@ -68,7 +68,7 @@ export default function FeedbackForm({ handleRadioChange, sendFeedback, feedback
             </RadioGroup>
             {/* <Checkbox {...label} color="success" onChange={(e) => handleCheckboxChange("answer")} /> */}
           </Box>
-          <Box>
+          {/* <Box>
             Is the attention corect?: 
             <RadioGroup
               row
@@ -80,8 +80,8 @@ export default function FeedbackForm({ handleRadioChange, sendFeedback, feedback
               <FormControlLabel value="yes" control={<Radio />} label="Yes" />
               <FormControlLabel value="no" control={<Radio />} label="No" />
             </RadioGroup>
-            {/* <Checkbox {...label} color="success" onChange={(e) => handleRadioChange("attention")} /> */}
-          </Box>
+          </Box> */}
+          
           <Box className='buttons'>
             <Button onClick={handleClose} size="small" variant="contained">Done</Button>
           </Box>

@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import Answer from '../Answer/Index';
 import { useState } from 'react';
-import { fetchPrediction } from '../../utils/helpers';
+import { fetchPrediction, sendUserFeedback } from '../../utils/helpers';
 import { useEvaluate } from '../../contexts/EvaluateProvider';
 import FeedbackForm from '../FeedbackForm/Index';
 
@@ -76,12 +76,12 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 		}
 	}
 
-	const handleRadioChange = (name, value) => {
+	function handleRadioChange (name, value){
 		setFeedback({ ...feedback, [name]: value });
 		console.log({ feedback });
 	};
 
-	const handleWarningClose = (event, reason) => {
+	function handleWarningClose(event, reason) {
 		if (reason === 'clickaway') {
 			return;
 		}
@@ -89,12 +89,17 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 		setWarningOpen(false);
 	};
 
-	const sendFeedback = async () => {
-		if (!feedback.answer || !feedback.attention) {
+	async function sendFeedback () {
+		// if (!feedback.answer || !feedback.attention) {
+		if (!feedback.answer) {
 			console.log('You have to pick something!');
 			setWarningOpen(true);
 			return false;
 		}
+
+		console.log(feedback)
+
+		sendUserFeedback(apiUrl, {feedback, imageIndex, question, answer})
 
 		setFeedback({
 			answer: null,
