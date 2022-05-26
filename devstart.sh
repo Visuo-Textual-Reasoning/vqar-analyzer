@@ -1,4 +1,4 @@
 #!/bin/bash
 
-node ./mock-api/index.js &
+node ./mock-api/dist/index.js & 
 npm start
