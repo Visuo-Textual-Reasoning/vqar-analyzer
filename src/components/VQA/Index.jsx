@@ -4,7 +4,8 @@ import ImagePanel from '../ImagePanel/Index';
 import Question from '../Question/Index';
 import { getMaxNoOfImages } from '../../utils/api_calls';
 import VQAModelPanel from '../ModelPanel/VQAPanel';
-import { MCAN_HOME_URL, SAAA_HOME_URL, MOCK_API} from '../../utils/apis';
+import { fetchVocabulary } from '../../utils/helpers';
+import { MCAN_HOME_URL, SAAA_HOME_URL, MOCK_API } from '../../utils/apis';
 import SampleQuestions from '../SampleQuestions/Index';
 import { makeStyles } from '@mui/styles';
 
@@ -16,25 +17,26 @@ const useStyles = makeStyles((theme) => {
 			alignItems: 'center'
 		},
 		modelPanels: {
-			[theme.breakpoints.up("sm")] : {
+			[theme.breakpoints.up('sm')]: {
 				display: 'flex',
-				width: "100%"
+				width: '100%'
 			},
-			[theme.breakpoints.down("md")] : {
-				flexDirection: 'column',
+			[theme.breakpoints.down('md')]: {
+				flexDirection: 'column'
 			}
 		}
 	};
 });
 
 export default function VQA() {
-	const classes = useStyles()
+	const classes = useStyles();
 	const [ maxImages, setMaxImages ] = useState(0);
 	const [ imageIndex, setImageIndex ] = useState(1);
 	const [ question, setQuestion ] = useState('');
 	const [ split ] = useState('val');
-	const saaaHomeUrl = (process.env.REACT_APP_DEMO) ? MOCK_API :SAAA_HOME_URL
-	const mcanHomeUrl = (process.env.REACT_APP_DEMO) ? MOCK_API :MCAN_HOME_URL
+	const [ vocab, setVocab ] = useState([]);
+	const saaaHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : SAAA_HOME_URL;
+	const mcanHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : MCAN_HOME_URL;
 
 	useEffect(
 		() => {
@@ -45,13 +47,25 @@ export default function VQA() {
 		[ split ]
 	);
 
+	// Fetch vocab from the server
+	useEffect(() => {
+		fetchVocabulary(saaaHomeUrl).then(v => {
+			setVocab(v);
+		})
+	}, []);
+
 	function questionChangeHandler(e) {
 		setQuestion(e.target.value);
 	}
 
 	return (
 		<Box className={classes.wrapper}>
-			<ImagePanel maxImages={maxImages} imageIndex={imageIndex} setImageIndex={setImageIndex} apiUrl={saaaHomeUrl}/>
+			<ImagePanel
+				maxImages={maxImages}
+				imageIndex={imageIndex}
+				setImageIndex={setImageIndex}
+				apiUrl={saaaHomeUrl}
+			/>
 			<SampleQuestions task="vqa" imageIndex={imageIndex} />
 			<Question question={question} questionChangeHandler={questionChangeHandler} />
 			<Box className={classes.modelPanels}>

@@ -42,3 +42,10 @@ export async function sendUserFeedback(apiUrl, data){
 	})
 	return
 }
+
+export async function fetchVocabulary(apiUrl) {
+	let response = await fetch(`${apiUrl}/vocab`)
+	let vocab = await response.json()
+
+	return vocab
+}
