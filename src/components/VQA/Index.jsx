@@ -8,6 +8,7 @@ import { fetchVocabulary } from '../../utils/helpers';
 import { MCAN_HOME_URL, SAAA_HOME_URL, MOCK_API } from '../../utils/apis';
 import SampleQuestions from '../SampleQuestions/Index';
 import { makeStyles } from '@mui/styles';
+import { useVocab } from '../../contexts/VocabProvider';
 
 const useStyles = makeStyles((theme) => {
 	return {
@@ -34,7 +35,7 @@ export default function VQA() {
 	const [ imageIndex, setImageIndex ] = useState(1);
 	const [ question, setQuestion ] = useState('');
 	const [ split ] = useState('val');
-	const [ vocab, setVocab ] = useState([]);
+	const [ vocab, setVocab ] = useVocab();
 	const saaaHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : SAAA_HOME_URL;
 	const mcanHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : MCAN_HOME_URL;
 
@@ -49,12 +50,26 @@ export default function VQA() {
 
 	// Fetch vocab from the server
 	useEffect(() => {
-		fetchVocabulary(saaaHomeUrl).then(v => {
+		fetchVocabulary(saaaHomeUrl).then((v) => {
 			setVocab(v);
-		})
+		});
 	}, []);
 
+	function validateQuestion(question){
+		let words = question.split(" ")
+		let invalidWords = []
+		for(let word of words){
+			if(!vocab.includes(word.toLowerCase())){
+				invalidWords.push(word)
+			}
+		}
+
+		return invalidWords
+	}
+
 	function questionChangeHandler(e) {
+		let invalidWords = validateQuestion(e.target.value)
+		console.log(invalidWords)
 		setQuestion(e.target.value);
 	}
 

@@ -31,7 +31,7 @@ export async function fetchRandomQuestions(imageIndex, task = 'vqa') {
 	return data.random_questions;
 }
 
-export async function sendUserFeedback(apiUrl, data){
+export async function sendUserFeedback(apiUrl, data) {
 	let response = await fetch(`${apiUrl}/feedback`, {
 		method: 'POST',
 		headers: {
@@ -39,13 +39,17 @@ export async function sendUserFeedback(apiUrl, data){
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify(data)
-	})
-	return
+	});
+	return;
 }
 
 export async function fetchVocabulary(apiUrl) {
-	let response = await fetch(`${apiUrl}/vocab`)
-	let vocab = await response.json()
+	try {
+		let response = await fetch(`${apiUrl}/vocab`);
+		let vocab = await response.json();
 
-	return vocab
+		return vocab;
+	} catch (err) {
+		return [];
+	}
 }

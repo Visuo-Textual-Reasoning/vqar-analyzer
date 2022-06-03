@@ -45,6 +45,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 		answer: null,
 		attention: null
 	});
+
 	useEffect(
 		() => {
 			// console.log("Model Panel: ", evaluate, evaluateRef.current);
