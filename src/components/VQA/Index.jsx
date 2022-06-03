@@ -1,4 +1,6 @@
 import { Box } from '@mui/system';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import React, { useState, useEffect } from 'react';
 import ImagePanel from '../ImagePanel/Index';
 import Question from '../Question/Index';
@@ -36,6 +38,8 @@ export default function VQA() {
 	const [ question, setQuestion ] = useState('');
 	const [ split ] = useState('val');
 	const [ vocab, setVocab ] = useVocab();
+	const [ warningOpen, setWarningOpen ] = useState(false);
+	const [ warningMessage, setWarningMessage ] = useState('');
 	const saaaHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : SAAA_HOME_URL;
 	const mcanHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : MCAN_HOME_URL;
 
@@ -55,22 +59,38 @@ export default function VQA() {
 		});
 	}, []);
 
-	function validateQuestion(question){
-		let words = question.split(" ")
-		let invalidWords = []
-		for(let word of words){
-			if(!vocab.includes(word.toLowerCase())){
-				invalidWords.push(word)
+	function validateQuestion(question) {
+		if(question[question.length -1] !== " "){
+			return []
+		}
+		let words = question.split(' ');
+		let invalidWords = [];
+		for (let word of words) {
+			if (!vocab.includes(word.toLowerCase())) {
+				invalidWords.push(word);
 			}
 		}
 
-		return invalidWords
+		return invalidWords;
 	}
 
 	function questionChangeHandler(e) {
-		let invalidWords = validateQuestion(e.target.value)
-		console.log(invalidWords)
+		let invalidWords = validateQuestion(e.target.value);
+		// console.log(invalidWords)
+		if(invalidWords.length !== 0){
+			let msg = `These words [${invalidWords.join()}] are not found in the vocab. They'll be replaced with UNK`;
+			setWarningMessage(msg);
+			setWarningOpen(true)
+		}
 		setQuestion(e.target.value);
+	}
+
+	function handleWarningClose(event, reason) {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setWarningOpen(false);
 	}
 
 	return (
@@ -97,6 +117,11 @@ export default function VQA() {
 					imageIndex={imageIndex}
 				/>
 			</Box>
+			<Snackbar open={warningOpen} autoHideDuration={6000} onClose={handleWarningClose}>
+				<Alert onClose={handleWarningClose} severity="warning" sx={{ width: '100%' }}>
+					{warningMessage}
+				</Alert>
+			</Snackbar>
 		</Box>
 	);
 }
