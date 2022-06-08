@@ -7,16 +7,29 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Drawer, List, ListItem, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router';
+import { useAuth } from '../../contexts/AuthProvider';
 
 export default function MenuBar() {
 	const [ open, setOpen ] = useState(false);
+	const [ auth, setAuth ] = useAuth();
 	const menuItems = [ 'VQA', 'VCR' ];
 	const navigate = useNavigate();
 
+	console.log(auth)
+
 	const toggleDrawer = (e) => {
 		setOpen(!open);
+	};
+
+	const goToLogin = () => {
+		navigate('/login');
+	};
+
+	const logout = () => {
+		setAuth({});
 	};
 
 	return (
@@ -36,7 +49,19 @@ export default function MenuBar() {
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
 						VQAR Analyzer
 					</Typography>
-					<Button color="inherit">Login</Button>
+					{auth.name ? (
+						<>
+							{auth.name}
+							<LogoutIcon onClick={logout} sx={{"cursor": "pointer", margin: "0 10px"}}/>
+							{/* <Button size="small" color="inherit" onClick={logout} startIcon={<LogoutIcon/>}> */}
+							{/* </Button> */}
+						</>
+						
+					) : (
+						<Button color="inherit" onClick={goToLogin}>
+							Login
+						</Button>
+					)}
 				</Toolbar>
 			</AppBar>
 			<Drawer anchor={'left'} open={open} onClose={toggleDrawer}>

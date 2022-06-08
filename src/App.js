@@ -1,8 +1,10 @@
 import './App.css';
 import VQAPage from './pages/VQA';
 import VCRPage from './pages/VCR';
+import Login from './components/Login/Index';
 import EvaluateProvider from './contexts/EvaluateProvider';
 import VocabProvider from './contexts/VocabProvider';
+import AuthProvider from './contexts/AuthProvider';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, useTheme } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
@@ -34,19 +36,22 @@ function App() {
 	console.log(useTheme());
 	return (
 		<ThemeProvider theme={myTheme}>
-			<EvaluateProvider>
-				<VocabProvider>
-					<Router>
-						{/* <Sidebar /> */}
-						<MenuBar />
-						<Routes>
-							<Route exact path="/" element={<Home />} />
-							<Route exact path="/vqa" element={<VQAPage />} />
-							<Route exact path="/vcr" element={<VCRPage />} />
-						</Routes>
-					</Router>
-				</VocabProvider>
-			</EvaluateProvider>
+			<AuthProvider>
+				<EvaluateProvider>
+					<VocabProvider>
+						<Router>
+							{/* <Sidebar /> */}
+							<MenuBar />
+							<Routes>
+								<Route exact path="/" element={<Home />} />
+								<Route exact path="/vqa" element={<VQAPage />} />
+								<Route exact path="/vcr" element={<VCRPage />} />
+								<Route exact path="/login" element={<Login />} />
+							</Routes>
+						</Router>
+					</VocabProvider>
+				</EvaluateProvider>
+			</AuthProvider>
 		</ThemeProvider>
 	);
 }
