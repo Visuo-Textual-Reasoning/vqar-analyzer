@@ -32,6 +32,8 @@ export async function fetchRandomQuestions(imageIndex, task = 'vqa') {
 }
 
 export async function sendUserFeedback(apiUrl, data) {
+	console.log("Sending feedback: ")
+	console.log(data)
 	let response = await fetch(`${apiUrl}/feedback`, {
 		method: 'POST',
 		headers: {

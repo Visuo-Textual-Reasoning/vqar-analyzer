@@ -9,6 +9,7 @@ import Answer from '../Answer/Index';
 import { useState } from 'react';
 import { fetchPrediction, sendUserFeedback } from '../../utils/helpers';
 import { useEvaluate } from '../../contexts/EvaluateProvider';
+import {useAuth} from "../../contexts/AuthProvider"
 import FeedbackForm from '../FeedbackForm/Index';
 
 const useStyles = makeStyles((theme) => {
@@ -45,6 +46,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 		answer: null,
 		attention: null
 	});
+	const [auth, setAuth] = useAuth()
 
 	useEffect(
 		() => {
@@ -80,7 +82,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 
 	function handleRadioChange (name, value){
 		setFeedback({ ...feedback, [name]: value });
-		console.log({ feedback });
+		// console.log({ feedback });
 	};
 
 	function handleWarningClose(event, reason) {
@@ -101,7 +103,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 
 		console.log(feedback)
 
-		sendUserFeedback(apiUrl, {feedback, imageIndex, question, answer})
+		sendUserFeedback(apiUrl, {auth, feedback, imageIndex, question, answer})
 
 		setFeedback({
 			answer: null,
