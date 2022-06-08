@@ -39,7 +39,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 	const [ loading, setLoading ] = useState(false);
 	const [ timeTaken, setTimeTaken ] = useState(null);
 	const [ modelActive, setModelActive ] = useState(true);
-
+	const [showFeedback, setShowFeedback] = useState(false);
 	const [ warningOpen, setWarningOpen ] = useState(false);
 	const [ feedback, setFeedback ] = React.useState({
 		answer: null,
@@ -53,6 +53,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 				// console.log('getting asnwer');
 				getAnswer();
 				setEvaluate(false);
+				setShowFeedback(true)
 			}
 		},
 		[ evaluate ]
@@ -106,6 +107,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 			answer: null,
 			attention: null
 		});
+		setShowFeedback(false)
 	};
 
 	return (
@@ -129,7 +131,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 				{!loading && timeTaken && `Took ${(timeTaken / 1000).toFixed(2)}s`}
 			</Typography>
 
-			{modelActive && <FeedbackForm
+			{(modelActive && showFeedback) && <FeedbackForm
 				handleRadioChange={handleRadioChange}
 				sendFeedback={sendFeedback}
 				feedback={feedback}
