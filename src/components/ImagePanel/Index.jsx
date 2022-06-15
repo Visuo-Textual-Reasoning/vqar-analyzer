@@ -43,6 +43,7 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 	const [ snackbarOpen, setSnackBarOpen ] = useState(false);
 	const classes = useStyles();
 	const split = 'val';
+	const imageUrl = `${apiUrl}/image?imageIndex=${imageIndex}`
 
 	// This should handle Issue #2. May be the issue is browser specific.
 	function handleImageIndexChange(e) {
@@ -109,7 +110,7 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 			<Paper
 				component="img"
 				className={classes.img}
-				src={`${apiUrl}/image?imageIndex=${imageIndex}`}
+				src={imageUrl}
 				alt={`Image-${imageIndex}`}
 			/>
 		</Box>
