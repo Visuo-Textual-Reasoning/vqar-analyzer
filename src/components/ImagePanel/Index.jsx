@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
 import { getRandomDataPoint } from '../../utils/api_calls';
+import MySnackbar from '../MySnackbar/Index';
 
 const useStyles = makeStyles((theme) => {
 	return {
@@ -43,7 +44,7 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 	const [ snackbarOpen, setSnackBarOpen ] = useState(false);
 	const classes = useStyles();
 	const split = 'val';
-	const imageUrl = `${apiUrl}/image?imageIndex=${imageIndex}`
+	const imageUrl = `${apiUrl}/image?imageIndex=${imageIndex}`;
 
 	// This should handle Issue #2. May be the issue is browser specific.
 	function handleImageIndexChange(e) {
@@ -76,16 +77,11 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 
 	return (
 		<Box className={classes.imagePanel}>
-			<Snackbar
+			<MySnackbar
 				open={snackbarOpen}
-				autoHideDuration={2000}
-				onClose={handleSnackbarClose}
-				//   action={action}
-			>
-				<Alert onClose={handleSnackbarClose} severity="warning" sx={{ width: '100%' }}>
-					{`Image index must lie between ${1} and ${maxImages}`}
-				</Alert>
-			</Snackbar>
+				handleClose={handleSnackbarClose}
+				msg={`Image index must lie between ${1} and ${maxImages}`}
+			/>
 			<Box>
 				<TextField
 					id="outlined-number"
@@ -107,12 +103,7 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 					Fetch random Image
 				</Button>
 			</Box>
-			<Paper
-				component="img"
-				className={classes.img}
-				src={imageUrl}
-				alt={`Image-${imageIndex}`}
-			/>
+			<Paper component="img" className={classes.img} src={imageUrl} alt={`Image-${imageIndex}`} />
 		</Box>
 	);
 }

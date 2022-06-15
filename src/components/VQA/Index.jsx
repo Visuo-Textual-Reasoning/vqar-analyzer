@@ -11,6 +11,7 @@ import { MCAN_HOME_URL, SAAA_HOME_URL, MOCK_API } from '../../utils/apis';
 import SampleQuestions from '../SampleQuestions/Index';
 import { makeStyles } from '@mui/styles';
 import { useVocab } from '../../contexts/VocabProvider';
+import MySnackbar from '../MySnackbar/Index';
 
 const useStyles = makeStyles((theme) => {
 	return {
@@ -117,11 +118,7 @@ export default function VQA() {
 					imageIndex={imageIndex}
 				/>
 			</Box>
-			<Snackbar open={warningOpen} autoHideDuration={6000} onClose={handleWarningClose}>
-				<Alert onClose={handleWarningClose} severity="warning" sx={{ width: '100%' }}>
-					{warningMessage}
-				</Alert>
-			</Snackbar>
+			<MySnackbar open={warningOpen} handleClose={handleWarningClose} msg={warningMessage}/>
 		</Box>
 	);
 }

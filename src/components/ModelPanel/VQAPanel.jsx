@@ -11,6 +11,7 @@ import { fetchPrediction, sendUserFeedback } from '../../utils/helpers';
 import { useEvaluate } from '../../contexts/EvaluateProvider';
 import {useAuth} from "../../contexts/AuthProvider"
 import FeedbackForm from '../FeedbackForm/Index';
+import MySnackbar from '../MySnackbar/Index';
 
 const useStyles = makeStyles((theme) => {
 	console.log(theme);
@@ -139,11 +140,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 				feedback={feedback}
 			/>}
 
-			<Snackbar open={warningOpen} autoHideDuration={6000} onClose={handleWarningClose}>
-				<Alert onClose={handleWarningClose} severity="warning" sx={{ width: '100%' }}>
-					Please provide complete feedback!
-				</Alert>
-			</Snackbar>
+			<MySnackbar open={warningOpen} handleClose={handleWarningClose} msg={"Please Provide Feedback"}/>
 		</Paper>
 	);
 }
