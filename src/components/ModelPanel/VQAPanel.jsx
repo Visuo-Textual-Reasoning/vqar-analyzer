@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => {
 			width: '35%',
 			margin: '20px auto',
 			padding: 10,
-			height: "fit-content"
+			height: "fit-content",
 		},
 		switch: {
 			float: 'right'
@@ -48,6 +48,8 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 		attention: null
 	});
 	const [auth, setAuth] = useAuth()
+	const [attMapID, setAttMapID] = useState(null)
+	const [attMapUrl, setAttMapUrl] = useState(null)
 
 	useEffect(
 		() => {
@@ -61,6 +63,10 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 		},
 		[ evaluate ]
 	);
+
+	useEffect(() => {
+		setAttMapUrl(`${apiUrl}/attention-maps?imageIndex=${attMapID}`)
+	}, [attMapID])
 
 	async function getAnswer() {
 		if (!modelActive) {
@@ -76,6 +82,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 			setTimeTaken(endTime - startTime);
 			setLoading(false);
 			setAnswer(data.answer);
+			setAttMapID(data.att_map_id)
 		} catch (err) {
 			console.error(err);
 		}
@@ -139,6 +146,8 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 				sendFeedback={sendFeedback}
 				feedback={feedback}
 			/>}
+
+			{(attMapUrl && modelActive) && <Paper component="img" src={attMapUrl} alt={`Attention Map`} sx={{mt: 2, width: "100%", height: "auto"}}/>}
 
 			<MySnackbar open={warningOpen} handleClose={handleWarningClose} msg={"Please Provide Feedback"}/>
 		</Paper>
