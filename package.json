@@ -1,5 +1,6 @@
 {
   "name": "dashboard",
+  "homepage": "https://visuo-textual-reasoning.github.io/vqar-analyzer/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -27,7 +28,9 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "demo": "REACT_APP_DEMO=true bash devstart.sh"
+    "demo": "REACT_APP_DEMO=true bash devstart.sh",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -68,6 +71,7 @@
     "@storybook/preset-create-react-app": "^4.1.0",
     "@storybook/react": "^6.4.21",
     "@storybook/testing-library": "^0.0.9",
+    "gh-pages": "^4.0.0",
     "webpack": "^5.72.0"
   }
 }
