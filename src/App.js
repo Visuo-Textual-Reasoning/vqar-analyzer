@@ -5,7 +5,7 @@ import Login from './components/Login/Index';
 import EvaluateProvider from './contexts/EvaluateProvider';
 import VocabProvider from './contexts/VocabProvider';
 import AuthProvider from './contexts/AuthProvider';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, HashRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, useTheme } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import Home from './components/Home/Index';
@@ -39,7 +39,8 @@ function App() {
 			<AuthProvider>
 				<EvaluateProvider>
 					<VocabProvider>
-						<Router>
+						{/* <Router> */}
+						<HashRouter>
 							{/* <Sidebar /> */}
 							<MenuBar />
 							<Routes>
@@ -48,7 +49,8 @@ function App() {
 								<Route exact path="/vcr" element={<VCRPage />} />
 								<Route exact path="/login" element={<Login />} />
 							</Routes>
-						</Router>
+						</HashRouter>
+						{/* </Router> */}
 					</VocabProvider>
 				</EvaluateProvider>
 			</AuthProvider>
