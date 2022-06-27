@@ -147,7 +147,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 				feedback={feedback}
 			/>}
 
-			{(attMapUrl && modelActive) && <Paper component="img" src={attMapUrl} alt={`Attention Map`} sx={{mt: 2, width: "100%", height: "auto"}}/>}
+			{/* {(attMapUrl && modelActive) && <Paper component="img" src={attMapUrl} alt={`Attention Map`} sx={{mt: 2, width: "100%", height: "auto"}}/>} */}
 
 			<MySnackbar open={warningOpen} handleClose={handleWarningClose} msg={"Please Provide Feedback"}/>
 		</Paper>

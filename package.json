@@ -1,6 +1,5 @@
 {
   "name": "dashboard",
-  "homepage": "https://visuo-textual-reasoning.github.io/vqar-analyzer/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

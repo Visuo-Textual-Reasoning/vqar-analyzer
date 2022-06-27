@@ -79,7 +79,7 @@ export default function VQA() {
 		let invalidWords = validateQuestion(e.target.value);
 		// console.log(invalidWords)
 		if(invalidWords.length !== 0){
-			let msg = `These words [${invalidWords.join()}] are not found in the vocab. They'll be replaced with UNK`;
+			let msg = `The words [${invalidWords.join()}] are not found in the vocab. They'll be replaced with UNK`;
 			setWarningMessage(msg);
 			setWarningOpen(true)
 		}
