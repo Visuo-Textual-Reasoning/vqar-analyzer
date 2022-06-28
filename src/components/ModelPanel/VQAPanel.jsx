@@ -99,6 +99,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 	function handleRadioChange(name, value) {
 		setFeedback({ ...feedback, [name]: value });
 		// console.log({ feedback });
+		setWarningMessage("")
 	}
 
 	function handleWarningClose(event, reason) {
