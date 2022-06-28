@@ -42,7 +42,6 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 	const [ timeTaken, setTimeTaken ] = useState(null);
 	const [ modelActive, setModelActive ] = useState(true);
 	const [ showFeedback, setShowFeedback ] = useState(false);
-	// const [ warningOpen, setWarningOpen ] = useState(false);
 	const [ feedback, setFeedback ] = React.useState({
 		answer: null,
 		attention: null,
@@ -53,7 +52,6 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 	const [ auth, setAuth ] = useAuth();
 	const [ attMapID, setAttMapID ] = useState(null);
 	const [ attMapUrl, setAttMapUrl ] = useState(null);
-	// let warningMessage = 'Please Provide Feedback';
 	const [warningMessage, setWarningMessage] = useState("");
 
 	useEffect(
@@ -63,7 +61,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 				// console.log('getting asnwer');
 				getAnswer();
 				setEvaluate(false);
-				setShowFeedback(true);
+				// setShowFeedback(true);
 			}
 		},
 		[ evaluate ]
@@ -89,6 +87,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 			let endTime = performance.now();
 			setTimeTaken(endTime - startTime);
 			setLoading(false);
+			setShowFeedback(true);
 			setAnswer(data.answer);
 			setAttMapID(data.att_map_id);
 		} catch (err) {
