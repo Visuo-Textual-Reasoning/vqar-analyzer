@@ -46,7 +46,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 	const [ feedback, setFeedback ] = React.useState({
 		answer: null,
 		attention: null,
-		relevance_score: null,
+		relevance_score: -1,
 		user_answer: '',
 		explanation: ''
 	});
@@ -126,6 +126,11 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 			return false;
 		}
 
+		if(feedback.relevance_score === -1){
+			setWarningMessage('Relevance score must be between 0 and 4 (Inclusive)');
+			return false;
+		}
+
 		console.log(feedback);
 
 		sendUserFeedback(apiUrl, { auth, feedback, imageIndex, question, answer });
@@ -133,7 +138,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 		setFeedback({
 			answer: null,
 			attention: null,
-			relevance_score: null,
+			relevance_score: -1,
 			user_answer: '',
 			explaination: ''
 		});

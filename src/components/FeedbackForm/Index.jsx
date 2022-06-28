@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 		},
 
 		'& button': {
-			margin: '0 auto'
+			margin: '5px auto 0 auto',
 		}
 	}
 });
@@ -80,7 +80,7 @@ export default function FeedbackForm({ handleRadioChange, sendFeedback, feedback
             </RadioGroup>
           </Box> */}
 					<Box>
-						How relevant is the answer:
+						How relevant is the answer?:
 						<Slider
 							aria-label="relevance_score"
 							defaultValue={30}
@@ -91,7 +91,7 @@ export default function FeedbackForm({ handleRadioChange, sendFeedback, feedback
 							color="secondary"
 							step={1}
 							marks
-							min={0}
+							min={-1}
 							max={4}
 						/>
 					</Box>
