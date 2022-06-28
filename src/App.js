@@ -12,7 +12,7 @@ import Home from './components/Home/Index';
 import MenuBar from './components/MenuBar/Index';
 
 // console.log(process.env)
-if (process.env.NODE_ENV !== 'production'){
+if (process.env.NODE_ENV === 'production'){
 	console = {}
 	console.log = function(){}
 
