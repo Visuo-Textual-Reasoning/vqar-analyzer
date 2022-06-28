@@ -114,7 +114,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 	async function sendFeedback() {
 		console.log(feedback);
 		// if (!feedback.answer || !feedback.attention) {
-		if (!feedback.answer || !feedback.relevance_score) {
+		if (!feedback.answer || feedback.relevance_score === -1) {
 			console.log('You have to pick something!');
 			setWarningMessage('Please Provide Feedback');
 			return false;

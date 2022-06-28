@@ -80,7 +80,7 @@ export default function FeedbackForm({ handleRadioChange, sendFeedback, feedback
             </RadioGroup>
           </Box> */}
 					<Box>
-						How relevant is the answer?:
+						How relevant is the answer to the image?:
 						<Slider
 							aria-label="relevance_score"
 							defaultValue={30}
