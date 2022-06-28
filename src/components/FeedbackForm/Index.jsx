@@ -99,7 +99,7 @@ export default function FeedbackForm({ handleRadioChange, sendFeedback, feedback
 					<Box>
 						<TextField
 							id="filled-basic"
-							label="Actual Answer"
+							label="Actual Answer(s)"
 							color="secondary"
 							variant="standard"
 							value={feedback['user_answer']}
