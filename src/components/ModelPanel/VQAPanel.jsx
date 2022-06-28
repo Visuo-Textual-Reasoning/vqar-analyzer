@@ -9,7 +9,7 @@ import Answer from '../Answer/Index';
 import { useState } from 'react';
 import { fetchPrediction, sendUserFeedback } from '../../utils/helpers';
 import { useEvaluate } from '../../contexts/EvaluateProvider';
-import {useAuth} from "../../contexts/AuthProvider"
+import { useAuth } from '../../contexts/AuthProvider';
 import FeedbackForm from '../FeedbackForm/Index';
 import MySnackbar from '../MySnackbar/Index';
 
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => {
 			width: '35%',
 			margin: '20px auto',
 			padding: 10,
-			height: "fit-content",
+			height: 'fit-content'
 		},
 		switch: {
 			float: 'right'
@@ -41,15 +41,20 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 	const [ loading, setLoading ] = useState(false);
 	const [ timeTaken, setTimeTaken ] = useState(null);
 	const [ modelActive, setModelActive ] = useState(true);
-	const [showFeedback, setShowFeedback] = useState(false);
-	const [ warningOpen, setWarningOpen ] = useState(false);
+	const [ showFeedback, setShowFeedback ] = useState(false);
+	// const [ warningOpen, setWarningOpen ] = useState(false);
 	const [ feedback, setFeedback ] = React.useState({
 		answer: null,
-		attention: null
+		attention: null,
+		relevance_score: null,
+		user_answer: '',
+		explanation: ''
 	});
-	const [auth, setAuth] = useAuth()
-	const [attMapID, setAttMapID] = useState(null)
-	const [attMapUrl, setAttMapUrl] = useState(null)
+	const [ auth, setAuth ] = useAuth();
+	const [ attMapID, setAttMapID ] = useState(null);
+	const [ attMapUrl, setAttMapUrl ] = useState(null);
+	// let warningMessage = 'Please Provide Feedback';
+	const [warningMessage, setWarningMessage] = useState("");
 
 	useEffect(
 		() => {
@@ -58,15 +63,18 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 				// console.log('getting asnwer');
 				getAnswer();
 				setEvaluate(false);
-				setShowFeedback(true)
+				setShowFeedback(true);
 			}
 		},
 		[ evaluate ]
 	);
 
-	useEffect(() => {
-		setAttMapUrl(`${apiUrl}/attention-maps?imageIndex=${attMapID}`)
-	}, [attMapID])
+	useEffect(
+		() => {
+			setAttMapUrl(`${apiUrl}/attention-maps?imageIndex=${attMapID}`);
+		},
+		[ attMapID ]
+	);
 
 	async function getAnswer() {
 		if (!modelActive) {
@@ -82,43 +90,54 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 			setTimeTaken(endTime - startTime);
 			setLoading(false);
 			setAnswer(data.answer);
-			setAttMapID(data.att_map_id)
+			setAttMapID(data.att_map_id);
 		} catch (err) {
 			console.error(err);
 		}
 	}
 
-	function handleRadioChange (name, value){
+	function handleRadioChange(name, value) {
 		setFeedback({ ...feedback, [name]: value });
 		// console.log({ feedback });
-	};
+	}
 
 	function handleWarningClose(event, reason) {
 		if (reason === 'clickaway') {
 			return;
 		}
 
-		setWarningOpen(false);
-	};
+		// setWarningOpen(false)
+		setWarningMessage("")
+	}
 
-	async function sendFeedback () {
+	async function sendFeedback() {
+		console.log(feedback);
 		// if (!feedback.answer || !feedback.attention) {
-		if (!feedback.answer) {
+		if (!feedback.answer || !feedback.relevance_score) {
 			console.log('You have to pick something!');
-			setWarningOpen(true);
+			setWarningMessage('Please Provide Feedback');
 			return false;
 		}
 
-		console.log(feedback)
+		// If the answer is wrong, then user answer is required!!
+		if (feedback.answer === 'no' && !feedback.user_answer) {
+			setWarningMessage('Please provide the actual answer.');
+			return false;
+		}
 
-		sendUserFeedback(apiUrl, {auth, feedback, imageIndex, question, answer})
+		console.log(feedback);
+
+		sendUserFeedback(apiUrl, { auth, feedback, imageIndex, question, answer });
 
 		setFeedback({
 			answer: null,
-			attention: null
+			attention: null,
+			relevance_score: null,
+			user_answer: '',
+			explaination: ''
 		});
-		setShowFeedback(false)
-	};
+		setShowFeedback(false);
+	}
 
 	return (
 		<Paper
@@ -141,15 +160,14 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 				{!loading && timeTaken && `Took ${(timeTaken / 1000).toFixed(2)}s`}
 			</Typography>
 
-			{(modelActive && showFeedback) && <FeedbackForm
-				handleRadioChange={handleRadioChange}
-				sendFeedback={sendFeedback}
-				feedback={feedback}
-			/>}
+			{modelActive &&
+			showFeedback && (
+				<FeedbackForm handleRadioChange={handleRadioChange} sendFeedback={sendFeedback} feedback={feedback} />
+			)}
 
 			{/* {(attMapUrl && modelActive) && <Paper component="img" src={attMapUrl} alt={`Attention Map`} sx={{mt: 2, width: "100%", height: "auto"}}/>} */}
 
-			<MySnackbar open={warningOpen} handleClose={handleWarningClose} msg={"Please Provide Feedback"}/>
+			<MySnackbar open={warningMessage !== ""} handleClose={handleWarningClose} msg={warningMessage} />
 		</Paper>
 	);
 }
