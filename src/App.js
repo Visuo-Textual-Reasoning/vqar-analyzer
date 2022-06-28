@@ -11,6 +11,14 @@ import { createTheme } from '@mui/material/styles';
 import Home from './components/Home/Index';
 import MenuBar from './components/MenuBar/Index';
 
+// console.log(process.env)
+if (process.env.NODE_ENV !== 'production'){
+	console = {}
+	console.log = function(){}
+
+	window.console = console;
+}
+
 function App() {
 	const theme = useTheme();
 
