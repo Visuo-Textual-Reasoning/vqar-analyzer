@@ -34,6 +34,15 @@ export async function fetchRandomQuestions(imageIndex, task = 'vqa') {
 export async function sendUserFeedback(apiUrl, data) {
 	console.log("Sending feedback: ")
 	console.log(data)
+
+	let today = new Date().toISOString().slice(0, 10)
+	let timestamp = {
+		date: today,
+		time: new Date().toLocaleTimeString(),
+		timestamp: Date.now()
+	}
+
+	data["timestamp"] = timestamp;
 	let response = await fetch(`${apiUrl}/feedback`, {
 		method: 'POST',
 		headers: {
