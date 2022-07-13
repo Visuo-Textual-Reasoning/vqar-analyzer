@@ -3,8 +3,12 @@ import { Paper, Typography, CircularProgress } from '@mui/material';
 import React, { useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import { useState } from 'react';
-import { fetchPrediction } from '../../utils/helpers';
+import { fetchPrediction, sendUserFeedback } from '../../utils/helpers';
 import { useEvaluate } from '../../contexts/EvaluateProvider';
+import Answer from '../Answer/Index';
+import { useAuth } from '../../contexts/AuthProvider';
+import VCRFeedbackForm from '../FeedbackForm/VCRFeedback';
+import MySnackbar from '../MySnackbar/Index';
 
 const useStyles = makeStyles((theme) => {
 	console.log(theme);
@@ -25,10 +29,25 @@ const useStyles = makeStyles((theme) => {
 
 export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcrMode }) {
 	const classes = useStyles();
-	const [ prediction, setPrediction ] = useState('');
+	const [ auth, setAuth ] = useAuth();
+	const [ prediction, setPrediction ] = useState({
+		answer: "",
+		rationale: "",
+	});
 	const [ evaluate, setEvaluate ] = useEvaluate();
 	const [ loading, setLoading ] = useState(false);
 	const [ timeTaken, setTimeTaken ] = useState(null);
+	const [ showFeedback, setShowFeedback ] = useState(false);
+	const [ feedback, setFeedback ] = React.useState({
+		answer: null,
+		rationale: null,
+		attention: null,
+		answer_relevance_score: -1,
+		rationale_relevance_score: -1,
+		user_answer: '',
+		user_rationale: '',
+	});
+	const [warningMessage, setWarningMessage] = useState("");
 
 	useEffect(
 		() => {
@@ -41,6 +60,64 @@ export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcr
 		},
 		[ evaluate ]
 	);
+
+	async function sendFeedback() {
+		console.log(feedback);
+		// if (!feedback.answer || !feedback.attention) {
+		if (!feedback.answer || feedback.answer_relevance_score === -1 || feedback.rationale_relevance_score === -1) {
+			console.log('You have to pick something!');
+			setWarningMessage('Please Provide Feedback');
+			return false;
+		}
+
+		// If the answer is wrong, then user answer is required!!
+		if (feedback.answer === 'no' && !feedback.user_answer) {
+			setWarningMessage('Please provide the actual answer.');
+			return false;
+		}
+
+		// If the rationale is wrong, then user rationale is required!!
+		if (feedback.rationale === 'no' && !feedback.user_rationale) {
+			setWarningMessage('Please provide the actual answer.');
+			return false;
+		}
+
+		if(feedback.answer_relevance_score === -1 || feedback.rationale_relevance_score === -1){
+			setWarningMessage('Relevance score must be between 0 and 4 (Inclusive)');
+			return false;
+		}
+
+		console.log(feedback);
+
+		sendUserFeedback(apiUrl, { auth, feedback, imageIndex, data });
+
+		setFeedback({
+			answer: null,
+			rationale: null,
+			attention: null,
+			answer_relevance_score: -1,
+			rationale_relevance_score: -1,
+			user_answer: '',
+			user_rationale: '',
+		});
+		setShowFeedback(false);
+	}
+
+
+	function handleRadioChange(name, value) {
+		setFeedback({ ...feedback, [name]: value });
+		// console.log({ feedback });
+		setWarningMessage("")
+	}
+
+	function handleWarningClose(event, reason) {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		// setWarningOpen(false)
+		setWarningMessage("")
+	}
 
 	async function getAnswer() {
 		let predictionData = {
@@ -56,7 +133,12 @@ export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcr
 			let endTime = performance.now();
 			setTimeTaken(endTime - startTime);
 			setLoading(false);
-			setPrediction(ans);
+			// setPrediction(ans);
+			let answer = ans.answer_batch_outputs[0].predicted_answer
+			let rationale = ans.rational_batch_outputs[0].predicted_rationale
+			setPrediction({answer, rationale})
+			setShowFeedback(true)
+			// setAnswerWithRationale(ansWrat)
 		} catch (err) {
 			console.error(err);
 		}
@@ -65,10 +147,18 @@ export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcr
 	return (
 		<Paper className={classes.panel} elevation={10}>
 			<Typography sx={{ fontFamily: 'Cascadia Code' }}>{modelName}</Typography>
-			{loading ? <CircularProgress color="secondary" /> : JSON.stringify(prediction)}
+			{loading ? <CircularProgress color="secondary" /> : <><Answer answer={`${prediction.answer}`} showMeta={false}/> I think becase, <Answer answer={prediction.rationale} showMeta={false}/></>}
 			<Typography sx={{ fontFamily: 'Cascadia Code', fontSize: '12px' }}>
 				{!loading && timeTaken && `Took ${(timeTaken / 1000).toFixed(2)}s`}
 			</Typography>
+
+			{showFeedback && (
+				<VCRFeedbackForm handleRadioChange={handleRadioChange} sendFeedback={sendFeedback} feedback={feedback} />
+			)}
+
+			{/* {(attMapUrl && modelActive) && <Paper component="img" src={attMapUrl} alt={`Attention Map`} sx={{mt: 2, width: "100%", height: "auto"}}/>} */}
+
+			<MySnackbar open={warningMessage !== ""} handleClose={handleWarningClose} msg={warningMessage} />
 		</Paper>
 	);
 }

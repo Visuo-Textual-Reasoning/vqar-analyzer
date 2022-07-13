@@ -4,7 +4,7 @@ import Alert from '@mui/material/Alert';
 import React, { useState, useEffect } from 'react';
 import ImagePanel from '../ImagePanel/Index';
 import Question from '../Question/Index';
-import { getMaxNoOfImages } from '../../utils/api_calls';
+import { getMaxNoOfImages, getRandomDataPoint } from '../../utils/api_calls';
 import VQAModelPanel from '../ModelPanel/VQAPanel';
 import { fetchVocabulary } from '../../utils/helpers';
 import { MCAN_HOME_URL, SAAA_HOME_URL, MOCK_API } from '../../utils/apis';
@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => {
 export default function VQA() {
 	const classes = useStyles();
 	const [ maxImages, setMaxImages ] = useState(0);
-	const [ imageIndex, setImageIndex ] = useState(1);
 	const [ question, setQuestion ] = useState('');
 	const [ split ] = useState('val');
 	const [ vocab, setVocab ] = useVocab();
@@ -43,6 +42,7 @@ export default function VQA() {
 	const [ warningMessage, setWarningMessage ] = useState('');
 	const saaaHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : SAAA_HOME_URL;
 	const mcanHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : MCAN_HOME_URL;
+	const [ imageIndex, setImageIndex ] = useState();
 
 	useEffect(
 		() => {
@@ -58,6 +58,7 @@ export default function VQA() {
 		fetchVocabulary(saaaHomeUrl).then((v) => {
 			setVocab(v);
 		});
+		getRandomDataPoint(split).then(imid => setImageIndex(imid))
 	}, []);
 
 	function validateQuestion(question) {
