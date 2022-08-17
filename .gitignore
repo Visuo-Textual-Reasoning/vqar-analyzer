@@ -26,3 +26,5 @@ yarn-error.log*
 .env
 
 react-readme.md
+
+.flowconfig

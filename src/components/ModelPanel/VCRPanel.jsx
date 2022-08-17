@@ -1,3 +1,5 @@
+// @flow
+
 import PropTypes from 'prop-types';
 import { Paper, Typography, CircularProgress } from '@mui/material';
 import React, { useEffect } from 'react';

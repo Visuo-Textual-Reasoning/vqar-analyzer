@@ -1,3 +1,5 @@
+// @flow
+
 import PropTypes from 'prop-types';
 import { Paper, Typography, CircularProgress, Switch } from '@mui/material';
 
@@ -33,6 +35,16 @@ const useStyles = makeStyles((theme) => {
 		}
 	};
 });
+
+interface I_VQA_Feedback {
+	answer: null | Boolean,
+	attention: null | Boolean,
+	relevance_score: Number,
+	user_answer: string,
+	explanation: string
+
+}
+
 
 export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex }) {
 	const classes = useStyles();
