@@ -36,17 +36,18 @@ const useStyles = makeStyles((theme) => {
 	};
 });
 
-interface I_VQA_Feedback {
-	answer: null | Boolean,
-	attention: null | Boolean,
-	relevance_score: Number,
-	user_answer: string,
-	explanation: string
+// interface I_VQA_Feedback {
+// 	answer: null | Boolean,
+// 	attention: null | Boolean,
+// 	relevance_score: Number,
+// 	user_answer: string,
+// 	explanation: string
 
-}
+// }
 
 
 export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex }) {
+	const imageUrl = `${apiUrl}/image?imageIndex=${imageIndex}`;
 	const classes = useStyles();
 	const [ answer, setAnswer ] = useState('');
 	const [ evaluate, setEvaluate ] = useEvaluate();
@@ -181,7 +182,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 			showFeedback && (
 				<FeedbackForm handleRadioChange={handleRadioChange} sendFeedback={sendFeedback} feedback={feedback} />
 			)}
-
+			{(answer && modelActive) &&<Paper component="img" className={classes.img} src={imageUrl} alt={`Image-${imageIndex}`} sx={{mt: 2, width: "100%", height: "auto"}}  />}
 			{/* {(attMapUrl && modelActive) && <Paper component="img" src={attMapUrl} alt={`Attention Map`} sx={{mt: 2, width: "100%", height: "auto"}}/>} */}
 
 			<MySnackbar open={warningMessage !== ""} handleClose={handleWarningClose} msg={warningMessage} />
