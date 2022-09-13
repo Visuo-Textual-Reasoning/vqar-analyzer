@@ -2,7 +2,7 @@
 
 import PropTypes from 'prop-types';
 import { Paper, Typography, CircularProgress, Switch } from '@mui/material';
-
+import JsonData from './qatt.json'
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import React, { useEffect } from 'react';
@@ -157,6 +157,21 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 		setShowFeedback(false);
 	}
 
+	function setFontColor(currentelement,index){
+		const jsonArray = JsonData.values;
+		var colorG = (jsonArray[index]*1)+0.1;
+		var colorGrad = colorG.toFixed(2);
+		let rgbaColor = "rgba(237,108,3,"+colorGrad+")";
+		return <div style={{ color: rgbaColor,"flex":"0 1 auto" }}>{currentelement}&nbsp;</div>;
+	}
+
+	function questionAtt(question){
+		var myarray = question.split(' ');
+		// let result = myarray.map( (currentelement, index) => <div style={{ color: '${setfontColor(index)}',"flex":"0 1 auto" }}>{currentelement}&nbsp;</div>);
+		let result = myarray.map( (currentelement, index) => setFontColor(currentelement,index));
+		return result;
+	}
+
 	return (
 		<Paper
 			className={classes.panel}
@@ -174,6 +189,13 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 			/>
 			<Typography sx={{ fontFamily: 'Cascadia Code' }}>{modelName}</Typography>
 			{loading ? <CircularProgress color="secondary" /> : <Answer answer={answer} />}
+			
+			{(answer && modelActive) &&
+			<Typography>
+				<div style={{"display":"flex","flexDirection":"row"}}>{questionAtt(question)}</div>
+			</Typography>
+			}
+			
 			<Typography sx={{ fontFamily: 'Cascadia Code', fontSize: '12px' }}>
 				{!loading && timeTaken && `Took ${(timeTaken / 1000).toFixed(2)}s`}
 			</Typography>
