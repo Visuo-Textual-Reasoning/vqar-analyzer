@@ -8,7 +8,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import VQAImage from '../../assets/images/vqa-example.png';
 import VCRImage from '../../assets/images/vcr-example.png';
-
+import Local from '../MCANattention/Local';
 const useStyles = makeStyles((theme) => {
 	return {
 		wrapper: {
@@ -55,10 +55,13 @@ const useStyles = makeStyles((theme) => {
 export default function Home() {
 	const classes = useStyles();
 	return (
-		<Box className={classes.wrapper}>
-			<VQACard />
-			<VCRCard />
-		</Box>
+		<>
+			<Box className={classes.wrapper}>
+				<VQACard />
+				<VCRCard />
+			</Box>
+			<Local />
+		</>
 	);
 }
 

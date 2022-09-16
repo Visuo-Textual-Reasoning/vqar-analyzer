@@ -1,7 +1,7 @@
 // @flow
 
 import PropTypes from 'prop-types';
-import { Paper, Typography, CircularProgress, Switch } from '@mui/material';
+import { Paper, Typography, CircularProgress, Switch, rgbToHex } from '@mui/material';
 import JsonData from './qatt.json'
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
@@ -14,6 +14,8 @@ import { useEvaluate } from '../../contexts/EvaluateProvider';
 import { useAuth } from '../../contexts/AuthProvider';
 import FeedbackForm from '../FeedbackForm/Index';
 import MySnackbar from '../MySnackbar/Index';
+import Local from '../MCANattention/Local';
+import DiscreteSlider from '../MCANattention/DiscreteSlider';
 
 const useStyles = makeStyles((theme) => {
 	console.log(theme);
@@ -46,8 +48,9 @@ const useStyles = makeStyles((theme) => {
 // }
 
 
-export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex }) {
-	const imageUrl = `${apiUrl}/image?imageIndex=${imageIndex}`;
+export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,mcan }) {
+	//const imageUrl = `${apiUrl}/image?imageIndex=${imageIndex}`;
+	const imageUrl = `${apiUrl}/attention-maps?imageIndex=${imageIndex}`;
 	const classes = useStyles();
 	const [ answer, setAnswer ] = useState('');
 	const [ evaluate, setEvaluate ] = useEvaluate();
@@ -171,7 +174,16 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 		let result = myarray.map( (currentelement, index) => setFontColor(currentelement,index));
 		return result;
 	}
-
+	function isMCAN(bool){
+		if(bool){
+		return (
+			<div>
+				{/* <div className='mcanAttImg'>{Local(1)}</div> */}
+				<DiscreteSlider/>
+			</div>
+		)
+		}	
+	}
 	return (
 		<Paper
 			className={classes.panel}
@@ -204,7 +216,10 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex 
 			showFeedback && (
 				<FeedbackForm handleRadioChange={handleRadioChange} sendFeedback={sendFeedback} feedback={feedback} />
 			)}
-			{(answer && modelActive) &&<Paper component="img" className={classes.img} src={imageUrl} alt={`Image-${imageIndex}`} sx={{mt: 2, width: "100%", height: "auto"}}  />}
+			{(answer && modelActive && mcan==false) && <Paper component="img" className={classes.img} src={imageUrl} alt={`Image-${imageIndex}`} sx={{mt: 2, width: "100%", height: "auto"}}  />}
+			
+			{(answer && modelActive) && isMCAN(mcan)}
+			
 			{/* {(attMapUrl && modelActive) && <Paper component="img" src={attMapUrl} alt={`Attention Map`} sx={{mt: 2, width: "100%", height: "auto"}}/>} */}
 
 			<MySnackbar open={warningMessage !== ""} handleClose={handleWarningClose} msg={warningMessage} />
@@ -216,5 +231,6 @@ VQAModelPanel.propTypes = {
 	modelName: PropTypes.string.isRequired,
 	question: PropTypes.string.isRequired,
 	apiUrl: PropTypes.string.isRequired,
-	imageIndex: PropTypes.number.isRequired
+	imageIndex: PropTypes.number.isRequired,
+	mcan:PropTypes.bool.isRequired
 };

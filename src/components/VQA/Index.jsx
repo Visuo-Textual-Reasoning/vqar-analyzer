@@ -108,16 +108,18 @@ export default function VQA() {
 			<Box className={classes.modelPanels}>
 				<VQAModelPanel
 					modelName="Show Ask Attend and Answer"
-					apiUrl={saaaHomeUrl}
+					apiUrl={SAAA_HOME_URL}
 					question={question}
 					imageIndex={imageIndex}
+					mcan={false}
 				/>
 				<VQAModelPanel
 					modelName="Deep Modular Co-attention"
 					apiUrl={mcanHomeUrl}
 					question={question}
 					imageIndex={imageIndex}
-				/>
+					mcan={true}
+									/>
 			</Box>
 			<MySnackbar open={warningOpen} handleClose={handleWarningClose} msg={warningMessage}/>
 		</Box>

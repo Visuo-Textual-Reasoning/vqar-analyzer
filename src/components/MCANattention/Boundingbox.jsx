@@ -546,10 +546,10 @@ Boundingbox.defaultProps = {
       [x, y, width, height] = coord;
 
     }
-
+    var temp = (box.label*1).toFixed(3)
     ctx.font = '60px Arial';
     ctx.fillStyle = 'rgba(225,0,0,1)';
-    ctx.fillText(box.label, x, y + height);
+    ctx.fillText(temp, x, y + height);
   },
   options: {
     colors: {
