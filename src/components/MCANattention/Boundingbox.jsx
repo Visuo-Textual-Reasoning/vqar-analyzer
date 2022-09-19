@@ -483,11 +483,18 @@ Boundingbox.defaultProps = {
     ctx.strokeStyle = color;
     ctx.lineWidth = lineWidth;
     ctx.beginPath();
-    ctx.moveTo(x + width, y);
-    ctx.lineTo(x, y);
-    ctx.lineTo(x, y + height);
-    ctx.lineTo(x + width, y + height);
-    ctx.lineTo(x + width, y);
+    //Draw Ellipse
+    // console.log("image dimentions"+width)
+    var xCoordCenter = x+(width/2);
+    var yCoordCenter = y+(height/2);
+    ctx.ellipse(xCoordCenter, yCoordCenter, width/2, height/2,0,0,2 * Math.PI); 
+    
+    // Code to render box
+    // ctx.moveTo(x + width, y);
+    // ctx.lineTo(x, y);
+    // ctx.lineTo(x, y + height);
+    // ctx.lineTo(x + width, y + height);
+    // ctx.lineTo(x + width, y);
     ctx.stroke();
     // // Left segment
     // const tenPercent = width / 10;
