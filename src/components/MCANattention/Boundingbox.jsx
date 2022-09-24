@@ -259,7 +259,7 @@ class Boundingbox extends Component {
     if (this.canvas.width > 600) { lineWidth = 3; }
     if (this.canvas.width > 1000) { lineWidth = 5; }
 
-    this.props.drawBox(this.canvas, box, color, lineWidth);
+    this.props.drawBox(this.canvas, box, index, lineWidth);
     if(box.label) { this.props.drawLabel(this.canvas, box) };
   }
 
@@ -311,7 +311,7 @@ class Boundingbox extends Component {
       imgd = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
       let pix = imgd.data;
 
-      for (var i = 0, j = 0, n = pix.length; i <n; i += 4, j += 1) {
+      for (let i = 0, j = 0, n = pix.length; i <n; i += 4, j += 1) {
           const segmentClass = segmentation[j];
           const segmentColor = this.segmentColor(segmentClass);
           pix[i] = Math.round((pix[i] + segmentColor[0]) / 2);
@@ -436,7 +436,7 @@ Boundingbox.defaultProps = {
   separateSegmentation: false,
   segmentationTransparency: 190,
   onSelected() {},
-  drawBox(canvas, box, color, lineWidth) {
+  drawBox(canvas, box, colorIndex, lineWidth) {
 
     if(!box || typeof box === 'undefined')
       return null;
@@ -480,14 +480,30 @@ Boundingbox.defaultProps = {
     if ((x + width) > canvas.width) { width = canvas.width - lineWidth - x; }
     if ((y + height) > canvas.height) { height = canvas.height - lineWidth - y; }
 
-    ctx.strokeStyle = color;
+
+    var colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC', 
+		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', 
+		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
+		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+
+    
+    ctx.strokeStyle = colorArray[colorIndex];
+
+    //colorIndex++;
     ctx.lineWidth = lineWidth;
     ctx.beginPath();
+    
     //Draw Ellipse
-    // console.log("image dimentions"+width)
-    var xCoordCenter = x+(width/2);
-    var yCoordCenter = y+(height/2);
-    ctx.ellipse(xCoordCenter, yCoordCenter, width/2, height/2,0,0,2 * Math.PI); 
+    //console.log("image dimentions"+width)
+    let xCoordCenter = x+(width/2);
+    let yCoordCenter = y+(height/2);
+    ctx.ellipse(xCoordCenter, yCoordCenter,width/2, height/2,0,0,2 * Math.PI); 
     
     // Code to render box
     // ctx.moveTo(x + width, y);
@@ -495,7 +511,9 @@ Boundingbox.defaultProps = {
     // ctx.lineTo(x, y + height);
     // ctx.lineTo(x + width, y + height);
     // ctx.lineTo(x + width, y);
+    
     ctx.stroke();
+
     // // Left segment
     // const tenPercent = width / 10;
     // const ninetyPercent = 9 * tenPercent;

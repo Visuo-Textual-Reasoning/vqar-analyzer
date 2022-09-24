@@ -8,7 +8,14 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import VQAImage from '../../assets/images/vqa-example.png';
 import VCRImage from '../../assets/images/vcr-example.png';
-import Local from '../MCANattention/Local';
+//import MCANattention from '../MCANattention/Index';
+import {LocalMCAN, bBox} from '../MCANattention/Local';
+import InputSlider from '../MCANattention/InputSlider';
+import DiscreteSlider from '../MCANattention/DiscreteSlider';
+// import setCookie from '../../hooks/setCookie';
+// import getCookie from '../../hooks/getCookie';
+// import { v4 as uuid } from 'uuid';
+
 const useStyles = makeStyles((theme) => {
 	return {
 		wrapper: {
@@ -54,13 +61,33 @@ const useStyles = makeStyles((theme) => {
 
 export default function Home() {
 	const classes = useStyles();
+	// const isWorking = uuid();
+	// let userCookie = getCookie('userId')
+	// if (!userCookie){
+	// 	const unique_full_id = uuid();
+	// 	const unique_id = unique_full_id.slice(0,8)
+	// 	setCookie('userId',unique_id);
+	// 	userCookie = getCookie('userId')
+	// 	console.log("getCookie "+userCookie)
+	// }else{
+		
+	// 	console.log("getCookie "+userCookie)
+	// }
+
 	return (
 		<>
+			{/* <Local/> */}
+			{/* <InputSlider/> */}
+			{/* <DiscreteSlider onChange={(_, value) => <div>{ var element = document.getElementsByClassName('Image');}</div>}/> */}
+			<div className='Image'>
+
+			</div>
 			<Box className={classes.wrapper}>
 				<VQACard />
 				<VCRCard />
 			</Box>
-			{/* <Local /> */}
+			{/* <MCANattention /> */}
+			{/* <div>{isWorking}</div> */}
 		</>
 	);
 }

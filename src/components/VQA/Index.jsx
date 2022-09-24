@@ -3,6 +3,8 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import React, { useState, useEffect } from 'react';
 import ImagePanel from '../ImagePanel/Index';
+// import AttMaps from '../AttMaps/Index';
+// import WordAtt from '../WordAtt/Index';
 import Question from '../Question/Index';
 import { getMaxNoOfImages, getRandomDataPoint } from '../../utils/api_calls';
 import VQAModelPanel from '../ModelPanel/VQAPanel';
@@ -55,7 +57,7 @@ export default function VQA() {
 
 	// Fetch vocab from the server
 	useEffect(() => {
-		fetchVocabulary(saaaHomeUrl).then((v) => {
+		fetchVocabulary(SAAA_HOME_URL).then((v) => {
 			setVocab(v);
 		});
 		getRandomDataPoint(split).then(imid => setImageIndex(imid))
@@ -101,10 +103,14 @@ export default function VQA() {
 				maxImages={maxImages}
 				imageIndex={imageIndex}
 				setImageIndex={setImageIndex}
-				apiUrl={saaaHomeUrl}
+				apiUrl={SAAA_HOME_URL}
 			/>
 			<SampleQuestions task="vqa" imageIndex={imageIndex} />
 			<Question question={question} questionChangeHandler={questionChangeHandler} />
+			{/* <AttMaps
+				apiUrl={saaaHomeUrl}
+			/> */}
+			{/* <WordAtt/> */}
 			<Box className={classes.modelPanels}>
 				<VQAModelPanel
 					modelName="Show Ask Attend and Answer"
@@ -115,11 +121,11 @@ export default function VQA() {
 				/>
 				<VQAModelPanel
 					modelName="Deep Modular Co-attention"
-					apiUrl={mcanHomeUrl}
+					apiUrl={MCAN_HOME_URL}
 					question={question}
 					imageIndex={imageIndex}
 					mcan={true}
-									/>
+				/>
 			</Box>
 			<MySnackbar open={warningOpen} handleClose={handleWarningClose} msg={warningMessage}/>
 		</Box>

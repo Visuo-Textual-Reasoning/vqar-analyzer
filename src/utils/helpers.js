@@ -1,4 +1,4 @@
-import { VQA } from './apis';
+import { SAAA_HOME_URL, VQA } from './apis';
 
 export function getRandomInt(min, max) {
 	min = Math.ceil(min);
@@ -22,7 +22,7 @@ export async function fetchPrediction(apiUrl, predictionData) {
 export async function fetchRandomQuestions(imageIndex, task = 'vqa') {
 	let apiUrl;
 	if (task === 'vqa') {
-		apiUrl = VQA;
+		apiUrl = SAAA_HOME_URL;
 	} else {
 		apiUrl = 'vcr';
 	}

@@ -11,6 +11,8 @@ import Answer from '../Answer/Index';
 import { useAuth } from '../../contexts/AuthProvider';
 import VCRFeedbackForm from '../FeedbackForm/VCRFeedback';
 import MySnackbar from '../MySnackbar/Index';
+import { useCookies } from 'react-cookie';
+
 
 const useStyles = makeStyles((theme) => {
 	console.log(theme);
@@ -51,6 +53,10 @@ export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcr
 	});
 	const [warningMessage, setWarningMessage] = useState("");
 
+	const [cookies, setCookie] = useCookies(['user']);
+	//console.log("Stored Cookie "+cookies.userID);
+	let cookieUserID = cookies.userID;
+
 	useEffect(
 		() => {
 			// console.log("Model Panel: ", evaluate, evaluateRef.current);
@@ -90,8 +96,8 @@ export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcr
 		}
 
 		console.log(feedback);
-
-		sendUserFeedback(apiUrl, { auth, feedback, imageIndex, data });
+		
+		sendUserFeedback(apiUrl, { cookieUserID, feedback, imageIndex, data });
 
 		setFeedback({
 			answer: null,

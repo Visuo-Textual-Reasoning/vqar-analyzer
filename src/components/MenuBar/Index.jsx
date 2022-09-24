@@ -15,9 +15,12 @@ import { useAuth } from '../../contexts/AuthProvider';
 export default function MenuBar() {
 	const [ open, setOpen ] = useState(false);
 	const [ auth, setAuth ] = useAuth();
-	const menuItems = [ 'VQA', 'VCR' ];
+	const menuItems = [ 'VQA', 'VCR', 'FAQs' ];
 	const navigate = useNavigate();
-
+	// const navigate = (x) => {
+	// 	console.log(x);
+	//   }
+	  
 	console.log(auth)
 
 	const toggleDrawer = (e) => {

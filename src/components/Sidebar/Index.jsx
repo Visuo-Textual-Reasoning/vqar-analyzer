@@ -5,8 +5,9 @@ import { FaBars } from 'react-icons/fa';
 
 export default function Sidebar() {
 	const [ open, setOpen ] = useState(false);
-	const Tasks = [ 'VQA', 'VCR' ];
+	const Tasks = [ 'VQA', 'VCR' , 'FAQs' ];
 	const navigate = useNavigate();
+
 
 	const toggleDrawer = (e) => {
 		setOpen(!open);

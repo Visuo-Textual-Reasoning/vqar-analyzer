@@ -1,6 +1,7 @@
 import './App.css';
 import VQAPage from './pages/VQA';
 import VCRPage from './pages/VCR';
+import FAQsPage from './pages/FAQs';
 import Login from './components/Login/Index';
 import EvaluateProvider from './contexts/EvaluateProvider';
 import VocabProvider from './contexts/VocabProvider';
@@ -10,6 +11,13 @@ import { ThemeProvider, useTheme } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import Home from './components/Home/Index';
 import MenuBar from './components/MenuBar/Index';
+import React, { useState } from 'react';
+import { useCookies } from 'react-cookie';
+
+// import getCookie from './hooks/getCookie';
+// import setCookie from './hooks/setCookie';
+import { v4 as uuid } from 'uuid';
+
 
 // console.log(process.env)
 if (process.env.NODE_ENV === 'production'){
@@ -42,6 +50,28 @@ function App() {
 		}
 	});
 	console.log(useTheme());
+
+	
+	const [cookies, setCookie] = useCookies(['user']);
+	//console.log("user id: "+ id);
+	if(!cookies.userID ){
+		let id = uuid();
+		setCookie('userID',id, { path: '/' });
+		console.log("after setCookie: "+cookies.userID);
+	}else{
+		console.log("Stored Cookie "+cookies.userID);
+	}
+	
+	// const userCookie = getCookie('userId')
+	// if (userCookie == null){
+	// 	const unique_full_id = uuid();
+	// 	const unique_id = unique_full_id.slice(0,8)
+	// 	setCookie('userId',unique_id);
+	// 	console.log("setCookie "+userCookie)
+	// }else{
+		
+	// 	console.log("getCookie "+userCookie)
+	// }
 	return (
 		<ThemeProvider theme={myTheme}>
 			<AuthProvider>
@@ -55,10 +85,12 @@ function App() {
 								<Route exact path="/" element={<Home />} />
 								<Route exact path="/vqa" element={<VQAPage />} />
 								<Route exact path="/vcr" element={<VCRPage />} />
+								<Route exact path="/faqs" element={<FAQsPage />} />
 								<Route exact path="/login" element={<Login />} />
 							</Routes>
 						</HashRouter>
 						{/* </Router> */}
+						{/* <div>{getCookie('userId')}</div> */}
 					</VocabProvider>
 				</EvaluateProvider>
 			</AuthProvider>
