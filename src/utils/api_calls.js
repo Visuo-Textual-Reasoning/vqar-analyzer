@@ -1,6 +1,11 @@
 import { VQA } from "./apis";
 import { getRandomInt } from "./helpers"
 
+/**
+ * Get the total number of images in a data split
+ *
+ * @param {string} split
+ */
 export async function getMaxNoOfImages(split) {
     try {
         let response = await fetch(VQA)

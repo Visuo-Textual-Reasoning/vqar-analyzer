@@ -79,6 +79,9 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 	let cookieUserID = cookies.userID;
 	//var JsonData = []
 
+  /**
+   * Pull word attention maps for a question
+   */
 	async function pullJson(){
 		const response = await fetch(qattUrl);
 		const responseData = await response.json();
@@ -87,6 +90,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		// setData(responseData);
 		// console.log("data2"+data.values)
 	}
+
 	async function assigndata(){
 		// pullJson().then(
 		// 	function(value) {JsonData = value; console.log("fetchJson: "+ JsonData.values);}
@@ -95,7 +99,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		//fetchJsonData = await pullJson();
 		console.log("jsondata: "+ fetchJsonData.values);
 	}
-	
+
 	// function pullJson(){
 	// 	 fetch("10.5.0.96:5556/attention_question" )
 	// 	.then(response => response.json())
@@ -231,8 +235,8 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		});
 		setShowFeedback(false);
 	}
-	
-	
+
+
 	function setFontColor(currentelement,index){
 		//var colorArray = ['red', 'green', 'blue', 'orange', 'yellow'];
 		const jsonArray = JsonData.values;
@@ -243,7 +247,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		// let tempColor = "rgba(255,0,0,0.13)"
 		//wconsole.log(index);
 		return <div style={{ color: rgbaColor,"flex":"0 1 auto" }}>{currentelement}&nbsp;</div>;
-		
+
 	}
 
 	function questionAtt(question){
@@ -262,14 +266,14 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 				{/* {DiscreteSlider("http://10.5.0.96:5002",20)} */}
 			</div>
 		)
-		}	
+		}
 	}
 
 	// const handleChange = (e,val) => {
     //     //console.log(val);
     //     ReactDOM.render(<h1>hey</h1>, document.getElementsByClassName('mcanAttImg'));
     // }
-	
+
 	return (
 		<Paper
 			className={classes.panel}
@@ -287,25 +291,25 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 			/>
 			<Typography sx={{ fontFamily: 'Cascadia Code' }}>{modelName}</Typography>
 			{loading ? <CircularProgress color="secondary" /> : <Answer answer={answer} />}
-			
+
 			{(answer && modelActive && isMCAN(mcan)) &&
 			<Typography>
 				<div style={{"display":"flex","flexDirection":"row"}}>{questionAtt(question)}</div>
 				{/* <MCANattention/> */}
 			</Typography>
 			}
-			
+
 			<Typography sx={{ fontFamily: 'Cascadia Code', fontSize: '12px' }}>
 				{!loading && timeTaken && `Took ${(timeTaken / 1000).toFixed(2)}s`}
 			</Typography>
-			
+
 			{modelActive &&
 			showFeedback && (
 				<FeedbackForm handleRadioChange={handleRadioChange} sendFeedback={sendFeedback} feedback={feedback} />
 			)}
 
 			{(answer && modelActive && mcan==false) && <Paper component="img" className={classes.img} src={imageUrl} alt={`Image-${imageIndex}`} sx={{mt: 2, width: "100%", height: "auto"}}  />}
-			
+
 			{(answer && modelActive) && isMCAN(mcan)}
 
 			<MySnackbar open={warningMessage !== ""} handleClose={handleWarningClose} msg={warningMessage} />
