@@ -258,7 +258,6 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		});
 		setShowFeedback(false);
 	}
-<<<<<<< HEAD
 	
 	/**
 	 * 
@@ -266,10 +265,6 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 	 * @param {number} index 
 	 * @returns 
 	 */
-=======
-
-
->>>>>>> origin/parikshith
 	function setFontColor(currentelement,index){
 		//var colorArray = ['red', 'green', 'blue', 'orange', 'yellow'];
 		const jsonArray = JsonData.values;

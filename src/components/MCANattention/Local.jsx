@@ -3,7 +3,7 @@ import JsonData from './iatt.json'
 //import pic from "./mcanAttention.jpeg";
 import Boundingbox from "./Boundingbox";
 //import { MCAN_HOME_URL, SAAA_HOME_URL } from '../../utils/apis';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 /**
  * 
  * @param {number} n input to generate the number of bounding boxes
