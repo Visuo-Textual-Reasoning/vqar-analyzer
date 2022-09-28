@@ -11,10 +11,14 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Drawer, List, ListItem, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../../contexts/AuthProvider';
-
+/**
+ * @function MenuBar It shows a menu bar that we can toggle
+ * @returns 
+ */
 export default function MenuBar() {
 	const [ open, setOpen ] = useState(false);
 	const [ auth, setAuth ] = useAuth();
+	/** @type {Array.<string>} */
 	const menuItems = [ 'VQA', 'VCR', 'FAQs' ];
 	const navigate = useNavigate();
 	// const navigate = (x) => {
@@ -23,7 +27,7 @@ export default function MenuBar() {
 	  
 	console.log(auth)
 
-	const toggleDrawer = (e) => {
+	const toggleDrawer = () => {
 		setOpen(!open);
 	};
 

@@ -19,6 +19,24 @@ export default function FAQ(ques,ans) {
   const toggleAccordion = () => {
     setActive(!active);
   };
+
+  // const toggleIcon = (temp) => {
+  //   if (temp == true){
+  //     toggleAccordion();
+  //   }
+  // }
+
+  //let actBool = false;
+  // if(actBool == true){
+  //   const toggleAccordion = () => {
+  //     setActive(!active);
+  //   };
+  // } else {
+  //   const toggleAccordion = () => {
+  //     setActive(actbool);
+  //   };
+  // }
+
   return (
     <>
       <div className="App">
@@ -55,4 +73,5 @@ export default function FAQ(ques,ans) {
 FAQ.propTypes = {
 	ques: PropTypes.string.isRequired,
 	ans: PropTypes.string.isRequired,
+  // actBool: PropTypes.bool.isRequired,
 };

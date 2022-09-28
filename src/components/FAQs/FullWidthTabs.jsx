@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-//import SwipeableViews from 'react-swipeable-views';
+import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
@@ -74,17 +74,18 @@ export default function FullWidthTabs() {
           textColor="inherit"
           variant="fullWidth"
           aria-label="full width tabs example"
+          sx={{bgcolor:'white', color:'black'}}
         >
           <Tab label="Visual Question Answering" {...a11yProps(0)} />
           <Tab label="Visual Commonsense Reasoning" {...a11yProps(1)} />
           {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
         </Tabs>
       </AppBar>
-      {/* <SwipeableViews
+      <SwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={value}
         onChangeIndex={handleChangeIndex}
-      > */}
+      >
         <TabPanel value={value} index={0} dir={theme.direction}>
           {FAQ(q1,a1)}
           {FAQ(q2,a2)}
@@ -94,12 +95,14 @@ export default function FullWidthTabs() {
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
         VCR Questions and Answers
+        {/* {FAQ(q4,a4)} */}
+        {/* {FAQ(q1,a1,false)} */}
           
         </TabPanel>
         {/* <TabPanel value={value} index={2} dir={theme.direction}>
           Item Three
         </TabPanel> */}
-      {/* </SwipeableViews> */}
+      </SwipeableViews>
     </Box>
   );
 }

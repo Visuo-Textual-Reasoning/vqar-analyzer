@@ -3,8 +3,8 @@
 import PropTypes from 'prop-types';
 import { Paper, Typography, CircularProgress, Switch, rgbToHex } from '@mui/material';
 import JsonData from './qatt.json'
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
+// import Snackbar from '@mui/material/Snackbar';
+// import Alert from '@mui/material/Alert';
 import React, { useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import Answer from '../Answer/Index';
@@ -14,7 +14,7 @@ import { useEvaluate } from '../../contexts/EvaluateProvider';
 import { useAuth } from '../../contexts/AuthProvider';
 import FeedbackForm from '../FeedbackForm/Index';
 import MySnackbar from '../MySnackbar/Index';
-import Local from '../MCANattention/Local';
+// import Local from '../MCANattention/Local';
 import DiscreteSlider from '../MCANattention/DiscreteSlider';
 import { useCookies } from 'react-cookie';
 
@@ -48,11 +48,22 @@ const useStyles = makeStyles((theme) => {
 
 // }
 
-
+/**
+ * 
+ * @param {string} modelName
+ * @param {string} apiUrl
+ * @param {string} question
+ * @param {number} imageIndex
+ * @param {boolean} mcan
+ * @returns 
+ */
 export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,mcan }) {
 	//const imageUrl = `${apiUrl}/image?imageIndex=${imageIndex}`;
+	/** @type {string} Url attention image of SAAA model */
 	const imageUrl = `${apiUrl}/attention-maps?imageIndex=${imageIndex}`;
+	/** @type {string} Url to get Json values of the bounding boxes */
 	const iattUrl = `http://10.5.0.96:5556/attention_image`
+	/** @type {string} Url to get word attention values */
 	const qattUrl = `http://10.5.0.96:5556/attention_question`
 	const classes = useStyles();
 	const [ answer, setAnswer ] = useState('');
@@ -68,14 +79,17 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		user_answer: '',
 		explanation: ''
 	});
+	const [heatmapImage, setHeatmapImage] = useState(null)
 	const [ auth, setAuth ] = useAuth();
 	const [ attMapID, setAttMapID ] = useState(null);
 	const [ attMapUrl, setAttMapUrl ] = useState(null);
 	const [warningMessage, setWarningMessage] = useState("");
 	const [cookies, setCookie] = useCookies(['user']);
 	const [fetchJsonData, setData] = useState(0)
+
 	//var fetchJsonData;
 	//console.log("Stored Cookie "+cookies.userID);
+	/** @type {string} contains User id cookie */
 	let cookieUserID = cookies.userID;
 	//var JsonData = []
 
@@ -138,7 +152,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		// )().then(
 		// 	function(value) {fetchJsonData = value}
 		// );
-		//assigndata();
+		assigndata();
 		console.log("fetch json outisde asyn: "+ fetchJsonData);
 	},[])
 
@@ -161,7 +175,10 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		},
 		[ attMapID ]
 	);
-
+/**
+ * @async
+ * @returns 
+ */
 	async function getAnswer() {
 		if (!modelActive) {
 			return;
@@ -173,6 +190,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 			let startTime = performance.now();
 			let data = await fetchPrediction(apiUrl, predictionData);
 			let endTime = performance.now();
+			
 			setTimeTaken(endTime - startTime);
 			setLoading(false);
 			setShowFeedback(true);
@@ -184,6 +202,11 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		}
 	}
 
+	/**
+	 * Function that handles radio button
+	 * @param {string} name 
+	 * @param {number} value 
+	 */
 	function handleRadioChange(name, value) {
 		setFeedback({ ...feedback, [name]: value });
 		// console.log({ feedback });
@@ -235,8 +258,18 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		});
 		setShowFeedback(false);
 	}
+<<<<<<< HEAD
+	
+	/**
+	 * 
+	 * @param {string} currentelement 
+	 * @param {number} index 
+	 * @returns 
+	 */
+=======
 
 
+>>>>>>> origin/parikshith
 	function setFontColor(currentelement,index){
 		//var colorArray = ['red', 'green', 'blue', 'orange', 'yellow'];
 		const jsonArray = JsonData.values;
@@ -249,7 +282,11 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		return <div style={{ color: rgbaColor,"flex":"0 1 auto" }}>{currentelement}&nbsp;</div>;
 
 	}
-
+/**
+ * 
+ * @param {string} question Assigns word attention to question 
+ * @returns 
+ */
 	function questionAtt(question){
 		var myarray = question.split(' ');
 		// let result = myarray.map( (currentelement, index) => <div style={{ color: '${setfontColor(index)}',"flex":"0 1 auto" }}>{currentelement}&nbsp;</div>);
@@ -257,6 +294,11 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param {boolean} bool returns jsx slider 
+	 * @returns 
+	 */
 	function isMCAN(bool){
 		if(bool){
 		return (

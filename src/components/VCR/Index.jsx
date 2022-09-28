@@ -21,6 +21,8 @@ export default function VCR() {
 		answers: [ '', '', '', '' ],
 		rationales: [ '', '', '', '' ]
 	});
+	
+	/**@type {string} */
 	const vcrMode = 'QA_R';
 
 	return (

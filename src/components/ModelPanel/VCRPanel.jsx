@@ -30,7 +30,15 @@ const useStyles = makeStyles((theme) => {
 		}
 	};
 });
-
+/**
+ * Proptypes are defined at the bottom
+ * @param {string} modelName
+ * @param {string} apiUrl
+ * @param {} data
+ * @param {number} imageIndex
+ * @param {string} vcrMode 
+ * @returns 
+ */
 export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcrMode }) {
 	const classes = useStyles();
 	const [ auth, setAuth ] = useAuth();
@@ -68,7 +76,11 @@ export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcr
 		},
 		[ evaluate ]
 	);
-
+/**
+ * @async
+ * @function sendFeedback Function that handles feedback from users 
+ * @returns 
+ */
 	async function sendFeedback() {
 		console.log(feedback);
 		// if (!feedback.answer || !feedback.attention) {
@@ -111,7 +123,11 @@ export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcr
 		setShowFeedback(false);
 	}
 
-
+/**
+ * 
+ * @param {string} name 
+ * @param {number} value 
+ */
 	function handleRadioChange(name, value) {
 		setFeedback({ ...feedback, [name]: value });
 		// console.log({ feedback });
@@ -126,7 +142,12 @@ export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcr
 		// setWarningOpen(false)
 		setWarningMessage("")
 	}
-
+/**
+ * @async
+ * @function getAnswer It retreive answer from backend and sets it
+ * It fetches answer and pridiction, measures time taken for fetching.
+ * And shows feedback option
+ */
 	async function getAnswer() {
 		let predictionData = {
 			questionData: data,

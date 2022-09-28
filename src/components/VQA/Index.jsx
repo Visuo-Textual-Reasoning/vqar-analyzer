@@ -63,6 +63,11 @@ export default function VQA() {
 		getRandomDataPoint(split).then(imid => setImageIndex(imid))
 	}, []);
 
+	/**
+	 * @function validateQuestion get word by word from the input field and make it into an array
+	 * @param {string} question 
+	 * @returns @type {Array.<string>}
+	 */
 	function validateQuestion(question) {
 		if(question[question.length -1] !== " "){
 			return []

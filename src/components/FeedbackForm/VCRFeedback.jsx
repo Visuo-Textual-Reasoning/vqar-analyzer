@@ -29,7 +29,13 @@ const useStyles = makeStyles({
 		}
 	}
 });
-
+/**
+ * @component 
+ * @param {func} handleRadioChange
+ * @param {func} sendFeedback
+ * @param {} feedback
+ * @returns 
+ */
 export default function VCRFeedbackForm({ handleRadioChange, sendFeedback, feedback }) {
 	//   const [open, _setOpen] = useFeedbackFormOpenStatus()
 	const classes = useStyles();

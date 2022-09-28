@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import JsonData from './iatt.json'
 // import { padding } from '@mui/system';
-// import VQAModelPanel from '../ModelPanel/VQAPanel';
 import  Local  from './Local';
 // import ReactDOM from 'react-dom'
 // import  { div } from "react";
@@ -11,16 +10,22 @@ import  Local  from './Local';
 import PropTypes from 'prop-types';
 
 
-// const DynamicComponent = React.lazy(() => import("./Local"));
-// const DynamicComponent = () => {
-//    render() Local(1);
-//  }
 
-
-
+/**
+ * 
+ * @param {string} constApiUrl contains the MCAN URL
+ * @param {number} imageIndex contains the index of the image
+ * 
+ * @returns Local(), Slider, Displays attention values
+ */
 export default function DiscreteSlider({constApiUrl,imageIndex}) {
-  console.log("constApiUrl  "+constApiUrl)
+  //console.log("constApiUrl  "+constApiUrl)
     const [loadDynamicComp, setLoadDynamicComp] = React.useState(1);
+    
+    /**
+     * An array containg random Hex color codes
+     * @type {array<string>}
+     */
     var colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
 		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
 		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
@@ -31,42 +36,47 @@ export default function DiscreteSlider({constApiUrl,imageIndex}) {
 		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
 		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
 		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
-    //   function getJSONP(url, success) {
-
-    //     var ud = '_' + +new Date,
-    //         script = document.createElement('script'),
-    //         head = document.getElementsByTagName('head')[0] 
-    //                || document.documentElement;
     
-    //     window[ud] = function(data) {
-    //         head.removeChild(script);
-    //         success && success(data);
-    //     };
-    
-    //     script.src = url.replace('callback=?', 'callback=' + ud);
-    //     head.appendChild(script);
-    
-    // }
-    
-    // getJSONP(qatt, function(data){
-    //     console.log(data);
-    // });  
-
+/**
+ * @type {Array.<Array.<number>>} A 2d array containing coordinates of bounding boxes
+ */
 const jsonCoords = (JsonData.coordinates);
+
+/**
+ * @type {number} Variable containg the number of coordinates
+ */
 let coordsLength = jsonCoords.length;
+
+/**
+ * @type {Array.<number>} contains the Bounding boxes attention
+ */
 const jsonValues = (JsonData.values);
-let test = jsonValues;
+
+/**
+ * @type {number} Containing the number of bounding boxes
+ */
 let len = jsonValues.length;
 //console.log("Value.lenght"+len);
-let indices = new Array(len);
-for (let i = 0; i < len; ++i) indices[i] = i;
-indices.sort(function (a, b) { return test[a] < test[b] ? -1 : test[a] > test[b] ? 1 : 0; });
 
+/**
+ * @type {Array.<number>} Array that contains the indices of sorted json values in acending order 
+ */
+let indices = new Array(len);
+
+/** It sorts the indices jsonValues in to  */
+for (let i = 0; i < len; ++i) indices[i] = i;
+indices.sort(function (a, b) { return jsonValues[a] < jsonValues[b] ? -1 : jsonValues[a] > jsonValues[b] ? 1 : 0; });
+
+/**
+ * This Function displays the number of attention values based on the value given in input
+ * @param {number} i The number of attention values that need to be displayed
+ * @returns an Array of jsx elements containing Attention values of the bounding boxes
+ */
 function displayAttValues(i){
   let attValue = [];
   let j=0
   for( j=2; j<=i; j++){
-    attValue[(j-1)] = test[indices[len-j+1]]
+    attValue[(j-1)] = jsonValues[indices[len-j+1]]
     if (attValue[j-1] != null){
       attValue[j-1] = attValue[j-1].toFixed(3)
     }
@@ -80,12 +90,18 @@ function displayAttValues(i){
   return (
     <>
     {loadDynamicComp ? (
-                <div>
                 <div fallback={<div>Local(1)</div>}>
-                {Local(loadDynamicComp,constApiUrl,imageIndex)}
+                {
+                /**
+                 * Function imported from Local.jsx
+                 * @param {number} loadDynamicComp contains value of Discreet slider
+                 * @param {string} constApiUrl contains the MCAN URL
+                 * @param {number} imageIndex  contains index of the image
+                 */
+                Local(loadDynamicComp,constApiUrl,imageIndex)
+                }
                 </div> 
-                {/* <div style={{ display: "flex","flex-wrap": "wrap"}}>Attention:&nbsp; {displayAttValues(loadDynamicComp)}</div> */}
-                </div>
+                
             ) : null
     }
     <Box style={{ display: "flex", "alignItems": "center", "justifyContent": "center", margin: "0px" }} sx={{ width: "95%" }}>

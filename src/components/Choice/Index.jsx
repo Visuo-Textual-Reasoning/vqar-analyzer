@@ -37,7 +37,13 @@ const useStyles = makeStyles((theme) => {
 		}
 	};
 });
-
+/**
+ * @component Choice Handles radio buttons
+ * @param {number} value
+ * @param {func} valueChangeHandler
+ * @param {string} label
+ * @returns 
+ */
 export default function Choice({ value, valueChangeHandler, label }) {
 	const classes = useStyles();
 

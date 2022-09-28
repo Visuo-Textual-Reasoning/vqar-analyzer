@@ -47,6 +47,11 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 	const imageUrl = `${apiUrl}/image?imageIndex=${imageIndex}`;
 
 	// This should handle Issue #2. May be the issue is browser specific.
+
+	/**
+	 * @function handleImageIndexChange
+	 * @param {*} e 
+	 */
 	function handleImageIndexChange(e) {
 		let value = parseInt(e.target.value, 10);
 		if (!value) {
@@ -65,13 +70,18 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 
 		setImageIndex(value);
 	}
-
-	async function fetchRandomImage(e) {
+/**
+ * @async
+ * @function fetchRandomImage
+ */
+	async function fetchRandomImage() {
 		let randomImageIndex = await getRandomDataPoint(split);
 		setImageIndex(randomImageIndex);
 	}
-
-	function handleSnackbarClose(e) {
+/**
+ * @function handleSnackbarClose
+ */
+	function handleSnackbarClose() {
 		setSnackBarOpen(false);
 	}
 

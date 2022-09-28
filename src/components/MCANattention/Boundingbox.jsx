@@ -1,4 +1,8 @@
-/* global Image */
+/**
+ * Instead of installing npm package, we edited the source code
+ * src: "https://github.com/alx/react-bounding-box"
+ * Made a few changes - Added Elipses instead of bounding boxes
+ */
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -492,7 +496,7 @@ Boundingbox.defaultProps = {
 		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
 		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
 
-    
+    /** here is the fuctions we used to draw elipses */
     ctx.strokeStyle = colorArray[colorIndex];
 
     //colorIndex++;

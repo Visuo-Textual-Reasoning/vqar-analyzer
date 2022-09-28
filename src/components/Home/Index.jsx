@@ -10,7 +10,6 @@ import VQAImage from '../../assets/images/vqa-example.png';
 import VCRImage from '../../assets/images/vcr-example.png';
 //import MCANattention from '../MCANattention/Index';
 import {LocalMCAN, bBox} from '../MCANattention/Local';
-import InputSlider from '../MCANattention/InputSlider';
 import DiscreteSlider from '../MCANattention/DiscreteSlider';
 // import setCookie from '../../hooks/setCookie';
 // import getCookie from '../../hooks/getCookie';
@@ -58,7 +57,10 @@ const useStyles = makeStyles((theme) => {
 		}
 	};
 });
-
+/**
+ * @component
+ * @returns jsx elements
+ */
 export default function Home() {
 	const classes = useStyles();
 	// const isWorking = uuid();

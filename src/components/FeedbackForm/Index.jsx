@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 		'& > div': {
 			// border: "1px solid red",
 			display: 'flex',
-      flexDirection: 'column',
+      		flexDirection: 'column',
 			alignItems: 'center',
 			justifyContent: 'center',
 		},
@@ -29,7 +29,13 @@ const useStyles = makeStyles({
 		}
 	}
 });
-
+/**
+ * @function FeedbackForm
+ * @param {} handleRadioChange
+ * @param {} sendFeedback
+ * @param {} feedback
+ * @returns 
+ */
 export default function FeedbackForm({ handleRadioChange, sendFeedback, feedback }) {
 	//   const [open, _setOpen] = useFeedbackFormOpenStatus()
 	const classes = useStyles();

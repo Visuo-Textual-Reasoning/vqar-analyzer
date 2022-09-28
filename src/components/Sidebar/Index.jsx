@@ -5,11 +5,13 @@ import { FaBars } from 'react-icons/fa';
 
 export default function Sidebar() {
 	const [ open, setOpen ] = useState(false);
+
+	/**@type {Array.<string>} list of elements in side bar */
 	const Tasks = [ 'VQA', 'VCR' , 'FAQs' ];
+
 	const navigate = useNavigate();
 
-
-	const toggleDrawer = (e) => {
+	const toggleDrawer = () => {
 		setOpen(!open);
 	};
 
