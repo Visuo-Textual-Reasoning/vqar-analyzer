@@ -8,15 +8,26 @@ export default function FAQ(ques,ans) {
 
   const [active, setActive] = useState(false);
 
+  const [height, setHeight] = useState("0px");
+
   const contentRef = useRef(null);
 
-  useEffect(() => {
-    contentRef.current.style.maxHeight = active
-      ? `${contentRef.current.scrollHeight}px`
-      : "0px";
-  }, [contentRef, active]);
+  // useEffect(() => {
+  //   contentRef.current.style.maxHeight = active
+  //     ? `${contentRef.current.scrollHeight}px`
+  //     : "0px";
+  // }, [contentRef, active]);
+
+  // useEffect(() => {
+  //   contentRef.current.style.maxHeight = height;
+  // },[contentRef, height]);
 
   const toggleAccordion = () => {
+    if (active == false) {
+      contentRef.current.style.maxHeight =  `${contentRef.current.scrollHeight}px`
+    }else{
+      contentRef.current.style.maxHeight = '0px'
+    }
     setActive(!active);
   };
 

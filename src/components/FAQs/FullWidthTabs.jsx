@@ -44,15 +44,27 @@ function a11yProps(index) {
 
 export default function FullWidthTabs() {
 
-  let q1 = "What is VQA task?";
-  let a1 = "Visual question answering(vqa) is a multi modal task involving computer vision and NLP. We show an image to model, ask questions about that image to the model and model answers it.";
-  let q2 = "What am I supposed to do?";
-  let a2 = "In VQA, after fetching the image, you are supposed to ask a question about the image and hit evaluate, the 2 models answers to your question, upon which you are supposed to fill the feedback form about the model performance. For better understanding, the attention maps of the model will be displayed, as in where the model is focusing.";
-  let q3 = "What is relevance score?";
-  let a3 = "It is about how relevant is model's answer/approach to the question, even when the model is wrong, there could be very good reason why model answered that wrong even with a correct approach, probably due to the visual similarity between the answer by model and original answer. Example is model thinking dog with hair as lion,Similarly when model gives correct answer, but it is not focusing on correct areas, then the relevance is less.";
-  let q4 = "What are answer and explanation fields in the form?";
-  let a4 = "Give the correct answer in the answer field (one word) and explanation is what you think about model's answer. Explanation could be you explaining about relevance, model's attention etc.";
+  //VQA Questions
+  const q1 = "What is VQA task?";
+  const a1 = "Visual question answering(vqa) is a multi modal task involving computer vision and NLP. We show an image to model, ask questions about that image to the model and model answers it.";
+  const q2 = "What am I supposed to do?";
+  const a2 = "In VQA, after fetching the image, you are supposed to ask a question about the image and hit evaluate, the 2 models answers to your question, upon which you are supposed to fill the feedback form about the model performance. For better understanding, the attention maps of the model will be displayed, as in where the model is focusing.";
+  const q3 = "What is relevance score?";
+  const a3 = "It is about how relevant is model's answer/approach to the question, even when the model is wrong, there could be very good reason why model answered that wrong even with a correct approach, probably due to the visual similarity between the answer by model and original answer. Example is model thinking dog with hair as lion,Similarly when model gives correct answer, but it is not focusing on correct areas, then the relevance is less.";
+  const q4 = "What are answer and explanation fields in the form?";
+  const a4 = "Give the correct answer in the answer field (one word) and explanation is what you think about model's answer. Explanation could be you explaining about relevance, model's attention etc.";
 
+  //VCR Questions
+  const vcrq1 = "What is VCR task?";
+  const vcra1 = "Visual commonsense reasoning is a new task for congnitive level visual understanding. For more insights about the task and dataset, you may visit visualcommonsense.com";
+  const vcrq2 = "What am I supposed to do?";
+  const vcra2 = "unlike VQA, this a multiple choice kind of task, where after asking a question, you need to provide 4 answers of which one is correct and 4 rationales explaining the rationale for the answer. The model responds with {answer} I think, beacuse {rationale}, the {answer} will be from 4 options you give and similarly the {rationale} will be from 4 rationales you give.";
+  const vcrq3 = "What are the boxes and indices on the boxes?";
+  const vcra3 = "the indices and boxes represents the objects that you can ask questions about, you must be seeing number on the boxes. An example question would be: Why is 1 pointing at 2?";
+  const vcrq4 = "What is the Feedback here?";
+  const vcra4 = "similar to the VQA task, here also you report the relevance of answer and rationale chosen, what is the correct answer and rationale.";
+
+  //-------------------------------------------------------
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -94,10 +106,11 @@ export default function FullWidthTabs() {
 
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-        VCR Questions and Answers
-        {/* {FAQ(q4,a4)} */}
-        {/* {FAQ(q1,a1,false)} */}
-          
+        {FAQ(vcrq1,vcra1)}
+        {FAQ(vcrq2,vcra2)}
+        {FAQ(vcrq3,vcra3)}
+        {FAQ(vcrq4,vcra4)}
+        
         </TabPanel>
         {/* <TabPanel value={value} index={2} dir={theme.direction}>
           Item Three
