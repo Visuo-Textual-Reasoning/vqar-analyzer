@@ -31,12 +31,8 @@ const useStyles = makeStyles((theme) => {
 	};
 });
 /**
+ * @component
  * Proptypes are defined at the bottom
- * @param {string} modelName
- * @param {string} apiUrl
- * @param {} data
- * @param {number} imageIndex
- * @param {string} vcrMode 
  * @returns 
  */
 export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcrMode }) {

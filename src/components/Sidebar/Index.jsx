@@ -3,6 +3,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { FaBars } from 'react-icons/fa';
 
+/**
+ * @component
+ * Displays side navbar with toggle feature
+ * @returns 
+ */
 export default function Sidebar() {
 	const [ open, setOpen ] = useState(false);
 

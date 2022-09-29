@@ -24,6 +24,11 @@ const useStyles = makeStyles((theme) => {
 		}
 	};
 });
+
+/**
+ * @component Displays sample questions
+ * @returns jsx elements
+ */
 export default function SampleQuestions({ task, imageIndex }) {
 	const classes = useStyles();
 	const [ sampleQuestions, setSampleQuestions ] = useState([]);

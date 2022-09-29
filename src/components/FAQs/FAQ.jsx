@@ -3,12 +3,10 @@ import "./styles.css";
 import { FiPlus } from "react-icons/fi";
 import PropTypes from 'prop-types';
 
-
+// Show question, answer and toggle button
 export default function FAQ(ques,ans) {
-
+/** used for toggle butrton */
   const [active, setActive] = useState(false);
-
-  const [height, setHeight] = useState("0px");
 
   const contentRef = useRef(null);
 
@@ -18,10 +16,7 @@ export default function FAQ(ques,ans) {
   //     : "0px";
   // }, [contentRef, active]);
 
-  // useEffect(() => {
-  //   contentRef.current.style.maxHeight = height;
-  // },[contentRef, height]);
-
+  /** Used to toggle action */
   const toggleAccordion = () => {
     if (active == false) {
       contentRef.current.style.maxHeight =  `${contentRef.current.scrollHeight}px`
@@ -35,17 +30,6 @@ export default function FAQ(ques,ans) {
   //   if (temp == true){
   //     toggleAccordion();
   //   }
-  // }
-
-  //let actBool = false;
-  // if(actBool == true){
-  //   const toggleAccordion = () => {
-  //     setActive(!active);
-  //   };
-  // } else {
-  //   const toggleAccordion = () => {
-  //     setActive(actbool);
-  //   };
   // }
 
   return (

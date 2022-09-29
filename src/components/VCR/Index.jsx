@@ -11,7 +11,11 @@ const useStyles = makeStyles((theme) => {
 		wrapper: {}
 	};
 });
-
+/**
+ * @component
+ * Displays imagepanel and VCR model components  
+ * @returns 
+ */
 export default function VCR() {
 	const [ imageIndex, setImageIndex ] = useState(1);
 	// 40469, 4054

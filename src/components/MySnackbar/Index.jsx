@@ -2,8 +2,7 @@ import React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 /**
- * 
- * @param {} param0 
+ * @component
  * @returns 
  */
 export default function MySnackbar({ open, handleClose, msg }) {

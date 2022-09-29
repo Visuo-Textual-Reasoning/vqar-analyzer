@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => {
 // }
 
 /**
- * 
+ * @component
  * @param {string} modelName
  * @param {string} apiUrl
  * @param {string} question
@@ -176,7 +176,8 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		[ attMapID ]
 	);
 /**
- * @async
+ * @async 
+ * @function getAnswer get and set answer
  * @returns 
  */
 	async function getAnswer() {
@@ -203,7 +204,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 	}
 
 	/**
-	 * Function that handles radio button
+	 * @function handleRadioChange Function that handles radio button
 	 * @param {string} name 
 	 * @param {number} value 
 	 */
@@ -221,7 +222,10 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		// setWarningOpen(false)
 		setWarningMessage("")
 	}
-
+/**
+ * @function sendFeedback get the input from user else warning message
+ * @returns 
+ */
 	async function sendFeedback() {
 		console.log(feedback);
 		// if (!feedback.answer || !feedback.attention) {
@@ -247,6 +251,25 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		// setAuth(cookieUserID);
 		// console.log("auth: "+ auth);
 
+
+/**
+ * @async
+ * @function sendUserFeedback we set the current time &
+ * then we send feedback input to backend
+ * @param {string} apiUrl 
+ * @param {object} data 
+ * 	@param {string} cookieUserID
+ * 	@param {object} feedback
+ * 		@param {} feedback.answer
+ * 		@param {} feedback.attention
+ * 		@param {number} feedback.relevance_score
+ * 		@param {string} feedback.user_answer
+ * 		@param {string} feedback.explaination
+ * 	@param {number} imageIndex
+ * 	@param {string} question
+ * 	@param {string} answer
+ * 	@returns 
+ */
 		sendUserFeedback(apiUrl, { cookieUserID, feedback, imageIndex, question, answer });
 
 		setFeedback({
@@ -278,8 +301,8 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 
 	}
 /**
- * 
- * @param {string} question Assigns word attention to question 
+ * @function questionAtt Assigns word attention to question 
+ * @param {string} question 
  * @returns 
  */
 	function questionAtt(question){
@@ -290,7 +313,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 	}
 
 	/**
-	 * 
+	 * @function isMCAN Displays slider in MCAN model panel
 	 * @param {boolean} bool returns jsx slider 
 	 * @returns 
 	 */

@@ -68,6 +68,7 @@ for (let i = 0; i < len; ++i) indices[i] = i;
 indices.sort(function (a, b) { return jsonValues[a] < jsonValues[b] ? -1 : jsonValues[a] > jsonValues[b] ? 1 : 0; });
 
 /**
+ * @function displayAttValues
  * This Function displays the number of attention values based on the value given in input
  * @param {number} i The number of attention values that need to be displayed
  * @returns an Array of jsx elements containing Attention values of the bounding boxes

@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => {
   }
 })
 
+/** @function Login Displays Login page  */
 export default function Login() {
   const classes = useStyles()
 	const [ auth, setAuth ] = useAuth();

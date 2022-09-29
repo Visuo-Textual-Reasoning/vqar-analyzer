@@ -24,6 +24,12 @@ const useStyles = makeStyles((theme) => {
   }
 })
 
+/**
+ * @component
+ * Input form for VCR page
+ * propTypes are displayed Below
+ * @returns 
+ */
 export default function VCRInput({ data, setData }) {
   const classes = useStyles()
 	const [ evaluate, setEvaluate ] = useEvaluate();

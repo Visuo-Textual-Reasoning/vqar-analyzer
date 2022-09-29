@@ -31,9 +31,7 @@ const useStyles = makeStyles({
 });
 /**
  * @function FeedbackForm
- * @param {} handleRadioChange
- * @param {} sendFeedback
- * @param {} feedback
+ * @type {React.FC<Props>}
  * @returns 
  */
 export default function FeedbackForm({ handleRadioChange, sendFeedback, feedback }) {

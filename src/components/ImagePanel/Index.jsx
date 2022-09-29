@@ -49,7 +49,7 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 	// This should handle Issue #2. May be the issue is browser specific.
 
 	/**
-	 * @function handleImageIndexChange
+	 * @function handleImageIndexChange 
 	 * @param {*} e 
 	 */
 	function handleImageIndexChange(e) {
@@ -70,6 +70,7 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 
 		setImageIndex(value);
 	}
+
 /**
  * @async
  * @function fetchRandomImage
@@ -78,6 +79,7 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 		let randomImageIndex = await getRandomDataPoint(split);
 		setImageIndex(randomImageIndex);
 	}
+
 /**
  * @function handleSnackbarClose
  */

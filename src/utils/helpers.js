@@ -16,6 +16,8 @@ export function getRandomInt(min, max) {
  * @function fetchPrediction fetch prediction data from backend
  * @param {string} apiUrl 
  * @param {object} predictionData 
+ * 	@param {number} predictionData.imageIndex
+ * 	@param {string} pridictionData.question
  * @returns 
  */
 export async function fetchPrediction(apiUrl, predictionData) {
@@ -56,7 +58,17 @@ export async function fetchRandomQuestions(imageIndex, task = 'vqa') {
  * then we send feedback input to backend
  * @param {string} apiUrl 
  * @param {object} data 
- * @returns 
+ * 	@param {string} data.cookieUserID
+ * 	@param {object} data.feedback
+ * 		@param {} data.feedback.answer
+ * 		@param {} data.feedback.attention
+ * 		@param {number} data.feedback.relevance_score
+ * 		@param {string} data.feedback.user_answer
+ * 		@param {string} data.feedback.explaination
+ * 	@param {number} data.imageIndex
+ * 	@param {string} data.question
+ * 	@param {string} data.answer
+ * 	@returns 
  */
 export async function sendUserFeedback(apiUrl, data) {
 	console.log("Sending feedback: ")

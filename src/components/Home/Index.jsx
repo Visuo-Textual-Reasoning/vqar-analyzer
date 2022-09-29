@@ -8,12 +8,9 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import VQAImage from '../../assets/images/vqa-example.png';
 import VCRImage from '../../assets/images/vcr-example.png';
-//import MCANattention from '../MCANattention/Index';
 import {LocalMCAN, bBox} from '../MCANattention/Local';
 import DiscreteSlider from '../MCANattention/DiscreteSlider';
-// import setCookie from '../../hooks/setCookie';
-// import getCookie from '../../hooks/getCookie';
-// import { v4 as uuid } from 'uuid';
+
 
 const useStyles = makeStyles((theme) => {
 	return {
@@ -93,7 +90,10 @@ export default function Home() {
 		</>
 	);
 }
-
+/** 
+ * Shows card with VQA details 
+ * @component
+ */
 function VQACard() {
 	const classes = useStyles()
 	return (
@@ -114,7 +114,10 @@ function VQACard() {
 		</div>
 	);
 }
-
+/** 
+ * Shows Card with VCR information 
+ * @coomponent
+ */
 function VCRCard() {
 	const classes = useStyles()
 	return (

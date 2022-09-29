@@ -51,9 +51,14 @@ function App() {
 	});
 	console.log(useTheme());
 
-	
+	/** We are Defining Cookies here */
 	const [cookies, setCookie] = useCookies(['user']);
 	//console.log("user id: "+ id);
+	
+	/** We check for cookies.
+	 * if cookies are absent then we generate a user id 
+	 * 
+	 */
 	if(!cookies.userID ){
 		let id = uuid();
 		setCookie('userID',id, { path: '/' });
@@ -62,16 +67,6 @@ function App() {
 		console.log("Stored Cookie "+cookies.userID);
 	}
 	
-	// const userCookie = getCookie('userId')
-	// if (userCookie == null){
-	// 	const unique_full_id = uuid();
-	// 	const unique_id = unique_full_id.slice(0,8)
-	// 	setCookie('userId',unique_id);
-	// 	console.log("setCookie "+userCookie)
-	// }else{
-		
-	// 	console.log("getCookie "+userCookie)
-	// }
 	return (
 		<ThemeProvider theme={myTheme}>
 			<AuthProvider>

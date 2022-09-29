@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import FAQ from './FAQ'
 
+
+/** @type {React.FC<props>} */
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -35,6 +37,11 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
+/**
+ * @function a11yProps 
+ * @param {number} index 
+ * @returns It returns props for each tab 
+ */
 function a11yProps(index) {
   return {
     id: `full-width-tab-${index}`,
@@ -42,9 +49,15 @@ function a11yProps(index) {
   };
 }
 
+
+/** This component renders Tabs for FAQ page along with the questions */
 export default function FullWidthTabs() {
 
   //VQA Questions
+  /** 
+   * @type {string}
+   * @constant
+   */
   const q1 = "What is VQA task?";
   const a1 = "Visual question answering(vqa) is a multi modal task involving computer vision and NLP. We show an image to model, ask questions about that image to the model and model answers it.";
   const q2 = "What am I supposed to do?";
@@ -55,6 +68,10 @@ export default function FullWidthTabs() {
   const a4 = "Give the correct answer in the answer field (one word) and explanation is what you think about model's answer. Explanation could be you explaining about relevance, model's attention etc.";
 
   //VCR Questions
+  /** 
+   * @type {string}
+   * @constant
+   */
   const vcrq1 = "What is VCR task?";
   const vcra1 = "Visual commonsense reasoning is a new task for congnitive level visual understanding. For more insights about the task and dataset, you may visit visualcommonsense.com";
   const vcrq2 = "What am I supposed to do?";

@@ -81,7 +81,17 @@ export default function Local(n,constApiUrl,imageIndex){
     let str = tempSorted.slice(1,n);
 
     /** 
-     * @constant params It is needed for Input for the bounding boxes
+     * @typedef {object} params
+     *  @property {string} params.image
+     *  @property {Array.<Array.<number>>} params.box
+     *  @property {object} params.options
+     *      @property {object} params.options.colors
+     *          @property {string} params.options.colors.normal
+     *          @property {string} params.options.colors.selected
+     *          @property {string} params.options.colors.unselected
+     *      @property {object} params.options.style
+     *          @property {string} params.options.style.maxWidth
+     *          @property {string} params.options.style.maxHeight
      */
     const params = {
         image:imageUrl,

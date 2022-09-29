@@ -30,8 +30,8 @@ const useStyles = makeStyles({
 	}
 });
 /**
- * @component 
- * @param {func} handleRadioChange
+ * @function VCRFeedbackForm Displays the feedback form of VCR 
+ * @type {React.FC<Props>}
  * @returns 
  */
 export default function VCRFeedbackForm({ handleRadioChange, sendFeedback, feedback }) {

@@ -1,17 +1,9 @@
 import React from 'react'
 import Box from '@mui/material/Box';
-// import FAQ from './FAQ'
-// import Tabs from "@mui/material/Tabs";
-// import Tab from "@mui/material/Tab";
 import FullWidthTabs from './FullWidthTabs';
 
+/** Complete Faq page */
 export default function FAQs() {
-  
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
   
   return (
     <Box sx={{ alignItems: 'center',display:'flex',flexDirection: 'column',textAlign: 'center', width: "80%",margin:'auto'}}>
