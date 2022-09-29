@@ -124,7 +124,7 @@ function displayAttValues(i){
                 {/* <div fallback={<div>Local(1)</div>}>
                 {Local(loadDynamicComp)}
                 </div>  */}
-                <div style={{ display: "flex","flex-wrap": "wrap"}}>Attention:&nbsp; {displayAttValues(loadDynamicComp)}</div>
+                <div style={{ display: "flex","flexWrap": "wrap"}}>Attention:&nbsp; {displayAttValues(loadDynamicComp)}</div>
                 </div>
             ) : null
     }

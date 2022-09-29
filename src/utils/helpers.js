@@ -60,8 +60,8 @@ export async function fetchRandomQuestions(imageIndex, task = 'vqa') {
  * @param {object} data
  * 	@param {string} data.cookieUserID
  * 	@param {object} data.feedback
- * 		@param {} data.feedback.answer
- * 		@param {} data.feedback.attention
+ * 		@param {string} data.feedback.answer
+ * 		@param {*} data.feedback.attention
  * 		@param {number} data.feedback.relevance_score
  * 		@param {string} data.feedback.user_answer
  * 		@param {string} data.feedback.explaination

@@ -79,83 +79,38 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		user_answer: '',
 		explanation: ''
 	});
-	const [heatmapImage, setHeatmapImage] = useState(null)
 	const [ auth, setAuth ] = useAuth();
 	const [ attMapID, setAttMapID ] = useState(null);
 	const [ attMapUrl, setAttMapUrl ] = useState(null);
 	const [warningMessage, setWarningMessage] = useState("");
 	const [cookies, setCookie] = useCookies(['user']);
-	const [fetchJsonData, setData] = useState(0)
+	const [qattData, setQattData] = useState({})
+	const [qa, setQA] = useState([])
 
-	//var fetchJsonData;
-	//console.log("Stored Cookie "+cookies.userID);
 	/** @type {string} contains User id cookie */
 	let cookieUserID = cookies.userID;
-	//var JsonData = []
 
-  /**
-   * Pull word attention maps for a question
-   */
-	async function pullJson(){
+	async function fetchQattJson(){
 		const response = await fetch(qattUrl);
 		const responseData = await response.json();
 		return responseData;
-		// console.log("data1"+responseData.values);
-		// setData(responseData);
-		// console.log("data2"+data.values)
 	}
 
 	async function assigndata(){
-		// pullJson().then(
-		// 	function(value) {JsonData = value; console.log("fetchJson: "+ JsonData.values);}
-		// );
-		setData( await pullJson());
-		//fetchJsonData = await pullJson();
-		console.log("jsondata: "+ fetchJsonData.values);
+		setQattData( await fetchQattJson());
+		//console.log("QattJsonData: "+ qattData.question_values);
 	}
 
-	// function pullJson(){
-	// 	 fetch("10.5.0.96:5556/attention_question" )
-	// 	.then(response => response.json())
-	// 	.then(responseData=>  {
-	// 		console.log("responseData:  "+responseData.values);
-	// 		// JsonData = responseData;
-	// 		//console.log("responseData:  "+JsonData.values);
-	// 		setData(responseData);
-	// 	})
-	// 	// console.log("responseData:  "+temp.value);
-	// 	// return temp.values;
-	// }
-	 //let abc = pullJson();
-
-	//  console.log("json data:  "+JsonData.values);
-	useEffect(()=>{
-		console.log(42)
-		// var fetchJsonData;
-		// async function assigndata(){
-		// 	// pullJson().then(
-		// 	// 	function(value) {JsonData = value; console.log("fetchJson: "+ JsonData.values);}
-		// 	// );
-		// 	//  setData( await pullJson());
-		// 	fetchJsonData = await pullJson();
-		// 	console.log("jsondata: "+ fetchJsonData.values);
-		// }
-		// (async ()=>{
-		// 	const response =  await fetch(qattUrl);
-		// 	const responseData =  response.json();
-		// 	return responseData;
-		// 	// console.log("data1"+responseData.values);
-		// 	// setData(responseData);
-		// 	// console.log("data2"+data.values)
-		// }
-
-		// )().then(
-		// 	function(value) {fetchJsonData = value}
-		// );
+	useEffect(() => {
 		assigndata();
-		console.log("fetch json outisde asyn: "+ fetchJsonData);
+		console.log("QattJsonData: "+ qattData.question_values);
 	},[])
 
+	useEffect(() => {
+		let qatt = fetchQattJson();
+		setQA(qatt);
+	},[qattData])
+  
 	useEffect(
 		() => {
 			// console.log("Model Panel: ", evaluate, evaluateRef.current);
@@ -297,7 +252,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		// let finalColor = '"'+rgbaColor+'"'
 		// let tempColor = "rgba(255,0,0,0.13)"
 		//wconsole.log(index);
-		return <div style={{ color: rgbaColor,"flex":"0 1 auto" }}>{currentelement}&nbsp;</div>;
+		return <div key= {index} style={{ color: rgbaColor,"flex":"0 1 auto" }}>{currentelement}&nbsp;</div>;
 
 	}
 /**
@@ -353,14 +308,14 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 			{loading ? <CircularProgress color="secondary" /> : <Answer answer={answer} />}
 
 			{(answer && modelActive && isMCAN(mcan)) &&
-			<Typography>
+			<span>
 				<div style={{"display":"flex","flexDirection":"row"}}>{questionAtt(question)}</div>
 				{/* <MCANattention/> */}
-			</Typography>
+			</span>
 			}
 
 			<Typography sx={{ fontFamily: 'Cascadia Code', fontSize: '12px' }}>
-				{!loading && timeTaken && `Took ${(timeTaken / 1000).toFixed(2)}s`}
+				{!loading && timeTaken && `Took ${(timeTaken / 1000).toFixed(2)}`}
 			</Typography>
 
 			{modelActive &&
@@ -371,6 +326,8 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 			{(answer && modelActive && mcan==false) && <Paper component="img" className={classes.img} src={imageUrl} alt={`Image-${imageIndex}`} sx={{mt: 2, width: "100%", height: "auto"}}  />}
 
 			{(answer && modelActive) && isMCAN(mcan)}
+
+			{/* {(answer && modelActive && mcan==true) && <div>Hello macha {qa}</div>} */}
 
 			<MySnackbar open={warningMessage !== ""} handleClose={handleWarningClose} msg={warningMessage} />
 		</Paper>

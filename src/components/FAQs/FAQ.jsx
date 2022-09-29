@@ -53,9 +53,9 @@ export default function FAQ(ques,ans) {
                 ref={contentRef}
                 className={active ? `answer answer-divider` : `answer`}
               >
-                <p>
+                <div>
                  {ans}
-                </p> 
+                </div> 
               </div>
             </div>
           </button>
