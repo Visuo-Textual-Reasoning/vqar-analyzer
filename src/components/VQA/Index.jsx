@@ -44,7 +44,9 @@ export default function VQA() {
 	const [ warningMessage, setWarningMessage ] = useState('');
 	const saaaHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : SAAA_HOME_URL;
 	const mcanHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : MCAN_HOME_URL;
-	const [ imageIndex, setImageIndex ] = useState();
+	const [isFirst , setIsFirst] = useState(true);
+	let index = 1;
+	const [ imageIndex, setImageIndex ] = useState(isFirst ? 1 : index);
 
 	useEffect(
 		() => {
@@ -61,6 +63,8 @@ export default function VQA() {
 			setVocab(v);
 		});
 		getRandomDataPoint(split).then(imid => setImageIndex(imid))
+		//console.log("ImageIndex in useeffect :  " + imageIndex)
+		index = imageIndex;
 	}, []);
 
 	/**
