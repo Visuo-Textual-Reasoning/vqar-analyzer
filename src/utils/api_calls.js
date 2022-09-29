@@ -1,5 +1,5 @@
 import { VQA } from "./apis";
-import { getRandomInt } from "./helpers"
+import { getRandomInt } from "./helpers";
 //NOTE: I think we are not using split variable
 
 /**
@@ -9,34 +9,35 @@ import { getRandomInt } from "./helpers"
  */
 export async function getMaxNoOfImages(split) {
     try {
-        let response = await fetch(VQA)
-        let data = await response.json()
-        return data.max_images
+      let response = await fetch(VQA);
+      let data = await response.json();
+      return data.max_images;
     } catch (err) {
-        throw err
+      throw err;
     }
 }
 /**
  * @async
  * @function getDataPoint it returns image
- * @param {string} split 
- * @param {number} imageIndex 
- * @returns 
+ * @param {string} split
+ * @param {number} imageIndex
+ * @returns
  */
 export async function getDataPoint(split, imageIndex) {
-    return imageIndex
+  return imageIndex;
 }
 
 /**
- * @async 
+ * @async
  * @function getRandomDataPoint gets a random image index
- * @param {string} split 
- * @param {?number} maxImages 
- * @returns 
+ * @param {string} split
+ * @param {?number} maxImages
+ * @returns
  */
 export async function getRandomDataPoint(split, maxImages = null) {
-    if (!maxImages)
-        maxImages = await getMaxNoOfImages(split)
-    let imageIndex = getRandomInt(1, maxImages+1)
-    return await getDataPoint(split, imageIndex)
+    if (!maxImages){
+      maxImages = await getMaxNoOfImages(split);
+    }
+  let imageIndex = getRandomInt(1, maxImages+1);
+  return await getDataPoint(split, imageIndex);
 }

@@ -11,4 +11,4 @@ export const MCAN_HOME_URL = "http://10.5.0.96:5556";
 export const MOCK_API = "http://localhost:4000";
 
 /**@type {string} Mockapi Url else SAAA Url*/
-export const VQA = (process.env.REACT_APP_DEMO) ? MOCK_API :SAAA_HOME_URL
+export const VQA = (process.env.REACT_APP_DEMO) ? MOCK_API :SAAA_HOME_URL;
