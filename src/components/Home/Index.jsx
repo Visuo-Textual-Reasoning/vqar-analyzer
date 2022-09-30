@@ -8,8 +8,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import VQAImage from '../../assets/images/vqa-example.png';
 import VCRImage from '../../assets/images/vcr-example.png';
-import {LocalMCAN, bBox} from '../MCANattention/Local';
-import DiscreteSlider from '../MCANattention/DiscreteSlider';
+import { useNavigate } from 'react-router';
+
 
 
 const useStyles = makeStyles((theme) => {
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => {
 		},
 		myCard: {
 			maxWidth: 350,
-			height: 450,
+			height: 410,
 			padding: 10,
 			display: "flex",
 			flexDirection: 'column',
@@ -96,20 +96,22 @@ export default function Home() {
  */
 function VQACard() {
 	const classes = useStyles()
+	const navigate = useNavigate();
 	return (
 		<div className={classes.myCard}>
 			<div className="image">
 				<img src={VQAImage} alt="VQA" />
 			</div>
 			<div className="contents">
-				<h4>Visual Question Answering</h4>
-				<p>
+				<Button size="large" color="primary" style={{color:"black",margin:"20px 0px 0px 0px",fontWeight:"bold",fontSize:"17px"}}onClick={(e) => navigate(`/vqa`)}>Visual Question Answering</Button>
+				{/* <h4>Visual Question Answering</h4> */}
+				<p style={{marginTop:"6px"}}>
 					In VQA, we present the model with an image and a question in the form of natural language and the
 					 model generates an answer again in the form of natural language
 				</p>
 			</div>
 			<div className="actions">
-				<Button size="small">Learn More</Button>
+				<Button size="small" onClick={(e) => navigate(`/faqs`)}>Learn More</Button>
 			</div>
 		</div>
 	);
@@ -120,20 +122,21 @@ function VQACard() {
  */
 function VCRCard() {
 	const classes = useStyles()
+	const navigate = useNavigate();
 	return (
 		<div className={classes.myCard}>
 			<div className="image">
 				<img src={VCRImage} alt="VCR" />
 			</div>
 			<div className="contents">
-				<h4>Visual Commonsense Reasoning</h4>
-				<p>
+				<Button size="large" color="primary" style={{color:"black",margin:"20px 0px 0px 0px",fontWeight:"bold",fontSize:"17px"}}onClick={(e) => navigate(`/vcr`)}>Visual Commonsense Reasoning</Button>
+				<p style={{marginTop:"6px"}}>
 					In VQA, we present the model with an image and a question in the form of natural language and the
 					model generates an answer again in the form of natural language
 				</p>
 			</div>
 			<div className="actions">
-				<Button size="small">Learn More</Button>
+				<Button size="small" onClick={(e) => navigate(`/faqs`)}>Learn More</Button>
 			</div>
 		</div>
 	);
