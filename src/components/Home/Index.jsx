@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => {
 			alignItems: 'center'
 		},
 		card: {
-			// border: "1px solid red",
-			width: 450,
+			//border: "1px solid red",
+			width: 410,
 			height: 420,
 		},
 		myCard: {
@@ -100,7 +100,7 @@ function VQACard() {
 	return (
 		<div className={classes.myCard}>
 			<div className="image">
-				<img src={VQAImage} alt="VQA" />
+				<img src={VQAImage} alt="VQA" style={{"cursor": "pointer"}} onClick={(e) => navigate(`/vqa`)}/>
 			</div>
 			<div className="contents">
 				<Button size="large" color="primary" style={{color:"black",margin:"20px 0px 0px 0px",fontWeight:"bold",fontSize:"17px"}}onClick={(e) => navigate(`/vqa`)}>Visual Question Answering</Button>
@@ -126,7 +126,7 @@ function VCRCard() {
 	return (
 		<div className={classes.myCard}>
 			<div className="image">
-				<img src={VCRImage} alt="VCR" />
+				<img src={VCRImage} alt="VCR" style={{"cursor": "pointer"}} onClick={(e) => navigate(`/vcr`)}/>
 			</div>
 			<div className="contents">
 				<Button size="large" color="primary" style={{color:"black",margin:"20px 0px 0px 0px",fontWeight:"bold",fontSize:"17px"}}onClick={(e) => navigate(`/vcr`)}>Visual Commonsense Reasoning</Button>

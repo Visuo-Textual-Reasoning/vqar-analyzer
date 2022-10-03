@@ -11,6 +11,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Drawer, List, ListItem, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../../contexts/AuthProvider';
+import Tooltip from '@mui/material/Tooltip';
 /**
  * @function MenuBar It shows a menu bar that we can toggle
  * @returns 
@@ -53,9 +54,14 @@ export default function MenuBar() {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+					<Tooltip disableFocusListener disableTouchListener title=" HOME " >
+						<Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center', "cursor": "pointer" }} onClick={(e) => navigate(`/`)} >
+							VQAR Analyzer
+						</Typography>
+					</Tooltip>
+					{/* <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center', "cursor": "pointer" }} onClick={(e) => navigate(`/`)} >
 						VQAR Analyzer
-					</Typography>
+					</Typography> */}
 					{auth.name ? (
 						<>
 							{auth.name}
