@@ -9,7 +9,7 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import Answer from '../Answer/Index';
 import { useState } from 'react';
-import { fetchPrediction, sendUserFeedback } from '../../utils/helpers';
+import { fetchPrediction, fetchWordAtt, sendUserFeedback } from '../../utils/helpers';
 import { useEvaluate } from '../../contexts/EvaluateProvider';
 import { useAuth } from '../../contexts/AuthProvider';
 import FeedbackForm from '../FeedbackForm/Index';
@@ -86,31 +86,10 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 	const [cookies, setCookie] = useCookies(['user']);
 	const [qattData, setQattData] = useState({})
 	const [qa, setQA] = useState([])
-
+	const [jsonArray, setJsonArray] = useState({});
 	/** @type {string} contains User id cookie */
 	let cookieUserID = cookies.userID;
 
-	async function fetchQattJson(){
-		const response = await fetch(qattUrl);
-		const responseData = await response.json();
-		return responseData;
-	}
-
-	async function assigndata(){
-		setQattData( await fetchQattJson());
-		//console.log("QattJsonData: "+ qattData.question_values);
-	}
-
-	useEffect(() => {
-		assigndata();
-		console.log("QattJsonData: "+ qattData.question_values);
-	},[])
-
-	useEffect(() => {
-		let qatt = fetchQattJson();
-		setQA(qatt);
-	},[qattData])
-  
 	useEffect(
 		() => {
 			// console.log("Model Panel: ", evaluate, evaluateRef.current);
@@ -151,6 +130,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 			setLoading(false);
 			setShowFeedback(true);
 			setAnswer(data.answer);
+			if (mcan){assigndata();}
 			setAttMapID(data.att_map_id);
 			//console.log(attMapID);
 		} catch (err) {
@@ -236,6 +216,23 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		});
 		setShowFeedback(false);
 	}
+
+
+	async function assigndata(){
+		if (mcan)
+		setQattData( await fetchWordAtt(apiUrl));
+	}
+
+
+	useEffect(() => {
+		if( qattData.question_values != undefined){
+			//console.log( qattData.question_values);
+			setJsonArray([...qattData.question_values])
+			//console.log ("Json Array: " + jsonArray)
+		}
+	},[qattData,evaluate ])
+
+
 	
 	/**
 	 * 
@@ -245,7 +242,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 	 */
 	function setFontColor(currentelement,index){
 		//var colorArray = ['red', 'green', 'blue', 'orange', 'yellow'];
-		const jsonArray = JsonData.values;
+		// const jsonArray = qattData.question_values;
 		var colorG = (jsonArray[index]*1)+0.1;
 		var colorGrad = colorG.toFixed(2);
 		let rgbaColor = "rgba(237,108,3,"+colorGrad+")";
@@ -262,6 +259,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
  */
 	function questionAtt(question){
 		var myarray = question.split(' ');
+		console.log("Inside setFontColor jsonArray" + jsonArray[2]);
 		// let result = myarray.map( (currentelement, index) => <div style={{ color: '${setfontColor(index)}',"flex":"0 1 auto" }}>{currentelement}&nbsp;</div>);
 		let result = myarray.map( (currentelement, index) => setFontColor(currentelement,index));
 		return result;

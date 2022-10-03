@@ -33,6 +33,20 @@ export async function fetchPrediction(apiUrl, predictionData) {
 	return data;
 }
 
+export async function fetchWordAtt(apiUrl){
+	let response = await fetch(`${apiUrl}/attention_question`)
+	let data = await response.json();
+	console.log(data);
+	return data;
+}
+
+export async function fetchBoundingBoxAtt(apiUrl){
+	let response = await fetch(`${apiUrl}/attention_image`)
+	let data = await response.json();
+	console.log(data);
+	return data;
+}
+
 /**
  * @async
  * @function fetchRandomQuestions We use it to get sample questions from backend
