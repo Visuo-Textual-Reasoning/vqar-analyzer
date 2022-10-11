@@ -36,14 +36,14 @@ export async function fetchPrediction(apiUrl, predictionData) {
 export async function fetchWordAtt(apiUrl){
 	let response = await fetch(`${apiUrl}/attention_question`)
 	let data = await response.json();
-	console.log(data);
+	//console.log(data);
 	return data;
 }
 
 export async function fetchBoundingBoxAtt(apiUrl){
 	let response = await fetch(`${apiUrl}/attention_image`)
 	let data = await response.json();
-	console.log(data);
+	console.log("bboxAtt: "+data);
 	return data;
 }
 
@@ -60,13 +60,19 @@ export async function fetchRandomQuestions(imageIndex, task = 'vqa') {
 	if (task === 'vqa') {
 		apiUrl = SAAA_HOME_URL;
 	} else {
-		apiUrl = 'vcr';
+		apiUrl = 'http://localhost:4000';
+		let last2Str = String(imageIndex).slice(-2);
+		let last2Num = Math.round(Number(last2Str)/2);
+		imageIndex = last2Num;
+
 	}
-  console.log("fetchRandomQuestions", apiUrl, VQA);
+  	//console.log("fetchRandomQuestions", apiUrl, VQA);
 	let response = await fetch(`${apiUrl}/sample_questions?imageIndex=${imageIndex}`);
 	let data = await response.json();
 	return data.random_questions;
 }
+
+
 /**
  * @async
  * @function sendUserFeedback we set the current time &
