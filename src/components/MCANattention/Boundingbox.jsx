@@ -183,7 +183,7 @@ class Boundingbox extends Component {
 
       if(
         this.canvas.width !== background.width &&
-        this.canvas.height !== background.height
+        this.canvas.height !== background.height 
       ) {
         this.canvas.width = background.width;
         this.canvas.height = background.height;
@@ -477,6 +477,9 @@ Boundingbox.defaultProps = {
       [x, y, width, height] = coord;
 
     }
+    
+    width = Math.abs(width)
+    height = Math.abs(height)
 
     if (x < lineWidth / 2) { x = lineWidth / 2; }
     if (y < lineWidth / 2) { y = lineWidth / 2; }
@@ -504,10 +507,12 @@ Boundingbox.defaultProps = {
     ctx.beginPath();
     
     //Draw Ellipse
-    //console.log("image dimentions"+width)
+    // console.log("image dimentions"+width)
     let xCoordCenter = x+(width/2);
     let yCoordCenter = y+(height/2);
-    ctx.ellipse(xCoordCenter, yCoordCenter,width/2, height/2,0,0,2 * Math.PI); 
+    let radiusX = Math.abs(width/2);
+    let radiusY = Math.abs(height/2);
+    ctx.ellipse(xCoordCenter, yCoordCenter,radiusX,radiusY ,0,0,2 * Math.PI); 
     
     // Code to render box
     // ctx.moveTo(x + width, y);

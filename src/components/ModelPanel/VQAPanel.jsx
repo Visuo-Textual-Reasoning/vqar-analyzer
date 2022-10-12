@@ -1,15 +1,15 @@
 // @flow
 
 import PropTypes from 'prop-types';
-import { Paper, Typography, CircularProgress, Switch, rgbToHex } from '@mui/material';
-import JsonData from './qatt.json'
+import { Paper, Typography, CircularProgress, Switch } from '@mui/material';
+//import JsonData from './qatt.json'
 // import Snackbar from '@mui/material/Snackbar';
 // import Alert from '@mui/material/Alert';
 import React, { useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import Answer from '../Answer/Index';
 import { useState } from 'react';
-import { fetchPrediction, fetchWordAtt, sendUserFeedback } from '../../utils/helpers';
+import { fetchPrediction, fetchWordAtt, sendUserFeedback, fetchBoundingBoxAtt } from '../../utils/helpers';
 import { useEvaluate } from '../../contexts/EvaluateProvider';
 import { useAuth } from '../../contexts/AuthProvider';
 import FeedbackForm from '../FeedbackForm/Index';
@@ -19,7 +19,7 @@ import DiscreteSlider from '../MCANattention/DiscreteSlider';
 import { useCookies } from 'react-cookie';
 
 const useStyles = makeStyles((theme) => {
-	console.log(theme);
+	//console.log(theme);
 	return {
 		panel: {
 			[theme.breakpoints.down('md')]: {
@@ -60,7 +60,11 @@ const useStyles = makeStyles((theme) => {
 export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,mcan }) {
 	//const imageUrl = `${apiUrl}/image?imageIndex=${imageIndex}`;
 	/** @type {string} Url attention image of SAAA model */
-	const imageUrl = `${apiUrl}/attention-maps?imageIndex=${imageIndex}`;
+	const [imageUrl, setImageUrl] = useState('')
+	useEffect(() => {
+		setImageUrl(`${apiUrl}/attention-maps?imageIndex=${imageIndex}`);
+	},[])
+
 	/** @type {string} Url to get Json values of the bounding boxes */
 	const iattUrl = `http://10.5.0.96:5556/attention_image`
 	/** @type {string} Url to get word attention values */
@@ -85,8 +89,12 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 	const [warningMessage, setWarningMessage] = useState("");
 	const [cookies, setCookie] = useCookies(['user']);
 	const [qattData, setQattData] = useState({})
-	const [qa, setQA] = useState([])
 	const [jsonArray, setJsonArray] = useState({});
+	const [flag,setFlag] = useState(0)
+	const [iattData, setIattData] = useState({});
+	const [tempImageIndex, setTempImageIndex] = useState(0)
+
+
 	/** @type {string} contains User id cookie */
 	let cookieUserID = cookies.userID;
 
@@ -96,6 +104,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 			if (evaluate) {
 				// console.log('getting asnwer');
 				getAnswer();
+				// isMCAN(mcan);
 				setEvaluate(false);
 				// setShowFeedback(true);
 			}
@@ -125,11 +134,12 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 			let startTime = performance.now();
 			let data = await fetchPrediction(apiUrl, predictionData);
 			let endTime = performance.now();
-			
 			setTimeTaken(endTime - startTime);
 			setLoading(false);
 			setShowFeedback(true);
+			setImageUrl(`${apiUrl}/attention-maps?imageIndex=${imageIndex}`);
 			setAnswer(data.answer);
+			assignImageData();
 			if (mcan){assigndata();}
 			setAttMapID(data.att_map_id);
 			//console.log(attMapID);
@@ -259,11 +269,20 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
  */
 	function questionAtt(question){
 		var myarray = question.split(' ');
-		console.log("Inside setFontColor jsonArray" + jsonArray[2]);
 		// let result = myarray.map( (currentelement, index) => <div style={{ color: '${setfontColor(index)}',"flex":"0 1 auto" }}>{currentelement}&nbsp;</div>);
 		let result = myarray.map( (currentelement, index) => setFontColor(currentelement,index));
 		return result;
 	}
+
+
+	async function assignImageData(){
+		setTempImageIndex(imageIndex);
+        setIattData( await fetchBoundingBoxAtt("http://10.5.0.96:5556" ));
+      }
+      
+	// useEffect(() => {
+	// console.log(iattData)
+	// },[iattData])
 
 	/**
 	 * @function isMCAN Displays slider in MCAN model panel
@@ -272,10 +291,11 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 	 */
 	function isMCAN(bool){
 		if(bool){
+
 		return (
 			<div>
 				{/* <div className='mcanAttImg'>{Local(1)}</div> */}
-				<DiscreteSlider constApiUrl="http://10.5.0.96:5002" imageIndex={imageIndex}/>
+				{/* <DiscreteSlider constApiUrl="http://10.5.0.96:5556" imageIndex={imageIndex} data = {iattData}/> */}
 				{/* {DiscreteSlider("http://10.5.0.96:5002",20)} */}
 			</div>
 		)
@@ -323,7 +343,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 
 			{(answer && modelActive && mcan==false) && <Paper component="img" className={classes.img} src={imageUrl} alt={`Image-${imageIndex}`} sx={{mt: 2, width: "100%", height: "auto"}}  />}
 
-			{(answer && modelActive) && isMCAN(mcan)}
+			{(answer && modelActive && mcan==true && iattData!="undefined" && tempImageIndex!= 0) && <DiscreteSlider constApiUrl="http://10.5.0.96:5556" imageIndex={tempImageIndex} data = {iattData}/>}
 
 			{/* {(answer && modelActive && mcan==true) && <div>Hello macha {qa}</div>} */}
 

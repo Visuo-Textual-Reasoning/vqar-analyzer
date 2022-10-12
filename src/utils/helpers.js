@@ -1,4 +1,4 @@
-import { SAAA_HOME_URL, VQA } from './apis';
+import { MOCK_API, SAAA_HOME_URL, VQA } from './apis';
 
 /**
  * @function getRandomInt get random number in between min & max
@@ -43,7 +43,7 @@ export async function fetchWordAtt(apiUrl){
 export async function fetchBoundingBoxAtt(apiUrl){
 	let response = await fetch(`${apiUrl}/attention_image`)
 	let data = await response.json();
-	console.log("bboxAtt: "+data);
+	//console.log("bboxAtt: "+data);
 	return data;
 }
 
@@ -60,7 +60,7 @@ export async function fetchRandomQuestions(imageIndex, task = 'vqa') {
 	if (task === 'vqa') {
 		apiUrl = SAAA_HOME_URL;
 	} else {
-		apiUrl = 'http://localhost:4000';
+		apiUrl = MOCK_API;
 		let last2Str = String(imageIndex).slice(-2);
 		let last2Num = Math.round(Number(last2Str)/2);
 		imageIndex = last2Num;
