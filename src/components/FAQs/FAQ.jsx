@@ -4,7 +4,7 @@ import { FiPlus } from "react-icons/fi";
 import PropTypes from 'prop-types';
 
 // Show question, answer and toggle button
-export default function FAQ(ques,ans) {
+export default function FAQ(ques,ans,tvalue) {
 /** used for toggle butrton */
   const [active, setActive] = useState(false);
 
@@ -25,6 +25,11 @@ export default function FAQ(ques,ans) {
     }
     setActive(!active);
   };
+  
+  useEffect(() => {
+    setActive(false);
+  }, [tvalue]);
+
 
   // const toggleIcon = (temp) => {
   //   if (temp == true){
@@ -54,7 +59,10 @@ export default function FAQ(ques,ans) {
                 className={active ? `answer answer-divider` : `answer`}
               >
                 <div>
-                 {ans}
+                  <br/>
+                  {ans}
+                  <br/>
+                  <br/>
                 </div> 
               </div>
             </div>

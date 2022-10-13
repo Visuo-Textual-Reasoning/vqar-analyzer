@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import Boundingbox from "./Boundingbox";
 import PropTypes, { number } from 'prop-types';
-import { fetchBoundingBoxAtt } from '../../utils/helpers';
+//import { fetchBoundingBoxAtt } from '../../utils/helpers';
 
 
 

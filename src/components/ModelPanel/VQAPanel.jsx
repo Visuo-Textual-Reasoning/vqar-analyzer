@@ -66,9 +66,9 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 	},[])
 
 	/** @type {string} Url to get Json values of the bounding boxes */
-	const iattUrl = `http://10.5.0.96:5556/attention_image`
+	// const iattUrl = `http://10.5.0.96:5556/attention_image`
 	/** @type {string} Url to get word attention values */
-	const qattUrl = `http://10.5.0.96:5556/attention_question`
+	// const qattUrl = `http://10.5.0.96:5556/attention_question`
 	const classes = useStyles();
 	const [ answer, setAnswer ] = useState('');
 	const [ evaluate, setEvaluate ] = useEvaluate();
@@ -83,14 +83,13 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		user_answer: '',
 		explanation: ''
 	});
-	const [ auth, setAuth ] = useAuth();
+	// const [ auth, setAuth ] = useAuth();
 	const [ attMapID, setAttMapID ] = useState(null);
 	const [ attMapUrl, setAttMapUrl ] = useState(null);
 	const [warningMessage, setWarningMessage] = useState("");
 	const [cookies, setCookie] = useCookies(['user']);
 	const [qattData, setQattData] = useState({})
 	const [jsonArray, setJsonArray] = useState({});
-	const [flag,setFlag] = useState(0)
 	const [iattData, setIattData] = useState({});
 	const [tempImageIndex, setTempImageIndex] = useState(0)
 
@@ -235,7 +234,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 
 
 	useEffect(() => {
-		if( qattData.question_values != undefined){
+		if( qattData.question_values !== undefined){
 			//console.log( qattData.question_values);
 			setJsonArray([...qattData.question_values])
 			//console.log ("Json Array: " + jsonArray)
@@ -341,9 +340,9 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 				<FeedbackForm handleRadioChange={handleRadioChange} sendFeedback={sendFeedback} feedback={feedback} />
 			)}
 
-			{(answer && modelActive && mcan==false) && <Paper component="img" className={classes.img} src={imageUrl} alt={`Image-${imageIndex}`} sx={{mt: 2, width: "100%", height: "auto"}}  />}
+			{(answer && modelActive && mcan===false) && <Paper component="img" className={classes.img} src={imageUrl} alt={`Image-${imageIndex}`} sx={{mt: 2, width: "100%", height: "auto"}}  />}
 
-			{(answer && modelActive && mcan==true && iattData!="undefined" && tempImageIndex!= 0) && <DiscreteSlider constApiUrl="http://10.5.0.96:5556" imageIndex={tempImageIndex} data = {iattData}/>}
+			{(answer && modelActive && mcan===true && iattData!=="undefined" && tempImageIndex!== 0) && <DiscreteSlider constApiUrl="http://10.5.0.96:5556" imageIndex={tempImageIndex} data = {iattData}/>}
 
 			{/* {(answer && modelActive && mcan==true) && <div>Hello macha {qa}</div>} */}
 

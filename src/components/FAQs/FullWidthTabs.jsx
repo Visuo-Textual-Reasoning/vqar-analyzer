@@ -5,9 +5,10 @@ import { useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import FAQ from './FAQ'
+import { useState } from 'react';
 
 
 /** @type {React.FC<props>} */
@@ -24,7 +25,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <span>{children}</span>
         </Box>
       )}
     </div>
@@ -84,9 +85,20 @@ export default function FullWidthTabs() {
   //-------------------------------------------------------
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const [tvalue, setTValue] = useState(0);
+
+  function toggleSetTValue(){
+    if(tvalue === 0){
+      setTValue(1);
+    }else{
+      setTValue(0);
+    }
+  }
 
   const handleChange = (event, newValue) => {
+    toggleSetTValue();
     setValue(newValue);
+    //toggleSetTValue();
   };
 
   const handleChangeIndex = (index) => {
@@ -116,17 +128,17 @@ export default function FullWidthTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          {FAQ(q1,a1)}
-          {FAQ(q2,a2)}
-          {FAQ(q3,a3)}
-          {FAQ(q4,a4)}
+          {FAQ(q1,a1,tvalue)}
+          {FAQ(q2,a2,tvalue)}
+          {FAQ(q3,a3,tvalue)}
+          {FAQ(q4,a4,tvalue)}
 
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-        {FAQ(vcrq1,vcra1)}
-        {FAQ(vcrq2,vcra2)}
-        {FAQ(vcrq3,vcra3)}
-        {FAQ(vcrq4,vcra4)}
+        {FAQ(vcrq1,vcra1,tvalue)}
+        {FAQ(vcrq2,vcra2,tvalue)}
+        {FAQ(vcrq3,vcra3,tvalue)}
+        {FAQ(vcrq4,vcra4,tvalue)}
         
         </TabPanel>
         {/* <TabPanel value={value} index={2} dir={theme.direction}>
