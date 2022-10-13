@@ -47,9 +47,9 @@ export default function FAQ(ques,ans,tvalue) {
           >
             <div>
               <div className="question-align">
-                <h4 className="question-style">
+                <h3 className="question-style">
                   {ques}
-                </h4>
+                </h3>
                 <FiPlus
                   className={active ? `question-icon rotate` : `question-icon`}
                 />
@@ -58,12 +58,12 @@ export default function FAQ(ques,ans,tvalue) {
                 ref={contentRef}
                 className={active ? `answer answer-divider` : `answer`}
               >
-                <div>
-                  <br/>
+                <h3 className="answerText" style={{"font-weight": "normal"}}>
+                  {/* <br/> */}
                   {ans}
-                  <br/>
-                  <br/>
-                </div> 
+                  {/* <br/>
+                  <br/> */}
+                </h3> 
               </div>
             </div>
           </button>

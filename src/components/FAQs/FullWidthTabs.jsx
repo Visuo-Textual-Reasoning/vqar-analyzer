@@ -76,11 +76,11 @@ export default function FullWidthTabs() {
   const vcrq1 = "What is VCR task?";
   const vcra1 = "Visual commonsense reasoning is a new task for congnitive level visual understanding. For more insights about the task and dataset, you may visit visualcommonsense.com";
   const vcrq2 = "What am I supposed to do?";
-  const vcra2 = "unlike VQA, this a multiple choice kind of task, where after asking a question, you need to provide 4 answers of which one is correct and 4 rationales explaining the rationale for the answer. The model responds with {answer} I think, beacuse {rationale}, the {answer} will be from 4 options you give and similarly the {rationale} will be from 4 rationales you give.";
+  const vcra2 = "Unlike VQA, this a multiple choice kind of task, where after asking a question, you need to provide 4 answers of which one is correct and 4 rationales explaining the rationale for the answer. The model responds with {answer} I think, beacuse {rationale}, the {answer} will be from 4 options you give and similarly the {rationale} will be from 4 rationales you give.";
   const vcrq3 = "What are the boxes and indices on the boxes?";
-  const vcra3 = "the indices and boxes represents the objects that you can ask questions about, you must be seeing number on the boxes. An example question would be: Why is 1 pointing at 2?";
+  const vcra3 = "The indices and boxes represents the objects that you can ask questions about, you must be seeing number on the boxes. An example question would be: Why is 1 pointing at 2?";
   const vcrq4 = "What is the Feedback here?";
-  const vcra4 = "similar to the VQA task, here also you report the relevance of answer and rationale chosen, what is the correct answer and rationale.";
+  const vcra4 = "Similar to the VQA task, here also you report the relevance of answer and rationale chosen, what is the correct answer and rationale.";
 
   //-------------------------------------------------------
   const theme = useTheme();
@@ -123,7 +123,7 @@ export default function FullWidthTabs() {
         </Tabs>
       </AppBar>
       <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        axis={theme.direction === 'ltr' ? 'x-reverse' : 'x'}
         index={value}
         onChangeIndex={handleChangeIndex}
       >
