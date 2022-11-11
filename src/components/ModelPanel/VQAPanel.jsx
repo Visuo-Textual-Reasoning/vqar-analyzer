@@ -17,6 +17,7 @@ import MySnackbar from '../MySnackbar/Index';
 // import Local from '../MCANattention/Local';
 import DiscreteSlider from '../MCANattention/DiscreteSlider';
 import { useCookies } from 'react-cookie';
+import { MCAN_HOME_URL } from '../../utils/apis';
 
 const useStyles = makeStyles((theme) => {
 	//console.log(theme);
@@ -276,7 +277,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 
 	async function assignImageData(){
 		setTempImageIndex(imageIndex);
-        setIattData( await fetchBoundingBoxAtt("http://10.5.0.96:5556" ));
+        setIattData( await fetchBoundingBoxAtt(MCAN_HOME_URL ));
       }
       
 	// useEffect(() => {
@@ -342,7 +343,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 
 			{(answer && modelActive && mcan===false) && <Paper component="img" className={classes.img} src={imageUrl} alt={`Image-${imageIndex}`} sx={{mt: 2, width: "100%", height: "auto"}}  />}
 
-			{(answer && modelActive && mcan===true && iattData!=="undefined" && tempImageIndex!== 0) && <DiscreteSlider constApiUrl="http://10.5.0.96:5556" imageIndex={tempImageIndex} data = {iattData}/>}
+			{(answer && modelActive && mcan===true && iattData!=="undefined" && tempImageIndex!== 0) && <DiscreteSlider constApiUrl='MCAN_HOME_URL' imageIndex={tempImageIndex} data = {iattData}/>}
 
 			{/* {(answer && modelActive && mcan==true) && <div>Hello macha {qa}</div>} */}
 
