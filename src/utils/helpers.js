@@ -130,3 +130,31 @@ export async function fetchVocabulary(apiUrl) {
 		return [];
 	}
 }
+
+export async function fetchMaxImages(apiUrl) {
+
+	let response = await fetch(`${apiUrl}`);
+	let vocab = await response.json();
+	return vocab;
+}
+
+export async function fetchSampleQuestions(apiUrl,imageIndex) {
+
+	let response = await fetch(`${apiUrl}/vqa/sample-questions?imageIndex=${imageIndex}`);
+	let data = await response.json();
+	return data;
+}
+
+export async function fetchPredictionNew(apiUrl, predictionData) {
+	let response = await fetch(`${apiUrl}/vqa/predict`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(predictionData)
+	});
+	let data = await response.json();
+	return data;
+}
+
