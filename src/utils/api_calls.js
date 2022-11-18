@@ -9,7 +9,7 @@ import { getRandomInt } from "./helpers";
  */
 export async function getMaxNoOfImages(split) {
     try {
-      let response = await fetch(VQA);
+      let response = await fetch("http://10.5.0.96:4444/");
       let data = await response.json();
       return data.max_images;
     } catch (err) {

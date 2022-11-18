@@ -67,9 +67,9 @@ export async function fetchRandomQuestions(imageIndex, task = 'vqa') {
 
 	}
   	//console.log("fetchRandomQuestions", apiUrl, VQA);
-	let response = await fetch(`${apiUrl}/sample_questions?imageIndex=${imageIndex}`);
+	let response = await fetch(`${apiUrl}/sample-questions?imageIndex=${imageIndex}`);
 	let data = await response.json();
-	return data.random_questions;
+	return data;
 }
 
 
@@ -78,6 +78,7 @@ export async function fetchRandomQuestions(imageIndex, task = 'vqa') {
  * @function sendUserFeedback we set the current time &
  * then we send feedback input to backend
  * @param {string} apiUrl
+ * 
  * @param {object} data
  * 	@param {string} data.cookieUserID
  * 	@param {object} data.feedback
@@ -158,3 +159,6 @@ export async function fetchPredictionNew(apiUrl, predictionData) {
 	return data;
 }
 
+// export function onlyLettersAndNumbers(str) {  
+// 	return Boolean(str.match(/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/));  
+// }

@@ -6,10 +6,10 @@ export const R2C_HOME_URL = (process.env.REACT_APP_DEMO) ? MOCK_API : 'http://10
 
 
 /**@type {string} Show ask attend and answer URL*/
-export const SAAA_HOME_URL = (process.env.REACT_APP_DEMO) ? MOCK_API : "http://10.5.0.96:5002";
+export const SAAA_HOME_URL = (process.env.REACT_APP_DEMO) ? MOCK_API : "http://10.5.0.96:4444/vqa";
 
 /**@type {string} MCAN URL*/
-export const MCAN_HOME_URL = (process.env.REACT_APP_DEMO) ? MOCK_API : "http://10.5.0.96:5556";
+export const MCAN_HOME_URL = (process.env.REACT_APP_DEMO) ? MOCK_API : "http://10.5.0.96:4444/vqa";
 
 /**@type {string} Mockapi Url else SAAA Url*/
 export const VQA = (process.env.REACT_APP_DEMO) ? MOCK_API :SAAA_HOME_URL;
