@@ -16,8 +16,7 @@ import PropTypes, { number } from 'prop-types';
  * 
  * @returns Local(), Slider, Displays attention values
  */
-export default function DiscreteSlider({constApiUrl,imageIndex,data}) {
-  //console.log(data)
+export default function DiscreteSlider({constApiUrl,imageIndex,coords,imgValues}) {
   const imageUrl = `${constApiUrl}/image?imageIndex=${imageIndex}`;
   const [loadDynamicComp, setLoadDynamicComp] = React.useState(1);
   const [iattData, setIattData] = useState({});
@@ -26,12 +25,17 @@ export default function DiscreteSlider({constApiUrl,imageIndex,data}) {
   const [indicesArray, setIndicesArray] = useState([]);
   const [sortedCoords, setSortedCoords] = useState([]);
   const [len, setLen] = useState(0);
+  const [value, setValue] = useState(1);
   //const [value, setValue] = useState(1);
   
+  // if( Object.keys(coords).length > 0){
+  //   console.log( Object.keys(coords).length);
+    
+  //   //console.log ("jsonValues: " + jsonValues);
+  // }
   
   
   function displayImage(imageUrl,sortedCoords,number){
-    
     /** @type {Array.<Array.<number>>} We are slicing the sorted Decending array of Bounding boxes coordinated */
     let str = sortedCoords.slice(0,number);
     //console.log(str)
@@ -84,27 +88,20 @@ export default function DiscreteSlider({constApiUrl,imageIndex,data}) {
 		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
 		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
 
-      // async function assigndata(){
-      //   setIattData( await fetchBoundingBoxAtt(constApiUrl));
-      // }
       
-      useEffect(() => {
-        //assigndata();
-        setIattData(data);
-        //setValue(1);
-      },[data])
     
       useEffect(() => {
-        if( iattData.coordinates != "undefined"){
-          //console.log( "iatt image_value"+iattData.image_values);
-          setJsonCoords(iattData.coordinates)
-          setJsonValues(iattData.image_values)
-          //console.log ("jsonValues: " + jsonValues)
+        //setValue(1);
+        if( Object.keys(imgValues).length > 0){
+          console.log( Object.keys(imgValues).length);
+          setJsonCoords(coords);
+          setJsonValues(imgValues);
+          //console.log ("jsonValues: " + jsonValues);
         }
-      },[iattData])
+      },[imgValues])
 
       useEffect(() => {
-        if( jsonValues != undefined){
+        if(Object.keys(jsonValues).length > 0){
           let tempLen = jsonValues.length;
           let indices = new Array(tempLen);
           console.log("number of bounding boxes: "+tempLen);
@@ -116,7 +113,8 @@ export default function DiscreteSlider({constApiUrl,imageIndex,data}) {
       },[jsonValues])
 
       useEffect(() => {
-        if( len != undefined){
+        if(indicesArray.length>0 ){
+          //console.log("indicesArray: "+imgValues)
           let jsonInput = jsonCoords;
           for(let i=0; i<len; i++){
               jsonInput[i][2] = Math.abs(jsonInput[i][2]-jsonInput[i][0]);
@@ -139,10 +137,11 @@ export default function DiscreteSlider({constApiUrl,imageIndex,data}) {
           for(let i=0;i < len+1;i++){
               tempSorted[i] = arraySorted[len-i];
           }
+          
           //console.log("tempSorted" + tempSorted);
           setSortedCoords(tempSorted);
         }
-      },[len])
+      },[indicesArray])
     
   /**
    * @function displayAttValues
@@ -157,7 +156,8 @@ export default function DiscreteSlider({constApiUrl,imageIndex,data}) {
       for( j=2; j<=i; j++){
         attValue[(j-1)] = jsonValues[indicesArray[len-j+1]]
         if (attValue[j-1] != null){
-          attValue[j-1] = attValue[j-1].toFixed(3)
+          //console.log(attValue[j-1])
+          attValue[j-1] = ((attValue[j-1])*1).toFixed(3)
         }
       }
       return attValue.map((attValue,index) => <div key={index}>&nbsp;{attValue},&nbsp;</div>);
@@ -182,9 +182,9 @@ export default function DiscreteSlider({constApiUrl,imageIndex,data}) {
           {(len>0)&&
             <Slider
               aria-label="Temperature"
-              defaultValue={1}
-              //getAriaValueText={valueText}
-              valueLabelDisplay="auto"
+              value={typeof value === 'number' ? value : 1}
+              valueLabelDisplay= "auto"
+              valueLabelFormat={value => <div>{value-1}</div>}
               // value={value}
               step={1}
               marks={true}
@@ -193,15 +193,13 @@ export default function DiscreteSlider({constApiUrl,imageIndex,data}) {
               //max={Math.floor((len+1)/4)}
               onChange={(e,val) => {
                 // setValue(val);
+                setValue(val);
                 setLoadDynamicComp(val);
               }} 
               />}
       </Box>
       {loadDynamicComp ? (
                 <div>
-                {/* <div fallback={<div>Local(1)</div>}>
-                {Local(loadDynamicComp)}
-                </div>  */}
                 <div style={{ display: "flex","flexWrap": "wrap"}}>Attention:&nbsp; {displayAttValues(loadDynamicComp)}</div>
                 </div>
             ) : null
@@ -209,7 +207,3 @@ export default function DiscreteSlider({constApiUrl,imageIndex,data}) {
       </>
   );
 }
-DiscreteSlider.propTypes = {
-	constApiUrl: PropTypes.string.isRequired,
-	imageIndex: PropTypes.number.isRequired,
-};

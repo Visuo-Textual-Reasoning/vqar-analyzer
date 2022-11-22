@@ -8,7 +8,6 @@ import Answer from '../Answer/Index';
 import { useState } from 'react';
 import { fetchPrediction, fetchWordAtt, sendUserFeedback, fetchBoundingBoxAtt } from '../../utils/helpers';
 import { useEvaluate } from '../../contexts/EvaluateProvider';
-import { useAuth } from '../../contexts/AuthProvider';
 import FeedbackForm from '../FeedbackForm/Index';
 import MySnackbar from '../MySnackbar/Index';
 import DiscreteSlider from '../MCANattention/DiscreteSlider';
@@ -47,8 +46,6 @@ const useStyles = makeStyles((theme) => {
  * @returns 
  */
 export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,mcan }) {
-	
-	
 	const classes = useStyles();
 	const [ answer, setAnswer ] = useState('');
 	const [ evaluate, setEvaluate ] = useEvaluate();
@@ -63,17 +60,18 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		user_answer: '',
 		explanation: ''
 	});
-	// const [ auth, setAuth ] = useAuth();
-	const [ attMapID, setAttMapID ] = useState(null);
-	const [ attMapUrl, setAttMapUrl ] = useState(null);
 	const [warningMessage, setWarningMessage] = useState("");
 	const [cookies, setCookie] = useCookies(['user']);
-	const [qattData, setQattData] = useState({})
 	const [jsonArray, setJsonArray] = useState({});
-	const [iattData, setIattData] = useState({});
 	const [tempImageIndex, setTempImageIndex] = useState(0);
-	const [base64Data, setBase64Data] = useState(".")
+	const [base64Data, setBase64Data] = useState(".");
+	const [coordValues, setCoordValues] = useState({});
+	const [imageValues, setImageValues] = useState({});
+	const [data, setData] = useState({});
+	//const [predictionData, setPredictionData] = useState({});
+
 	let model_number = -1;
+
 	if(mcan){
 		model_number = 1;
 	}else{
@@ -93,12 +91,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		[ evaluate ]
 	);
 
-	useEffect(
-		() => {
-			setAttMapUrl(`${apiUrl}/attention-maps?imageIndex=${attMapID}`);
-		},
-		[ attMapID ]
-	);
+
 /**
  * @async 
  * @function getAnswer get and set answer
@@ -108,28 +101,37 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		if (!modelActive) {
 			return;
 		}
-		let predictionData = { imageIndex, question, model_number};
+		let inputData = { imageIndex, question, model_number};
 
 		try {
 			setLoading(true);
 			let startTime = performance.now();
-			let data = await fetchPrediction(apiUrl, predictionData);
+			let data = await fetchPrediction(apiUrl, inputData);
+			//assignData(inputData);
 			let endTime = performance.now();
 			setTimeTaken(endTime - startTime);
 			setLoading(false);
 			setShowFeedback(true);
 			setAnswer(data.answer);
-			
-			assignImageData();
 			if(!mcan){setBase64Data(data.attention_data)}
-			if (mcan){setJsonArray(data.attention_data.question_values)};
-			// if (mcan){assigndata();}
-			setAttMapID(data.att_map_id);
-			//console.log(attMapID);
+			if (mcan){
+				setTempImageIndex(imageIndex);
+				setJsonArray(data.attention_data.question_values);
+				setCoordValues(data.attention_data.coordinates);
+				setImageValues(data.attention_data.image_values);
+			}
+			//console.log(Object.keys(data.attention_data.question_values).length);
+			//if (mcan){assigndata();}
 		} catch (err) {
 			console.error(err);
 		}
 	}
+
+
+	// useEffect(() => {
+	// 	console.log("ImageValues: "+JSON.stringify(imageValues))
+
+	// },[imageValues])
 
 	/**
 	 * @function handleRadioChange Function that handles radio button
@@ -150,6 +152,9 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		// setWarningOpen(false)
 		setWarningMessage("")
 	}
+
+{/* --------------------------------------------------------------------------------------------- */}
+
 /**
  * @function sendFeedback get the input from user else warning message
  * @returns 
@@ -203,7 +208,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
  * 	@param {string} answer
  * 	@returns 
  */
-		sendUserFeedback(apiUrl, { cookieUserID, feedback, imageIndex, question, answer });
+		sendUserFeedback(apiUrl, {model_number, cookieUserID, feedback, imageIndex, question, answer });
 
 		setFeedback({
 			answer: null,
@@ -214,35 +219,22 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		});
 		setShowFeedback(false);
 	}
-
-
-	async function assigndata(){
-		if (mcan)
-		setQattData( await fetchWordAtt(apiUrl));
-	}
-
-
-	useEffect(() => {
-		if( qattData.question_values !== undefined){
-			setJsonArray([...qattData.question_values])
-		}
-	},[qattData,evaluate ])
-
-
 	
-	/**
-	 * 
-	 * @param {string} currentelement 
-	 * @param {number} index 
-	 * @returns 
-	 */
+{/* --------------------------------------------------------------------------------------------- */}
+	
+/**
+ * Send opacity to words using word attention
+ * @param {string} currentelement 
+ * @param {number} index 
+ * @returns 
+ */
 	function setFontColor(currentelement,index){
 		var colorG = (jsonArray[index]*1)+0.1;
 		var colorGrad = colorG.toFixed(2);
 		let rgbaColor = "rgba(237,108,3,"+colorGrad+")";
 		return <div key= {index} style={{ color: rgbaColor,"flex":"0 1 auto" }}>{currentelement}&nbsp;</div>;
-
 	}
+
 /**
  * @function questionAtt Assigns word attention to question 
  * @param {string} question 
@@ -255,12 +247,9 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		return result;
 	}
 
-
-	async function assignImageData(){
-		setTempImageIndex(imageIndex);
-        setIattData( await fetchBoundingBoxAtt(MCAN_HOME_URL ));
-      }
+{/* --------------------------------------------------------------------------------------------- */}
       
+
 
 	return (
 		<Paper
@@ -305,7 +294,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 			{(answer && modelActive && mcan===false) && <Paper component="img" className={classes.img} src={`data:image/jpeg;base64,${base64Data}`} alt={`Image-${imageIndex}`} sx={{mt: 2, width: "100%", height: "auto"}}  />}
 			
 			{/* image with slider MCAN */}
-			{(answer && modelActive && mcan===true && iattData!=="undefined" && tempImageIndex!== 0) && <DiscreteSlider constApiUrl='MCAN_HOME_URL' imageIndex={tempImageIndex} data = {iattData}/>}
+			{(answer && modelActive && mcan===true && Object.keys(imageValues).length > 0 && Object.keys(coordValues).length > 0 ) && <DiscreteSlider constApiUrl= {MCAN_HOME_URL} imageIndex={tempImageIndex} coords={coordValues} imgValues={imageValues}/>}
 
 			<MySnackbar open={warningMessage !== ""} handleClose={handleWarningClose} msg={warningMessage} />
 		</Paper>
