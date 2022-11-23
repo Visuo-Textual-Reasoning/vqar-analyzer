@@ -93,7 +93,7 @@ export default function DiscreteSlider({constApiUrl,imageIndex,coords,imgValues}
       useEffect(() => {
         //setValue(1);
         if( Object.keys(imgValues).length > 0){
-          console.log( Object.keys(imgValues).length);
+          //console.log( Object.keys(imgValues).length);
           setJsonCoords(coords);
           setJsonValues(imgValues);
           //console.log ("jsonValues: " + jsonValues);
@@ -104,7 +104,7 @@ export default function DiscreteSlider({constApiUrl,imageIndex,coords,imgValues}
         if(Object.keys(jsonValues).length > 0){
           let tempLen = jsonValues.length;
           let indices = new Array(tempLen);
-          console.log("number of bounding boxes: "+tempLen);
+          //console.log("number of bounding boxes: "+tempLen);
           for (let i = 0; i < tempLen; ++i) indices[i] = i;
           indices.sort(function (a, b) { return jsonValues[a] < jsonValues[b] ? -1 : jsonValues[a] > jsonValues[b] ? 1 : 0; });
           setIndicesArray(indices);

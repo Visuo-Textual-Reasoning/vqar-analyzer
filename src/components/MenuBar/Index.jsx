@@ -26,7 +26,7 @@ export default function MenuBar() {
 	// 	console.log(x);
 	//   }
 	  
-	console.log(auth)
+	//console.log(auth)
 
 	const toggleDrawer = () => {
 		setOpen(!open);

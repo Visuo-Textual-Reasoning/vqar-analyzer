@@ -42,8 +42,8 @@ export default function VQA() {
 	const [ vocab, setVocab ] = useVocab();
 	const [ warningOpen, setWarningOpen ] = useState(false);
 	const [ warningMessage, setWarningMessage ] = useState('');
-	const saaaHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : SAAA_HOME_URL;
-	const mcanHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : MCAN_HOME_URL;
+	// const saaaHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : SAAA_HOME_URL;
+	// const mcanHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : MCAN_HOME_URL;
 	const [isFirst , setIsFirst] = useState(true);
 	let index = 1;
 	const [ imageIndex, setImageIndex ] = useState(isFirst ? 1 : index);

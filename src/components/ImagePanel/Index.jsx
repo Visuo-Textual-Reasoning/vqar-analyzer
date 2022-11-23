@@ -12,10 +12,12 @@ const useStyles = makeStyles((theme) => {
 			flexDirection: 'column',
 			margin: '5px auto',
 			width: 'fit-content',
+			justifyContent: 'flex-end',
 
 			'& button': {
-				margin: '12px 3px',
-				fontFamily: 'Cascadia Code'
+				margin: '4px 3px 12px 3px',
+				fontFamily: 'Cascadia Code',
+				
 			}
 		},
 
@@ -108,9 +110,9 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 					sx={{ mb: 1, mt: 1 }}
 					className={classes.textField}
 				/>
-				<Button color="secondary" variant="contained" size="small">
+				{/* <Button color="secondary" variant="contained" size="small">
 					Fetch Image
-				</Button>
+				</Button> */}
 				<Button color="secondary" variant="contained" size="small" onClick={fetchRandomImage}>
 					Fetch random Image
 				</Button>

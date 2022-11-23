@@ -47,7 +47,7 @@ export default function SampleQuestions({ task, imageIndex }) {
 			</Typography>
 			{sampleQuestions.map((q) => {
 				return (
-					<Accordion key={q}>
+					<Accordion key={q} expanded={false}>
 						<AccordionSummary sx={{ color: '#118834' }}>{q}</AccordionSummary>
 						<AccordionDetails sx={{ color: '#2345b0', fontWeight: 'bold', textAlign: 'left' }}>
 							Answer

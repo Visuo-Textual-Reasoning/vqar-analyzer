@@ -49,7 +49,7 @@ function App() {
       fontFamily: ['Cascadia code', 'monospace'].join(', ')
     }
   });
-  console.log(useTheme());
+  //console.log(useTheme());
 
   /** We are Defining Cookies here */
   const [cookies, setCookie] = useCookies(['user']);
