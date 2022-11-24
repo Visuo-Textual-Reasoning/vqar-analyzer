@@ -1,4 +1,4 @@
-import { MOCK_API, SAAA_HOME_URL, VQA } from './apis';
+import { MOCK_API, VQA_URL } from './apis';
 
 /**
  * @function getRandomInt get random number in between min & max
@@ -58,7 +58,7 @@ export async function fetchBoundingBoxAtt(apiUrl){
 export async function fetchRandomQuestions(imageIndex, task = 'vqa') {
 	let apiUrl;
 	if (task === 'vqa') {
-		apiUrl = SAAA_HOME_URL;
+		apiUrl = VQA_URL;
 	} else {
 		apiUrl = MOCK_API;
 		let last2Str = String(imageIndex).slice(-2);
@@ -112,7 +112,15 @@ export async function sendUserFeedback(apiUrl, data) {
 		},
 		body: JSON.stringify(data)
 	});
-	return;
+
+	console.log("feedback response"+response)
+
+	if(response === 1){
+		return ;
+	}else{
+		return ;
+	}
+	
 }
 
 /**
@@ -141,13 +149,13 @@ export async function fetchMaxImages(apiUrl) {
 
 export async function fetchSampleQuestions(apiUrl,imageIndex) {
 
-	let response = await fetch(`${apiUrl}/vqa/sample-questions?imageIndex=${imageIndex}`);
+	let response = await fetch(`${apiUrl}/sample-questions?imageIndex=${imageIndex}`);
 	let data = await response.json();
 	return data;
 }
 
 export async function fetchPredictionNew(apiUrl, predictionData) {
-	let response = await fetch(`${apiUrl}/vqa/predict`, {
+	let response = await fetch(`${apiUrl}/predict`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',

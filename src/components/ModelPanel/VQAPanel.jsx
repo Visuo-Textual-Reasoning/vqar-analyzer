@@ -6,13 +6,13 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import Answer from '../Answer/Index';
 import { useState } from 'react';
-import { fetchPrediction, fetchWordAtt, sendUserFeedback, fetchBoundingBoxAtt } from '../../utils/helpers';
+import { fetchPrediction, sendUserFeedback } from '../../utils/helpers';
 import { useEvaluate } from '../../contexts/EvaluateProvider';
 import FeedbackForm from '../FeedbackForm/Index';
 import MySnackbar from '../MySnackbar/Index';
 import DiscreteSlider from '../MCANattention/DiscreteSlider';
 import { useCookies } from 'react-cookie';
-import { MCAN_HOME_URL } from '../../utils/apis';
+import { VQA_URL } from '../../utils/apis';
 
 const useStyles = makeStyles((theme) => {
 	//console.log(theme);
@@ -67,11 +67,9 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 	const [base64Data, setBase64Data] = useState(".");
 	const [coordValues, setCoordValues] = useState({});
 	const [imageValues, setImageValues] = useState({});
-	const [data, setData] = useState({});
-	//const [predictionData, setPredictionData] = useState({});
 
 	let model_number = -1;
-
+	/** Model no 1 is MCAN; Model no 0 is SAAA */
 	if(mcan){
 		model_number = 1;
 	}else{
@@ -80,6 +78,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 
 	/** @type {string} contains User id cookie */
 	let cookieUserID = cookies.userID;
+	// console.log("Cookie:"+cookieUserID)
 
 	useEffect(
 		() => {
@@ -153,7 +152,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		setWarningMessage("")
 	}
 
-{/* --------------------------------------------------------------------------------------------- */}
+/* --------------------------------------------------------------------------------------------- */
 
 /**
  * @function sendFeedback get the input from user else warning message
@@ -220,7 +219,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		setShowFeedback(false);
 	}
 	
-{/* --------------------------------------------------------------------------------------------- */}
+/* --------------------------------------------------------------------------------------------- */
 	
 /**
  * Send opacity to words using word attention
@@ -247,7 +246,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 		return result;
 	}
 
-{/* --------------------------------------------------------------------------------------------- */}
+/* --------------------------------------------------------------------------------------------- */
       
 
 
@@ -294,7 +293,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 			{(answer && modelActive && mcan===false) && <Paper component="img" className={classes.img} src={`data:image/jpeg;base64,${base64Data}`} alt={`Image-${imageIndex}`} sx={{mt: 2, width: "100%", height: "auto"}}  />}
 			
 			{/* image with slider MCAN */}
-			{(answer && modelActive && mcan===true && Object.keys(imageValues).length > 0 && Object.keys(coordValues).length > 0 ) && <DiscreteSlider constApiUrl= {MCAN_HOME_URL} imageIndex={tempImageIndex} coords={coordValues} imgValues={imageValues}/>}
+			{(answer && modelActive && mcan===true && Object.keys(imageValues).length > 0 && Object.keys(coordValues).length > 0 ) && <DiscreteSlider constApiUrl= {VQA_URL} imageIndex={tempImageIndex} coords={coordValues} imgValues={imageValues}/>}
 
 			<MySnackbar open={warningMessage !== ""} handleClose={handleWarningClose} msg={warningMessage} />
 		</Paper>

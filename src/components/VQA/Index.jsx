@@ -1,15 +1,11 @@
 import { Box } from '@mui/system';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
 import React, { useState, useEffect } from 'react';
 import ImagePanel from '../ImagePanel/Index';
-// import AttMaps from '../AttMaps/Index';
-// import WordAtt from '../WordAtt/Index';
 import Question from '../Question/Index';
 import { getMaxNoOfImages, getRandomDataPoint } from '../../utils/api_calls';
 import VQAModelPanel from '../ModelPanel/VQAPanel';
 import { fetchVocabulary } from '../../utils/helpers';
-import { MCAN_HOME_URL, SAAA_HOME_URL, MOCK_API } from '../../utils/apis';
+import { VQA_URL } from '../../utils/apis';
 import SampleQuestions from '../SampleQuestions/Index';
 import { makeStyles } from '@mui/styles';
 import { useVocab } from '../../contexts/VocabProvider';
@@ -44,7 +40,7 @@ export default function VQA() {
 	const [ warningMessage, setWarningMessage ] = useState('');
 	// const saaaHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : SAAA_HOME_URL;
 	// const mcanHomeUrl = process.env.REACT_APP_DEMO ? MOCK_API : MCAN_HOME_URL;
-	const [isFirst , setIsFirst] = useState(true);
+	 const isFirst  = useState(true);
 	let index = 1;
 	const [ imageIndex, setImageIndex ] = useState(isFirst ? 1 : index);
 
@@ -59,12 +55,12 @@ export default function VQA() {
 
 	// Fetch vocab from the server
 	useEffect(() => {
-		fetchVocabulary(SAAA_HOME_URL).then((v) => {
+		fetchVocabulary(VQA_URL).then((v) => {
 			setVocab(v);
 		});
 		getRandomDataPoint(split).then(imid => setImageIndex(imid))
-		//console.log("ImageIndex in useeffect :  " + imageIndex)
-		index = imageIndex;
+		
+		// index = imageIndex;
 	}, []);
 
 	/**
@@ -112,25 +108,22 @@ export default function VQA() {
 				maxImages={maxImages}
 				imageIndex={imageIndex}
 				setImageIndex={setImageIndex}
-				apiUrl={SAAA_HOME_URL}
+				apiUrl={VQA_URL}
 			/>
 			<SampleQuestions task="vqa" imageIndex={imageIndex} />
 			<Question question={question} questionChangeHandler={questionChangeHandler} />
-			{/* <AttMaps
-				apiUrl={saaaHomeUrl}
-			/> */}
-			{/* <WordAtt/> */}
+			
 			<Box className={classes.modelPanels}>
 				<VQAModelPanel
 					modelName="Show Ask Attend and Answer"
-					apiUrl={SAAA_HOME_URL}
+					apiUrl={VQA_URL}
 					question={question}
 					imageIndex={imageIndex}
 					mcan={false}
 				/>
 				<VQAModelPanel
 					modelName="Deep Modular Co-attention"
-					apiUrl={MCAN_HOME_URL}
+					apiUrl={VQA_URL}
 					question={question}
 					imageIndex={imageIndex}
 					mcan={true}

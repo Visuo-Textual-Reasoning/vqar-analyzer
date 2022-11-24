@@ -2,7 +2,7 @@ import { array, number } from "prop-types";
 import React from "react";
 import { fetchMaxImages,fetchPredictionNew, fetchSampleQuestions, onlyLettersAndNumbers } from "./helpers";
 
-const apiURL = "http://10.5.0.96:4444"
+const apiURL = "http://10.5.0.96:4444/vqa"
 const imageIndex = "233";
 let total_images = -1;
 
