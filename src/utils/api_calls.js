@@ -1,4 +1,4 @@
-import { VQA } from "./apis";
+// import { VQA } from "./apis";
 import { getRandomInt } from "./helpers";
 //NOTE: I think we are not using split variable
 

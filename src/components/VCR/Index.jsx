@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+// import { makeStyles } from '@mui/styles';
 import ImagePanel from '../ImagePanel/Index';
 import { R2C_HOME_URL } from '../../utils/apis';
 import VCRInput from '../VCRInput/Index';
 import VCRModelPanel from '../ModelPanel/VCRPanel';
 import { fetchRandomQuestions } from '../../utils/helpers';
 
-const useStyles = makeStyles((theme) => {
-	return {
-		wrapper: {}
-	};
-});
+// const useStyles = makeStyles((theme) => {
+// 	return {
+// 		wrapper: {}
+// 	};
+// });
+
+
 /**
  * @component
  * Displays imagepanel and VCR model components  
