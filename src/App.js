@@ -61,7 +61,7 @@ function App() {
    */
   if (!cookies.userID) {
     let id = uuid();
-    setCookie('userID', id, { path: '/' });
+    setCookie('userID', id, {path: '/',maxAge: 1000000 ,expires: new Date(Date.now()+2592000)});
     console.log("after setCookie: " + cookies.userID);
   } else {
     console.log("Stored Cookie " + cookies.userID);

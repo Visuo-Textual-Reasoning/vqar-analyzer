@@ -57,13 +57,27 @@ export default function FeedbackForm({ handleRadioChange, sendFeedback, feedback
 			<Paper elevation={5} sx={{ padding: 3, fontFamily: 'Cascadia Code', width: "100%" }}>
 				<Box className={classes.contents}>
 					<Box>
-						Is the answer corect?:
+						Is the answer correct?:
 						<RadioGroup
 							row
 							aria-labelledby="demo-radio-buttons-group-label"
 							name="radio-buttons-answer-group"
 							value={feedback['answer']}
 							onChange={(e) => handleChange(e, 'answer')}
+						>
+							<FormControlLabel value="yes" control={<Radio />} label="Yes" />
+							<FormControlLabel value="no" control={<Radio />} label="No" />
+						</RadioGroup>
+						{/* <Checkbox {...label} color="success" onChange={(e) => handleCheckboxChange("answer")} /> */}
+					</Box>
+					<Box>
+						<span>Is the Attention Map Correct?:</span>
+						<RadioGroup
+							row
+							aria-labelledby="demo-radio-buttons-group-label"
+							name="radio-buttons-answer-group"
+							value={feedback['attention']}
+							onChange={(e) => handleChange(e, 'attention')}
 						>
 							<FormControlLabel value="yes" control={<Radio />} label="Yes" />
 							<FormControlLabel value="no" control={<Radio />} label="No" />
