@@ -2,6 +2,7 @@ import './App.css';
 import VQAPage from './pages/VQA';
 import VCRPage from './pages/VCR';
 import FAQsPage from './pages/FAQs';
+import StatsPage from './pages/Stats';
 import Login from './components/Login/Index';
 import EvaluateProvider from './contexts/EvaluateProvider';
 import VocabProvider from './contexts/VocabProvider';
@@ -80,6 +81,7 @@ function App() {
                 <Route exact path="/" element={<Home />} />
                 <Route exact path="/vqa" element={<VQAPage />} />
                 <Route exact path="/vcr" element={<VCRPage />} />
+                <Route exact path="/stats" element={<StatsPage />} />
                 <Route exact path="/faqs" element={<FAQsPage />} />
                 <Route exact path="/login" element={<Login />} />
               </Routes>

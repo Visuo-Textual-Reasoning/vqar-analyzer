@@ -58,7 +58,7 @@ export default function FAQ(ques,ans,tvalue) {
                 ref={contentRef}
                 className={active ? `answer answer-divider` : `answer`}
               >
-                <h3 className="answerText" style={{"font-weight": "normal"}}>
+                <h3 className="answerText" style={{"fontWeight": "normal"}}>
                   {/* <br/> */}
                   {ans}
                   {/* <br/>

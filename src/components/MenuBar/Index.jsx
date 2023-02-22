@@ -20,7 +20,7 @@ export default function MenuBar() {
 	const [ open, setOpen ] = useState(false);
 	const [ auth, setAuth ] = useAuth();
 	/** @type {Array.<string>} */
-	const menuItems = [ 'VQA', 'VCR', 'FAQs' ];
+	const menuItems = [ 'VQA', 'VCR', 'STATs', 'FAQs' ];
 	const navigate = useNavigate();
 	// const navigate = (x) => {
 	// 	console.log(x);
