@@ -61,10 +61,9 @@ export async function fetchRandomQuestions(imageIndex, task = 'vqa') {
 		apiUrl = VQA_URL;
 	} else {
 		apiUrl = MOCK_API;
-		let last2Str = String(imageIndex).slice(-2);
-		let last2Num = Math.round(Number(last2Str)/2);
-		imageIndex = last2Num;
-
+		// let last2Str = String(imageIndex).slice(-2);
+		// let last2Num = Math.round(Number(last2Str));
+		// imageIndex = last2Num;
 	}
   	//console.log("fetchRandomQuestions", apiUrl, VQA);
 	let response = await fetch(`${apiUrl}/sample-questions?imageIndex=${imageIndex}`);

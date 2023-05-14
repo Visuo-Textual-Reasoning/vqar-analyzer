@@ -1,4 +1,4 @@
-// import { VQA } from "./apis";
+import { VQA_URL } from "./apis";
 import { getRandomInt } from "./helpers";
 //NOTE: I think we are not using split variable
 
@@ -9,7 +9,7 @@ import { getRandomInt } from "./helpers";
  */
 export async function getMaxNoOfImages(split) {
     try {
-      let response = await fetch("http://10.5.0.96:4444/vqa");
+      let response = await fetch(VQA_URL);
       let data = await response.json();
       return data.max_images;
     } catch (err) {
