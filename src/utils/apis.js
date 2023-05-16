@@ -12,4 +12,6 @@ export const R2C_HOME_URL = (process.env.REACT_APP_DEMO) ? MOCK_API : 'http://10
 // export const MCAN_HOME_URL = (process.env.REACT_APP_DEMO) ? MOCK_API : "http://10.5.0.96:4444/vqa";
 
 /**@type {string} Mockapi Url else SAAA Url*/
+export const PLAIN_VQA = "http://10.5.0.96:4444/vqa";
+
 export const VQA_URL = (process.env.REACT_APP_DEMO) ? MOCK_API :"http://10.5.0.96:4444/vqa";

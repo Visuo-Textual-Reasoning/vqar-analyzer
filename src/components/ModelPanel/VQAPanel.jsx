@@ -12,7 +12,8 @@ import FeedbackForm from '../FeedbackForm/Index';
 import MySnackbar from '../MySnackbar/Index';
 import DiscreteSlider from '../MCANattention/DiscreteSlider';
 import { useCookies } from 'react-cookie';
-import { VQA_URL } from '../../utils/apis';
+import { VQA_URL,MOCK_API, PLAIN_VQA } from '../../utils/apis';
+
 
 const useStyles = makeStyles((theme) => {
 	//console.log(theme);
@@ -67,6 +68,38 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 	const [base64Data, setBase64Data] = useState(".");
 	const [coordValues, setCoordValues] = useState({});
 	const [imageValues, setImageValues] = useState({});
+
+	const alternateImageUrl = 'http://localhost:4000/saaaImage?imageIndex=';
+	const [useAltImage, setUseAltImage] = useState(false);
+	const testURL = 'http://localhost:4000/saaaImage?imageIndex=1'
+
+	function ifUrlExist(url, callback) {
+		let request = new XMLHttpRequest;
+		request.open('GET', url, true);
+		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+		request.setRequestHeader('Accept', '*/*');
+		request.onprogress = function(event) {
+			let status = event.target.status;
+			let statusFirstNumber = (status).toString()[0];
+			switch (statusFirstNumber) {
+				case '2':
+					request.abort();
+					return callback(true);
+				default:
+					request.abort();
+					return callback(false);
+			};
+		};
+		request.send('');
+		
+	};
+
+	  useEffect(() => {
+		ifUrlExist(testURL, function(exists) {
+			setUseAltImage(true);
+		});
+	  }, []);
+	
 
 	let model_number = -1;
 	/** Model no 1 is MCAN; Model no 0 is SAAA */
@@ -290,7 +323,7 @@ export default function VQAModelPanel({ modelName, apiUrl, question, imageIndex,
 {/* --------------------------------------------------------------------------------------------- */}
 
 			{/* BASE 64 image SAAA model */}
-			{(answer && modelActive && mcan===false) && <Paper component="img" className={classes.img} src={`data:image/jpeg;base64,${base64Data}`} alt={`Image-${imageIndex}`} sx={{mt: 2, width: "100%", height: "auto"}}  />}
+			{(answer && modelActive && mcan===false) && <Paper component="img" className={classes.img} src={useAltImage ? `${alternateImageUrl}${imageIndex}`:`data:image/jpeg;base64,${base64Data}`} alt={`Image-${imageIndex}`} sx={{mt: 2, width: "100%", height: "auto"}}  />}
 			
 			{/* image with slider MCAN */}
 			{(answer && modelActive && mcan===true && Object.keys(imageValues).length > 0 && Object.keys(coordValues).length > 0 ) && <DiscreteSlider constApiUrl= {VQA_URL} imageIndex={tempImageIndex} coords={coordValues} imgValues={imageValues}/>}
