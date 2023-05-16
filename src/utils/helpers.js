@@ -68,7 +68,7 @@ export async function fetchRandomQuestions(imageIndex, task = 'vqa') {
   	//console.log("fetchRandomQuestions", apiUrl, VQA);
 	let response = await fetch(`${apiUrl}/sample-questions?imageIndex=${imageIndex}`);
 	let data = await response.json();
-	return data;
+	return data.random_questions;
 }
 
 

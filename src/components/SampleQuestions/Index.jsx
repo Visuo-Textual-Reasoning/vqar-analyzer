@@ -32,23 +32,26 @@ const useStyles = makeStyles((theme) => {
 export default function SampleQuestions({ task, imageIndex }) {
 	const classes = useStyles();
 	const [ sampleQuestions, setSampleQuestions ] = useState([]);
+	const [ ques, setQues ] = useState([1,2,3]);
 
 	useEffect(
 		() => {
-			fetchRandomQuestions(imageIndex, task).then(setSampleQuestions);
+			fetchRandomQuestions(imageIndex, task).then(setSampleQuestions);	
 		},
 		[ imageIndex ]
 	);
+
 
 	return (
 		<Box className={classes.wrapper}>
 			<Typography variant="h6" sx={{ fontFamily: 'Cascadia Code' }}>
 				Sample Questions
 			</Typography>
-			{sampleQuestions.map((q) => {
+			{sampleQuestions.map((item) => {
+				// console.log(item+"yoyo")
 				return (
-					<Accordion key={q} expanded={false}>
-						<AccordionSummary sx={{ color: '#118834' }}>{q}</AccordionSummary>
+					<Accordion key={item} expanded={false}>
+						<AccordionSummary sx={{ color: '#118834' }}>{item}</AccordionSummary>
 						<AccordionDetails sx={{ color: '#2345b0', fontWeight: 'bold', textAlign: 'left' }}>
 							Answer
 						</AccordionDetails>
