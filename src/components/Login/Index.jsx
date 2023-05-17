@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => {
 /** @function Login Displays Login page  */
 export default function Login() {
   const classes = useStyles()
-	const [ auth, setAuth ] = useAuth();
+	const [ setAuth ] = useAuth();
 	const [ name, setName ] = useState('');
 	const navigate = useNavigate();
 

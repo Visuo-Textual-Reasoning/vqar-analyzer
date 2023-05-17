@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import Boundingbox from "./Boundingbox";
-import PropTypes, { number } from 'prop-types';
+// import PropTypes, { number } from 'prop-types';
 //import { fetchBoundingBoxAtt } from '../../utils/helpers';
 
 
@@ -19,7 +19,6 @@ import PropTypes, { number } from 'prop-types';
 export default function DiscreteSlider({constApiUrl,imageIndex,coords,imgValues}) {
   const imageUrl = `${constApiUrl}/image?imageIndex=${imageIndex}`;
   const [loadDynamicComp, setLoadDynamicComp] = React.useState(1);
-  const [iattData, setIattData] = useState({});
   const [jsonCoords, setJsonCoords] = useState({});
   const [jsonValues, setJsonValues] = useState({});
   const [indicesArray, setIndicesArray] = useState([]);
@@ -72,23 +71,6 @@ export default function DiscreteSlider({constApiUrl,imageIndex,coords,imgValues}
     };
     return <Boundingbox image={params.image} boxes={params.boxes} options={params.options} />;
   }
-
-    /**
-     * An array containg random Hex color codes
-     * @type {array<string>}
-     */
-    var colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
-		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
-		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
-		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
-		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC', 
-		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
-		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', 
-		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
-		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
-		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
-
-      
     
       useEffect(() => {
         //setValue(1);
@@ -150,7 +132,7 @@ export default function DiscreteSlider({constApiUrl,imageIndex,coords,imgValues}
    * @returns an Array of jsx elements containing Attention values of the bounding boxes
    */
   function displayAttValues(i){
-    if(jsonCoords != undefined){
+    if(jsonCoords !== undefined){
       let attValue = [];
       let j=0
       for( j=2; j<=i; j++){

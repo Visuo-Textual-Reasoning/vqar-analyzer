@@ -251,13 +251,13 @@ class Boundingbox extends Component {
     if(!box || typeof box === 'undefined')
       return null;
 
-    let color = this.props.options.colors.normal;
-    if (this.state.hoverIndex >= 0) {
-      color = this.props.options.colors.unselected;
-    }
-    if (index === this.state.hoverIndex) {
-      color = this.props.options.colors.selected;
-    }
+    // let color = this.props.options.colors.normal;
+    // if (this.state.hoverIndex >= 0) {
+    //   color = this.props.options.colors.unselected;
+    // }
+    // if (index === this.state.hoverIndex) {
+    //   color = this.props.options.colors.selected;
+    // }
 
     let lineWidth = 2;
     if (this.canvas.width > 600) { lineWidth = 3; }

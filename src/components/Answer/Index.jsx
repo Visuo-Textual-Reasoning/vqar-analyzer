@@ -17,7 +17,7 @@ export default function Answer({answer, showMeta=true}) {
     useEffect(() => {
         setFlag(true);
         //console.log(answer)
-        if(answer == ''){
+        if(answer === ''){
             setFlag(false);
         }
       },[answer])

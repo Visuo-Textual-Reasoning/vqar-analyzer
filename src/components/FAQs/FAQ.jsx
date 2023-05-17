@@ -18,7 +18,7 @@ export default function FAQ(ques,ans,tvalue) {
 
   /** Used to toggle action */
   const toggleAccordion = () => {
-    if (active == false) {
+    if (active === false) {
       contentRef.current.style.maxHeight =  `${contentRef.current.scrollHeight}px`
     }else{
       contentRef.current.style.maxHeight = '0px'

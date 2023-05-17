@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { fetchPrediction, sendUserFeedback } from '../../utils/helpers';
 import { useEvaluate } from '../../contexts/EvaluateProvider';
 import Answer from '../Answer/Index';
-import { useAuth } from '../../contexts/AuthProvider';
+// import { useAuth } from '../../contexts/AuthProvider';
 import VCRFeedbackForm from '../FeedbackForm/VCRFeedback';
 import MySnackbar from '../MySnackbar/Index';
 import { useCookies } from 'react-cookie';
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => {
  */
 export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcrMode }) {
 	const classes = useStyles();
-	const [ auth, setAuth ] = useAuth();
+	// const [ auth, setAuth ] = useAuth();
 	const [ prediction, setPrediction ] = useState({
 		answer: "",
 		rationale: "",
@@ -57,7 +57,7 @@ export default function VCRModelPanel({ modelName, apiUrl, data, imageIndex, vcr
 	});
 	const [warningMessage, setWarningMessage] = useState("");
 
-	const [cookies, setCookie] = useCookies(['user']);
+	const [cookies] = useCookies(['user']);
 	//console.log("Stored Cookie "+cookies.userID);
 	let cookieUserID = cookies.userID;
 

@@ -32,8 +32,6 @@ const useStyles = makeStyles((theme) => {
 export default function SampleQuestions({ task, imageIndex }) {
 	const classes = useStyles();
 	const [ sampleQuestions, setSampleQuestions ] = useState([]);
-	const [ ques, setQues ] = useState([1,2,3]);
-
 	useEffect(
 		() => {
 			fetchRandomQuestions(imageIndex, task).then(setSampleQuestions);	

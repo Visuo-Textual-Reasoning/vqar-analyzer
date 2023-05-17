@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => {
  */
 export default function VCRInput({ data, setData }) {
   const classes = useStyles()
-	const [ evaluate, setEvaluate ] = useEvaluate();
+	const [ setEvaluate ] = useEvaluate();
 
 	function questionChangeHandler(event) {
 		setData({ ...data, question: event.target.value });

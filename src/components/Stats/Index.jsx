@@ -1,6 +1,6 @@
 import SaaaJsonData from "./SAAAFeedback.json";
 import McanJsonData from "./MCANFeedback.json";
-import React, { PureComponent } from 'react';
+import React from 'react';
 import Graphs from "./Graphs";
 
 export default function Stats() {

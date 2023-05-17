@@ -7,12 +7,12 @@ import Login from './components/Login/Index';
 import EvaluateProvider from './contexts/EvaluateProvider';
 import VocabProvider from './contexts/VocabProvider';
 import AuthProvider from './contexts/AuthProvider';
-import { BrowserRouter as Router, HashRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as HashRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, useTheme } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import Home from './components/Home/Index';
 import MenuBar from './components/MenuBar/Index';
-import React, { useState } from 'react';
+import React from 'react';
 import { useCookies } from 'react-cookie';
 
 // import getCookie from './hooks/getCookie';
@@ -22,7 +22,7 @@ import { v4 as uuid } from 'uuid';
 
 // console.log(process.env)
 if (process.env.NODE_ENV === 'production') {
-  console = {};
+  // console = {};
   console.log = function() { };
   window.console = console;
 }

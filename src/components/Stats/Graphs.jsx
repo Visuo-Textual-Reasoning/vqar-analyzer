@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 // import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Stack, Paper, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import {
@@ -25,8 +25,7 @@ export default function Graphs(name, JsonData) {
     const re_score = [0,0,0,0,0];
     const answer_count = [0,0];
     const attention_count = [0,0];
-    const CountScore=JsonData.map(
-        (info)=>{
+    JsonData.map((info)=>{
             //Counting answers from json
             if(info.feedback.answer === "no"){
                 answer_count[1] = answer_count[1] + 1;
@@ -56,6 +55,7 @@ export default function Graphs(name, JsonData) {
             //Counting relevency score from json
             var score = info.feedback.relevance_score;
             re_score[score] = re_score[score] +1;
+            return 0;
         }
     )
     
