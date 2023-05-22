@@ -89,6 +89,14 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 		setSnackBarOpen(false);
 	}
 
+	const handleClick = (event) => {
+		const image = event.target;
+		const rect = image.getBoundingClientRect();
+		const x = event.clientX - rect.left;
+		const y = event.clientY - rect.top;
+		console.log('Image coordinates:', x, y);
+	  };
+
 	return (
 		<Box className={classes.imagePanel}>
 			<MySnackbar
@@ -117,7 +125,7 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 					Fetch random Image
 				</Button>
 			</Box>
-			<Paper component="img" className={classes.img} src={imageUrl} alt={`Image-${imageIndex}`} />
+			<Paper component="img" className={classes.img} src={imageUrl} alt={`Image-${imageIndex}`} onClick={handleClick} />
 		</Box>
 	);
 }
