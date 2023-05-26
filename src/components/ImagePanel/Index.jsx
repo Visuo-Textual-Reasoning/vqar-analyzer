@@ -1,7 +1,7 @@
 import { Box, Paper, Button, TextField } from '@mui/material';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@mui/styles';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getRandomDataPoint } from '../../utils/api_calls';
 import MySnackbar from '../MySnackbar/Index';
 
@@ -97,6 +97,62 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 		console.log('Image coordinates:', x, y);
 	  };
 
+	// const [imageDimensions, setImageDimensions] = useState({});
+	// // const setImageSize = (setImageDimensions, imageUrl) => {
+	// 	const pic = new Image();
+	// 	pic.src = imageUrl;
+	// 	pic.onload = () => {
+	// 	  setImageDimensions({
+	// 		height: pic.height,
+	// 		width: pic.width
+	// 	  });
+	// 	};
+	//  };
+	
+	
+	// useEffect(() => {
+	// 	const imgs = new Image();
+	// 	imgs.src = imageUrl;		
+	// 		console.log(imgs.height);
+	// 		console.log(imgs.width);
+
+	//   }, [imageIndex]);
+
+
+	const [isHovered, setIsHovered] = useState(false);
+	
+	const handleMouseEnter = () => {
+		setIsHovered(true);
+	};
+	
+	const handleMouseLeave = (x) => {
+		setIsHovered(false);
+	};
+
+	useEffect(() => {
+		const sceneElements = document.querySelectorAll('.scene');
+		const viewerElements = document.querySelectorAll('.viewer');
+	
+		document.body.classList.add('blur');
+	
+		sceneElements.forEach((item, index) => {
+		  item.addEventListener('mousemove', (e) => {
+			var halfViewer = viewerElements[index].offsetWidth / 2;
+			var rect = e.target.getBoundingClientRect();
+			var x = e.clientX - rect.left - halfViewer;
+			var y = e.clientY - rect.top - halfViewer;
+			var xs = item.clientWidth;
+			var ys = item.clientHeight;
+	
+			viewerElements[index].style.transform = `translate(${x}px, ${y}px)`;
+			viewerElements[index].style.backgroundPosition = `${-x}px ${-y}px`;
+			viewerElements[index].style.backgroundSize = `${xs}px ${ys}px`;
+		  });
+		  item.addEventListener('mouseout', (e) => {
+			viewerElements[index].style.backgroundSize = `0px 0px`;
+		  });
+		});
+	  }, []);
 	return (
 		<Box className={classes.imagePanel}>
 			<MySnackbar
@@ -125,7 +181,60 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 					Fetch random Image
 				</Button>
 			</Box>
-			<Paper component="img" className={classes.img} src={imageUrl} alt={`Image-${imageIndex}`} onClick={handleClick} />
+			{/* <Paper component="img" className={classes.img} src={imageUrl} alt={`Image-${imageIndex}`} onClick={handleClick} style={{filter: isHovered ? 'none' : 'blur(0)',transition: 'filter 0.05s ease', }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}/> */}
+			<div
+				className="wrap"
+				style={{
+					position: 'relative',
+					width: '650px',
+					height: '650px',
+					margin: '20px auto',
+					cursor: 'pointer',
+					overflow: 'hidden',
+					border: '4px solid rgb(44,106,79)',
+					boxShadow: '0 0 20px rgba(0,0,0,0.5)',
+					// filter: isHovered ? 'none' : '1'
+				}}
+				>
+				<div
+					className="scene"
+					style={{
+					position: 'absolute',
+					top: 0,
+					right: 0,
+					left: 0,
+					bottom: 0,
+					margin: 'auto',
+					background: '#1d1f20',
+					textAlign: 'center',
+					overflow: 'hidden',
+					backgroundImage: `url(${imageUrl})`,
+					backgroundPosition: '50% 50%',
+					backgroundRepeat: 'no-repeat',
+					backgroundSize: '650px 650px',
+					filter: 'blur(2px)',
+					}}
+					onMouseMove={handleClick}
+				></div>
+				<div
+					className="viewer"
+					style={{
+					zIndex: 5,
+					position: 'absolute',
+					width: '200px',
+					height: '200px',
+					backgroundImage: `url(${imageUrl})`,
+					backgroundPosition: '50% 50%',
+					backgroundRepeat: 'no-repeat',
+					// backgroundSize: 'auto auto',
+					borderRadius: '50%',
+					pointerEvents: 'none',
+					opacity: isHovered? 0 : 1,
+					// filter: isHovered ? 'none' : '1',
+					transition: 'fade 0.5s ease',
+					}}
+				></div>
+			</div>
 		</Box>
 	);
 }
