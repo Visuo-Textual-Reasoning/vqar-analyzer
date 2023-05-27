@@ -38,7 +38,7 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "demo": "REACT_APP_DEMO=true bash devstart.sh",
+    "demo": "cd ../mock-api/ && node dist/index.js & REACT_APP_MOCK_API_URL=http://localhost:4000 REACT_APP_DEMO=true npm start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "flow": "flow"

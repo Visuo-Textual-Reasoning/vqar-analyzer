@@ -1,4 +1,4 @@
-import { MOCK_API, VQA_URL } from './apis';
+import { MOCK_API, VQA_URL } from './const';
 
 /**
  * @function getRandomInt get random number in between min & max

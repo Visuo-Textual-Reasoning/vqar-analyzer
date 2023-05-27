@@ -5,7 +5,7 @@ import Question from '../Question/Index';
 import { getMaxNoOfImages, getRandomDataPoint } from '../../utils/api_calls';
 import VQAModelPanel from '../ModelPanel/VQAPanel';
 import { fetchVocabulary } from '../../utils/helpers';
-import { VQA_URL } from '../../utils/apis';
+import { VQA_URL } from '../../utils/const';
 import SampleQuestions from '../SampleQuestions/Index';
 import { makeStyles } from '@mui/styles';
 import { useVocab } from '../../contexts/VocabProvider';

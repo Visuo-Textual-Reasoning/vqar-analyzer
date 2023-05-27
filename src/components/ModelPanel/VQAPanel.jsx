@@ -12,7 +12,7 @@ import FeedbackForm from '../FeedbackForm/Index';
 import MySnackbar from '../MySnackbar/Index';
 import DiscreteSlider from '../MCANattention/DiscreteSlider';
 import { useCookies } from 'react-cookie';
-import { VQA_URL } from '../../utils/apis';
+import { VQA_URL } from '../../utils/const';
 
 
 const useStyles = makeStyles((theme) => {

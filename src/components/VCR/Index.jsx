@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 // import { makeStyles } from '@mui/styles';
 import ImagePanel from '../ImagePanel/Index';
-import { R2C_HOME_URL } from '../../utils/apis';
+import { R2C_HOME_URL } from '../../utils/const';
 import VCRInput from '../VCRInput/Index';
 import VCRModelPanel from '../ModelPanel/VCRPanel';
 import { fetchRandomQuestions } from '../../utils/helpers';
@@ -16,8 +16,8 @@ import { fetchRandomQuestions } from '../../utils/helpers';
 
 /**
  * @component
- * Displays imagepanel and VCR model components  
- * @returns 
+ * Displays imagepanel and VCR model components
+ * @returns
  */
 export default function VCR() {
 	const [ imageIndex, setImageIndex ] = useState(1);
@@ -48,8 +48,8 @@ export default function VCR() {
 		},
 		[ sampleQuestions]
 	);
-	
-	
+
+
 	/**@type {string} */
 	const vcrMode = 'QA_R';
 

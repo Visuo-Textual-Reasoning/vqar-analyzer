@@ -1,4 +1,4 @@
-import { VQA_URL } from "./apis";
+import { VQA_URL } from "./const";
 import { getRandomInt } from "./helpers";
 //NOTE: I think we are not using split variable
 
