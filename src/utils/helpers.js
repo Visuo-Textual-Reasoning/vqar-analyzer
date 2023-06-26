@@ -166,6 +166,38 @@ export async function fetchPredictionNew(apiUrl, predictionData) {
 	return data;
 }
 
+
+export async function sendMouseHoverData(apiUrl, data) {
+	console.log("Sending feedback: ");
+	console.log(data);
+
+	let today = new Date().toISOString().slice(0, 10);
+	let timestamp = {
+		date: today,
+		time: new Date().toLocaleTimeString(),
+		timestamp: Date.now()
+	};
+
+	data["timestamp"] = timestamp;
+	let response = await fetch(`${apiUrl}/hover`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)
+	});
+
+	console.log("feedback response"+response)
+
+	if(response === 1){
+		return ;
+	}else{
+		return ;
+	}
+	
+}
+
 // export function onlyLettersAndNumbers(str) {  
 // 	return Boolean(str.match(/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/));  
 // }

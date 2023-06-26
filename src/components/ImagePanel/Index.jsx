@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { getRandomDataPoint } from '../../utils/api_calls';
 import { BLUR_RADIUS } from '../../utils/const';
 import MySnackbar from '../MySnackbar/Index';
+import { sendMouseHoverData } from '../../utils/helpers';
 
 const useStyles = makeStyles((theme) => {
 	return {
@@ -96,6 +97,7 @@ export default function ImagePanel({ maxImages, imageIndex, setImageIndex, apiUr
 		const x = event.clientX - rect.left;
 		const y = event.clientY - rect.top;
 		console.log('Image coordinates:', x, y);
+		sendMouseHoverData(apiUrl,{imageIndex,maxImages,x,y});
 	};
 
 	// const [imageDimensions, setImageDimensions] = useState({});
